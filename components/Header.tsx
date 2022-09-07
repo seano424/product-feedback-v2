@@ -6,7 +6,7 @@ const Header = () => {
   const [showMobileNav, setShowMobileNav] = useShowMobileNav()
 
   return (
-    <div className="fixed flex h-20 w-full">
+    <div className="fixed flex h-20 w-full md:hidden">
       <div className="fixed inset-0 h-20">
         <Image
           src="/images/background/tablet-header.png"

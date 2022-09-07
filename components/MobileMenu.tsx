@@ -77,7 +77,7 @@ export default function Menu() {
           initial="hidden"
           animate="show"
           exit="exit"
-          className="fixed right-0 top-20 z-20 flex min-h-screen  w-2/3 flex-col gap-8 bg-gray-light p-5 pt-10 lg:hidden"
+          className="fixed right-0 top-20 z-20 flex min-h-screen  w-2/3 flex-col gap-8 bg-gray-light p-5 pt-10 md:hidden"
         >
           {/* Filters */}
           <div className="flex flex-wrap gap-5 rounded-[10px] bg-white p-5">
