@@ -6,7 +6,7 @@
 
 @layer base {
   html {
-    @apply font-open text-[17px] font-medium text-black antialiased;
-    @apply min-h-screen w-full max-w-full overflow-x-hidden;
+    @apply antialiased;
+    @apply min-h-screen w-full;
   }
 }

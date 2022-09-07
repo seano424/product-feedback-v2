@@ -1,6 +1,4 @@
 import Head from 'next/head'
-import Header from './Header'
-import Footer from './Footer'
 
 export default function Layout({ children }) {
   return (
@@ -10,9 +8,7 @@ export default function Layout({ children }) {
         <meta name="description" content="Product Feedback" />
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
-      <Header />
       <main className="flex-1">{children}</main>
-      <Footer />
     </div>
   )
 }
