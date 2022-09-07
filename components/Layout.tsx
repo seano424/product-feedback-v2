@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 export default function Layout({ children }) {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col font-jost">
       <Head>
         <title>Product Feedback</title>
         <meta name="description" content="Product Feedback" />
