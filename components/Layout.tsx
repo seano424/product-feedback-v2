@@ -15,9 +15,13 @@ export default function Layout({ children }) {
       </Head>
       <Header />
       <MobileMenu />
-      {isMenuOpen && (
-        <div className="fixed inset-0 top-20 z-10 bg-black/70"></div>
-      )}
+      <div
+        className={`${
+          isMenuOpen
+            ? 'fixed inset-0 top-20 z-10 bg-black/70 opacity-100'
+            : 'opacity-0'
+        } transition-all duration-500 ease-in-out`}
+      ></div>
       <main className="relative top-20 flex-1">{children}</main>
     </div>
   )

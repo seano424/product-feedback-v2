@@ -11,6 +11,7 @@ module.exports = {
       },
       colors: {
         fuschia: '#AD1FEA',
+        blue: '#4661E6',
         'blue-dark': '#4661E6',
         'blue-light': '#62BCFA',
         orange: '#F49F85',
@@ -19,7 +20,6 @@ module.exports = {
         'gray-light': '#F2F4FF',
         'gray-lightest': '#F7F8FD',
         'gray-dark': '#3A4374',
-        'gray-darkest': '#4661E6',
       },
       container: {
         center: true,
