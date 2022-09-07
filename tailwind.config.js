@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        open: '"Open Sans", serif',
+        jost: '"Jost", serif',
       },
       colors: {
         fuschia: '#AD1FEA',
