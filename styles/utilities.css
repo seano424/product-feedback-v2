@@ -1,0 +1,5 @@
+@layer utilities {
+  .debug-screens::before {
+    @apply m-4 rounded bg-gray-900 p-2 text-white opacity-100 shadow-none;
+  }
+}
