@@ -21,9 +21,9 @@ const Header = () => {
         </div>
         <button onClick={() => setShowMobileNav((state) => !state)}>
           {showMobileNav ? (
-            <MenuIcon className="h-10 w-10" />
-          ) : (
             <XIcon className="h-10 w-10" />
+          ) : (
+            <MenuIcon className="h-10 w-10" />
           )}
         </button>
       </div>
