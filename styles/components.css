@@ -1,2 +1,5 @@
 @layer components {
+  .button {
+    @apply rounded-md bg-fuschia py-4 px-8 text-[14px] leading-[20px] text-white;
+  }
 }
