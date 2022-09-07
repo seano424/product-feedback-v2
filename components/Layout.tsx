@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import MobileMenu from './MobileMenu'
 
 export default function Layout({ children }) {
   return (
@@ -8,6 +9,7 @@ export default function Layout({ children }) {
         <meta name="description" content="Product Feedback" />
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
+      <MobileMenu />
       <main className="flex-1">{children}</main>
     </div>
   )
