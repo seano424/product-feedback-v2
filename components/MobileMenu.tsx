@@ -31,7 +31,7 @@ export default function Menu() {
           initial="hidden"
           animate="show"
           exit="exit"
-          className="px-base py-base fixed right-0 top-20 z-20 min-h-screen  w-2/3 bg-white lg:hidden"
+          className="px-base py-base fixed right-0 top-20 z-20 min-h-screen  w-2/3 bg-gray-light lg:hidden"
         >
           {links.map((link) => (
             <button key={link.title}>{link.title}</button>

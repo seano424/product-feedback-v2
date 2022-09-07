@@ -1,8 +1,11 @@
 import Head from 'next/head'
 import Header from './Header'
 import MobileMenu from './MobileMenu'
+import useShowMobileNav from 'hooks/useShowMobileNav'
 
 export default function Layout({ children }) {
+  const [isMenuOpen] = useShowMobileNav()
+
   return (
     <div className="flex min-h-screen flex-col font-jost">
       <Head>
@@ -12,7 +15,10 @@ export default function Layout({ children }) {
       </Head>
       <Header />
       <MobileMenu />
-      <main className="flex-1">{children}</main>
+      {isMenuOpen && (
+        <div className="fixed inset-0 top-20 z-10 bg-black/70"></div>
+      )}
+      <main className="relative top-20 flex-1">{children}</main>
     </div>
   )
 }
