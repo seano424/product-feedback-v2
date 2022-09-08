@@ -6,7 +6,7 @@ const Header = () => {
   const [showMobileNav, setShowMobileNav] = useShowMobileNav()
 
   return (
-    <div className="fixed flex h-20 w-full md:hidden">
+    <div className="fixed flex h-20 w-full lg:hidden">
       <div className="fixed inset-0 h-20">
         <Image
           src="/images/background/tablet-header.png"
@@ -15,15 +15,15 @@ const Header = () => {
         />
       </div>
       <div className="container z-20 flex w-full items-center justify-between">
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 text-white">
           <h2 className="h2">Frontend Mentor</h2>
-          <h3 className="h3">Feedback Board</h3>
+          <p className="body-1">Feedback Board</p>
         </div>
         <button onClick={() => setShowMobileNav((state) => !state)}>
           {showMobileNav ? (
-            <XIcon className="h-10 w-10" />
+            <XIcon className="h-10 w-10 text-white" />
           ) : (
-            <MenuIcon className="h-10 w-10" />
+            <MenuIcon className="h-10 w-10 text-white" />
           )}
         </button>
       </div>

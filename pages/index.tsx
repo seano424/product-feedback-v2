@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { LightBulbIcon } from '@heroicons/react/solid'
 import { ChevronDownIcon } from '@heroicons/react/solid'
-import { Bulb } from '../public/icons/index'
+import { Bulb, Plus } from '../public/icons/index'
 
 const suggestions = {
   amount: 6,
@@ -31,9 +31,9 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       <div className="bg-blue-navy py-4 text-white">
-        <div className="flex items-center justify-between">
+        <div className="container flex items-center justify-between">
           <div className="flex items-center gap-10">
-            <div className="flex items-center gap-5">
+            <div className="hidden items-center gap-5 lg:flex">
               <Bulb />
               <p className="h3 flex">
                 {suggestions.amount !== 1
@@ -47,6 +47,10 @@ const Home = () => {
               <ChevronDownIcon className="h-5 w-5" />
             </div>
           </div>
+          <button className="button flex">
+            <Plus className="text-white" />
+            Add Feedback
+          </button>
         </div>
       </div>
     </div>
