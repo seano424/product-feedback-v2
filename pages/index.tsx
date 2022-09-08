@@ -41,11 +41,12 @@ const Home = () => {
                   : suggestions.amount + ' Suggestion'}
               </p>
             </div>
-            <div className="flex items-center gap-2">
-              <p>Sort by:</p>
-              <button>{filter.text}</button>
+
+            <button className="flex items-center gap-2">
+              <span>Sort by:</span>
+              {filter.text}
               <ChevronDownIcon className="h-5 w-5" />
-            </div>
+            </button>
           </div>
           <button className="button flex">
             <Plus className="text-white" />
