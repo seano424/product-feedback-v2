@@ -13,6 +13,7 @@ module.exports = {
         fuschia: '#AD1FEA',
         blue: '#4661E6',
         'blue-dark': '#4661E6',
+        'blue-navy': '#373F68',
         'blue-light': '#62BCFA',
         orange: '#F49F85',
         red: '#D73737',

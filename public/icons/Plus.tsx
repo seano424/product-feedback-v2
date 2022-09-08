@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 const SvgPlus = (props) => (
   <svg width={9} height={9} xmlns="http://www.w3.org/2000/svg" {...props}>
     <text

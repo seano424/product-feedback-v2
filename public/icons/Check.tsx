@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 const SvgCheck = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={13} height={11} {...props}>
     <path

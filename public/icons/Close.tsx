@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 const SvgClose = (props) => (
   <svg width={18} height={17} xmlns="http://www.w3.org/2000/svg" {...props}>
     <path
