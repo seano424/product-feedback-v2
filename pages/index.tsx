@@ -4,7 +4,6 @@ import { categoriesState } from 'hooks/useCategories'
 import { statusesState } from 'hooks/useStatuses'
 import { suggestionsState } from 'hooks/useSuggestions'
 import { useSetRecoilState } from 'recoil'
-import TopDeck from '@/components/TopDeck'
 import Suggestions from '@/components/Suggestions'
 
 const Home = ({ categories, statuses, suggestions }) => {
@@ -17,8 +16,6 @@ const Home = ({ categories, statuses, suggestions }) => {
     setStatusesState(statuses)
     setSuggestionsState(suggestions)
   }, [categories, statuses])
-
-  console.log(suggestions)
 
   return (
     <section className="wrapper h-screen">
