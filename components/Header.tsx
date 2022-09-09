@@ -14,7 +14,7 @@ const Header = () => {
           layout="fill"
         />
       </div>
-      <div className="container z-20 flex w-full items-center justify-between">
+      <div className="z-20 flex w-full items-center justify-between p-4">
         <div className="flex flex-col gap-2 text-white">
           <h2 className="h2">Frontend Mentor</h2>
           <p className="body-1">Feedback Board</p>

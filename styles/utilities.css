@@ -2,4 +2,8 @@
   .debug-screens::before {
     @apply m-4 rounded bg-gray-dark p-2 text-white opacity-100 shadow-none;
   }
+
+  .wrapper {
+    @apply p-4 lg:container xl:px-0;
+  }
 }

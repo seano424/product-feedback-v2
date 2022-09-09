@@ -28,8 +28,8 @@ const ToolBar = () => {
   const [suggestions] = useSuggestions()
 
   return (
-    <div className="fixed top-20 flex w-full text-white lg:top-72 ">
-      <div className="lg:container">
+    <div className="fixed top-20 z-10 flex w-full bg-white text-white lg:top-0 lg:pt-72 xl:top-0 xl:pt-10 xl:pl-96 xl:pr-20">
+      <div className="w-full lg:container xl:px-0">
         <div className="flex w-full items-center justify-between bg-blue-navy p-4">
           <div className="flex items-center gap-10">
             <div className="hidden items-center gap-5 lg:flex">

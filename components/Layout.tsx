@@ -16,7 +16,9 @@ export default function Layout({ children }) {
       <MobileMenu />
       <Overlay />
       <ToolBar />
-      <main className="relative top-52 flex-1 lg:top-[400px]">{children}</main>
+      <main className="relative top-52 flex-1 lg:top-[400px] xl:top-40 xl:pl-96 xl:pr-20">
+        {children}
+      </main>
     </div>
   )
 }

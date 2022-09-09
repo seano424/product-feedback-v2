@@ -21,7 +21,10 @@ const Home = ({ categories, statuses, suggestions }) => {
   return (
     <>
       <TopDeck />
-      <div className="container">hello</div>
+
+      <div className="wrapper h-screen">
+        <div className="border">hello</div>
+      </div>
     </>
   )
 }
