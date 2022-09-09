@@ -8,7 +8,7 @@ const Categories = () => {
     <div className="flex flex-wrap gap-5 rounded-[10px] bg-white p-5">
       <button
         onClick={() => setIsActive(0)}
-        className={`rounded-[10px] py-2 px-5 text-[13px] font-semibold leading-[19px]
+        className={`button-small
                 ${
                   isActive === 0
                     ? 'bg-blue text-gray-light'
@@ -21,7 +21,7 @@ const Categories = () => {
       {categories.map((filter, i) => (
         <button
           onClick={() => setIsActive(i + 1)}
-          className={`rounded-[10px] py-2 px-5 text-[13px] font-semibold leading-[19px]
+          className={`button-small
                 ${
                   i + 1 === isActive
                     ? 'bg-blue text-gray-light'
