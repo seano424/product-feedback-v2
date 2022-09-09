@@ -5,6 +5,7 @@ import { statusesState } from 'hooks/useStatuses'
 import { suggestionsState } from 'hooks/useSuggestions'
 import { useSetRecoilState } from 'recoil'
 import ToolBar from '@/components/ToolBar'
+import TopDeck from '@/components/TopDeck'
 
 const Home = ({ categories, statuses, suggestions }) => {
   const setCategoryState = useSetRecoilState(categoriesState)
@@ -18,9 +19,10 @@ const Home = ({ categories, statuses, suggestions }) => {
   }, [categories, statuses])
 
   return (
-    <div className="min-h-screen">
-      <ToolBar />
-    </div>
+    <>
+      <TopDeck />
+      <div className="container">hello</div>
+    </>
   )
 }
 

@@ -2,10 +2,11 @@ import Head from 'next/head'
 import Header from './Header'
 import MobileMenu from './MobileMenu'
 import Overlay from './Overlay'
+import ToolBar from './ToolBar'
 
 export default function Layout({ children }) {
   return (
-    <div className="flex min-h-screen flex-col font-jost">
+    <div className="flex  flex-col font-jost">
       <Head>
         <title>Product Feedback</title>
         <meta name="description" content="Product Feedback" />
@@ -14,7 +15,8 @@ export default function Layout({ children }) {
       <Header />
       <MobileMenu />
       <Overlay />
-      <main className="relative top-20 flex-1">{children}</main>
+      <ToolBar />
+      <main className="relative top-52 flex-1 lg:top-[400px]">{children}</main>
     </div>
   )
 }
