@@ -13,6 +13,12 @@ const TopDeck = () => {
             layout="fill"
             className="rounded-xl"
           />
+          <div className="container absolute inset-0 flex flex-col justify-end pb-10">
+            <div className="flex flex-col gap-2 text-white">
+              <h2 className="h2">Frontend Mentor</h2>
+              <p className="body-1">Feedback Board</p>
+            </div>
+          </div>
         </div>
         <div className="w-1/3 rounded-xl shadow-xl">
           <Categories />
