@@ -326,4 +326,54 @@ const data = {
   ],
 }
 
-export { data }
+// id           Int          @id @default(autoincrement())
+//   name         String       @unique
+//   suggestionId Int?
+//   type         String
+//   Suggestion   Suggestion[]
+
+const categories: {
+  name: string
+  type: string
+}[] = [
+  {
+    name: 'UI',
+    type: 'ui',
+  },
+  {
+    name: 'UX',
+    type: 'ux',
+  },
+  {
+    name: 'Enhancement',
+    type: 'enhancement',
+  },
+  {
+    name: 'Bug',
+    type: 'bug',
+  },
+  {
+    name: 'Feature',
+    type: 'feature',
+  },
+]
+
+const status: {
+  name: string
+  type: string
+}[] = [
+  {
+    name: 'Planned',
+    type: 'planned',
+  },
+  {
+    name: 'In-Progress',
+    type: 'in-progress',
+  },
+  {
+    name: 'Live',
+    type: 'live',
+  },
+]
+
+export { data, categories, status }
