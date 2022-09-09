@@ -2,17 +2,19 @@ import { useEffect } from 'react'
 import prisma from 'lib/prisma'
 import { categoriesState } from 'hooks/useCategories'
 import { statusesState } from 'hooks/useStatuses'
+import { suggestionsState } from 'hooks/useSuggestions'
 import { useSetRecoilState } from 'recoil'
 import ToolBar from '@/components/ToolBar'
 
 const Home = ({ categories, statuses, suggestions }) => {
   const setCategoryState = useSetRecoilState(categoriesState)
   const setStatusesState = useSetRecoilState(statusesState)
-  console.log(suggestions)
+  const setSuggestionsState = useSetRecoilState(suggestionsState)
 
   useEffect(() => {
     setCategoryState(categories)
     setStatusesState(statuses)
+    setSuggestionsState(suggestions)
   }, [categories, statuses])
 
   return (
@@ -33,7 +35,7 @@ export const getServerSideProps = async () => {
     props: {
       categories,
       statuses,
-      suggestions,
+      suggestions: JSON.parse(JSON.stringify(suggestions)),
     },
   }
 }
