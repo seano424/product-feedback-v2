@@ -54,7 +54,7 @@ const ToolBar = () => {
                 />
               </button>
               {isOpen && (
-                <div className="absolute top-20 flex w-80 flex-col gap-4 rounded-lg text-black shadow-lg">
+                <div className="absolute top-20 flex w-80 flex-col gap-4 rounded-lg bg-white text-black shadow-lg">
                   {sortBy.map((choice) => (
                     <button
                       className={`h3 flex w-full justify-start border-b border-gray-light px-5 py-3 transition-all duration-300 hover:text-fuschia ${
