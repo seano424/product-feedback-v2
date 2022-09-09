@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { Plus, Bulb } from '@/icons/index'
+import useSuggestions from 'hooks/useSuggestions'
 
 const sortBy = [
   {
@@ -23,6 +24,8 @@ const sortBy = [
 
 const ToolBar = () => {
   const [filter, setFilter] = useState(sortBy[0])
+  const [isOpen, setFilterOpen] = useState(false)
+  const [suggestions] = useSuggestions()
 
   return (
     <div className="bg-blue-navy py-4 text-white">
@@ -31,17 +34,39 @@ const ToolBar = () => {
           <div className="hidden items-center gap-5 lg:flex">
             <Bulb />
             <p className="h3 flex">
-              {/* {suggestions.amount !== 1
-                ? suggestions.amount + ' Suggestions'
-                : suggestions.amount + ' Suggestion'} */}
+              {suggestions.length !== 1
+                ? suggestions.length + ' Suggestions'
+                : suggestions.length + ' Suggestion'}
             </p>
           </div>
-
-          <button className="flex items-center gap-2">
-            <span>Sort by:</span>
-            {filter.text}
-            <ChevronDownIcon className="h-5 w-5" />
-          </button>
+          <div className="h3 relative">
+            <button
+              onClick={() => setFilterOpen((state) => !state)}
+              className="flex items-center gap-2"
+            >
+              <span>Sort by:</span>
+              {filter.text}
+              <ChevronDownIcon
+                className={`${
+                  isOpen ? 'rotate-0' : 'rotate-180'
+                } h-5 w-5 transform transition-all duration-300`}
+              />
+            </button>
+            {isOpen && (
+              <div className="absolute top-20 flex w-80 flex-col gap-4 rounded-lg text-black shadow-lg">
+                {sortBy.map((choice) => (
+                  <button
+                    className={`h3 flex w-full justify-start border-b border-gray-light px-5 py-3 transition-all duration-300 hover:text-fuschia ${
+                      filter.type === choice.type && 'text-fuschia'
+                    }`}
+                    onClick={() => setFilter(choice)}
+                  >
+                    {choice.text}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
         <button className="button flex">
           <Plus className="text-white" />
