@@ -53,11 +53,11 @@ model Category {
   name         String       @unique
   suggestionId Int?
   type         String
-  Suggestion   Suggestion[]
+  suggestions  Suggestion[]
 }
 
 model Status {
-  type       String       @unique
-  name       String       @unique
-  Suggestion Suggestion[]
+  type        String       @unique
+  name        String       @unique
+  suggestions Suggestion[]
 }

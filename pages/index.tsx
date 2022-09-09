@@ -28,13 +28,17 @@ export default Home
 
 export const getServerSideProps = async () => {
   const categories = await prisma.category.findMany({})
-  const statuses = await prisma.status.findMany({})
+  const statuses = await prisma.status.findMany({
+    include: {
+      suggestions: true,
+    },
+  })
   const suggestions = await prisma.suggestion.findMany({})
 
   return {
     props: {
       categories,
-      statuses,
+      statuses: JSON.parse(JSON.stringify(statuses)),
       suggestions: JSON.parse(JSON.stringify(suggestions)),
     },
   }
