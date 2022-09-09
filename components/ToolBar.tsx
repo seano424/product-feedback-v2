@@ -28,7 +28,7 @@ const ToolBar = () => {
   const [suggestions] = useSuggestions()
 
   return (
-    <div className="fixed top-20 z-10 flex w-full bg-white text-white lg:top-0 lg:pt-72 xl:top-0 xl:pt-10 xl:pl-96 xl:pr-20">
+    <div className="fixed top-20 z-10 flex w-full bg-gray-light text-white lg:top-0 lg:pt-72 xl:top-0 xl:pt-10 xl:pl-96 xl:pr-20">
       <div className="w-full lg:container xl:px-0">
         <div className="flex w-full items-center justify-between bg-blue-navy p-4">
           <div className="flex items-center gap-10">
@@ -57,6 +57,7 @@ const ToolBar = () => {
                 <div className="absolute top-20 flex w-80 flex-col gap-4 rounded-lg bg-white text-black shadow-lg">
                   {sortBy.map((choice) => (
                     <button
+                      key={choice.type}
                       className={`h3 flex w-full justify-start border-b border-gray-light px-5 py-3 transition-all duration-300 hover:text-fuschia ${
                         filter.type === choice.type && 'text-fuschia'
                       }`}

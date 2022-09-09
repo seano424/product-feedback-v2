@@ -4,8 +4,8 @@ import { categoriesState } from 'hooks/useCategories'
 import { statusesState } from 'hooks/useStatuses'
 import { suggestionsState } from 'hooks/useSuggestions'
 import { useSetRecoilState } from 'recoil'
-import ToolBar from '@/components/ToolBar'
 import TopDeck from '@/components/TopDeck'
+import Suggestions from '@/components/Suggestions'
 
 const Home = ({ categories, statuses, suggestions }) => {
   const setCategoryState = useSetRecoilState(categoriesState)
@@ -18,13 +18,12 @@ const Home = ({ categories, statuses, suggestions }) => {
     setSuggestionsState(suggestions)
   }, [categories, statuses])
 
+  console.log(suggestions)
+
   return (
-    <>
-      <TopDeck />
-      <div className="wrapper h-screen">
-        <div className="border">hello</div>
-      </div>
-    </>
+    <section className="wrapper h-screen">
+      <Suggestions />
+    </section>
   )
 }
 
@@ -40,6 +39,8 @@ export const getServerSideProps = async () => {
   const suggestions = await prisma.suggestion.findMany({
     include: {
       comments: true,
+      category: true,
+      status: true,
     },
   })
 
