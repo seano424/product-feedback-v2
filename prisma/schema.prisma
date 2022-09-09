@@ -22,16 +22,19 @@ model User {
 }
 
 model Suggestion {
-  id          Int        @id @default(autoincrement())
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   title       String
   description String
   votes       Int
   userId      Int
-  user        User       @relation(fields: [userId], references: [id])
-  category    Category[]
+  user        User      @relation(fields: [userId], references: [id])
+  category    Category  @relation(fields: [categoryId], references: [id])
   comments    Comment[]
+  status      Status    @relation(fields: [statusType], references: [type])
+  statusType  String
+  categoryId  Int
 }
 
 model Comment {
@@ -46,9 +49,15 @@ model Comment {
 }
 
 model Category {
-  id           Int         @id @default(autoincrement())
-  name         String      @unique
+  id           Int          @id @default(autoincrement())
+  name         String       @unique
   suggestionId Int?
   type         String
-  suggestion   Suggestion? @relation(fields: [suggestionId], references: [id])
+  Suggestion   Suggestion[]
+}
+
+model Status {
+  type       String       @unique
+  name       String       @unique
+  Suggestion Suggestion[]
 }
