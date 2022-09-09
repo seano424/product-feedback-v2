@@ -13,8 +13,8 @@ const sortBy = [
     type: 'least-upvotes',
   },
   {
-    text: 'Least Comments',
-    type: 'least-comments',
+    text: 'Most Comments',
+    type: 'most-comments',
   },
   {
     text: 'Least Comments',
