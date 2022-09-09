@@ -21,7 +21,6 @@ const Home = ({ categories, statuses, suggestions }) => {
   return (
     <>
       <TopDeck />
-
       <div className="wrapper h-screen">
         <div className="border">hello</div>
       </div>
@@ -38,7 +37,11 @@ export const getServerSideProps = async () => {
       suggestions: true,
     },
   })
-  const suggestions = await prisma.suggestion.findMany({})
+  const suggestions = await prisma.suggestion.findMany({
+    include: {
+      comments: true,
+    },
+  })
 
   return {
     props: {
