@@ -28,7 +28,7 @@ const ToolBar = () => {
   const [suggestions] = useSuggestions()
 
   return (
-    <div className="bg-blue-navy py-4 text-white">
+    <div className="fixed top-20 w-full bg-blue-navy py-4 text-white">
       <div className="container flex items-center justify-between">
         <div className="flex items-center gap-10">
           <div className="hidden items-center gap-5 lg:flex">
@@ -48,7 +48,7 @@ const ToolBar = () => {
               {filter.text}
               <ChevronDownIcon
                 className={`${
-                  isOpen ? 'rotate-0' : 'rotate-180'
+                  isOpen ? 'rotate-180' : 'rotate-0'
                 } h-5 w-5 transform transition-all duration-300`}
               />
             </button>
