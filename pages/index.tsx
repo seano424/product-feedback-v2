@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { LightBulbIcon } from '@heroicons/react/solid'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { Bulb, Plus } from '../public/icons/index'
+import prisma from 'lib/prisma'
 
 const suggestions = {
   amount: 6,
@@ -25,7 +25,9 @@ const suggestions = {
   ],
 }
 
-const Home = () => {
+const Home = ({ categories }) => {
+  console.log(categories)
+
   const [filter, setFilter] = useState(suggestions.sortBy[0])
 
   return (
@@ -59,3 +61,13 @@ const Home = () => {
 }
 
 export default Home
+
+export const getServerSideProps = async () => {
+  const categories = await prisma.category.findMany({})
+
+  return {
+    props: {
+      categories,
+    },
+  }
+}

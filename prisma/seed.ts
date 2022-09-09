@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client'
-import bcrypt from 'bcrypt'
 import { categories, status } from '../lib/data'
 
 const prisma = new PrismaClient()
