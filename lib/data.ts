@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid'
+
 const data = {
   currentUser: {
     image: './assets/user-images/image-zena.jpg',
@@ -326,12 +328,6 @@ const data = {
   ],
 }
 
-// id           Int          @id @default(autoincrement())
-//   name         String       @unique
-//   suggestionId Int?
-//   type         String
-//   Suggestion   Suggestion[]
-
 const categories: {
   name: string
   type: string
@@ -358,7 +354,7 @@ const categories: {
   },
 ]
 
-const status: {
+const statuses: {
   name: string
   type: string
 }[] = [
@@ -376,4 +372,46 @@ const status: {
   },
 ]
 
-export { data, categories, status }
+// title       String
+//   description String
+//   votes       Int
+//   userId      Int
+//   user        User      @relation(fields: [userId], references: [id])
+//   category    Category  @relation(fields: [categoryId], references: [id])
+//   comments    Comment[]
+//   status      Status
+
+const suggestions: {
+  id: number
+  title: string
+  description: string
+  votes: number
+}[] = [
+  {
+    id: uuidv4(),
+    title: 'Add tags for solutions',
+    description: 'Easier to search for solutions based on a specific stack.',
+    votes: 11,
+  },
+  {
+    id: uuidv4(),
+    title: 'Add a dark theme option',
+    description:
+      'It would help people with light sensitivities and who prefer dark mode.',
+    votes: 93,
+  },
+  {
+    id: uuidv4(),
+    title: 'Q&A within the challenge hubs',
+    description: 'Challenge-specific Q&A would make for easy reference.',
+    votes: 7,
+  },
+  {
+    id: uuidv4(),
+    title: 'Ability to follow others',
+    description: 'Stay updated on comments and solutions other people post.',
+    votes: 32,
+  },
+]
+
+export { data, categories, statuses, suggestions }

@@ -1,61 +1,23 @@
-import { useState } from 'react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
-import { Bulb, Plus } from '../public/icons/index'
+import { useEffect } from 'react'
 import prisma from 'lib/prisma'
+import { categoriesState } from 'hooks/useCategories'
+import { statusesState } from 'hooks/useStatuses'
+import { useSetRecoilState } from 'recoil'
+import ToolBar from '@/components/ToolBar'
 
-const suggestions = {
-  amount: 6,
-  sortBy: [
-    {
-      text: 'Most Upvotes',
-      type: 'most-upvotes',
-    },
-    {
-      text: 'Least Upvotes',
-      type: 'least-upvotes',
-    },
-    {
-      text: 'Least Comments',
-      type: 'least-comments',
-    },
-    {
-      text: 'Least Comments',
-      type: 'least-comments',
-    },
-  ],
-}
+const Home = ({ categories, statuses, suggestions }) => {
+  const setCategoryState = useSetRecoilState(categoriesState)
+  const setStatusesState = useSetRecoilState(statusesState)
+  console.log(suggestions)
 
-const Home = ({ categories }) => {
-  console.log(categories)
-
-  const [filter, setFilter] = useState(suggestions.sortBy[0])
+  useEffect(() => {
+    setCategoryState(categories)
+    setStatusesState(statuses)
+  }, [categories, statuses])
 
   return (
     <div className="min-h-screen">
-      <div className="bg-blue-navy py-4 text-white">
-        <div className="container flex items-center justify-between">
-          <div className="flex items-center gap-10">
-            <div className="hidden items-center gap-5 lg:flex">
-              <Bulb />
-              <p className="h3 flex">
-                {suggestions.amount !== 1
-                  ? suggestions.amount + ' Suggestions'
-                  : suggestions.amount + ' Suggestion'}
-              </p>
-            </div>
-
-            <button className="flex items-center gap-2">
-              <span>Sort by:</span>
-              {filter.text}
-              <ChevronDownIcon className="h-5 w-5" />
-            </button>
-          </div>
-          <button className="button flex">
-            <Plus className="text-white" />
-            Add Feedback
-          </button>
-        </div>
-      </div>
+      <ToolBar />
     </div>
   )
 }
@@ -64,10 +26,14 @@ export default Home
 
 export const getServerSideProps = async () => {
   const categories = await prisma.category.findMany({})
+  const statuses = await prisma.status.findMany({})
+  const suggestions = await prisma.suggestion.findMany({})
 
   return {
     props: {
       categories,
+      statuses,
+      suggestions,
     },
   }
 }
