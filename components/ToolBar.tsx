@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { Plus, Bulb } from '@/icons/index'
 import useSuggestions from 'lib/hooks/useSuggestions'
+import { useGetSuggestions } from 'lib/hooks/useGetSuggestions'
 
 const sortBy = [
   {
@@ -25,7 +26,7 @@ const sortBy = [
 const ToolBar = () => {
   const [filter, setFilter] = useState(sortBy[0])
   const [isOpen, setFilterOpen] = useState(false)
-  const [suggestions] = useSuggestions()
+  const { data: suggestions } = useGetSuggestions()
 
   return (
     <div className="fixed top-20 z-10 flex w-full bg-gray-light text-white lg:top-0 lg:pt-72 xl:top-0 xl:pt-10 xl:pl-96 xl:pr-20">
@@ -35,9 +36,10 @@ const ToolBar = () => {
             <div className="hidden items-center gap-5 lg:flex">
               <Bulb />
               <p className="h3 flex">
-                {suggestions.length !== 1
-                  ? suggestions.length + ' Suggestions'
-                  : suggestions.length + ' Suggestion'}
+                {suggestions &&
+                  (suggestions.length !== 1
+                    ? suggestions.length + ' Suggestions'
+                    : suggestions.length + ' Suggestion')}
               </p>
             </div>
             <div className="h3 relative">
