@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import useCategories from 'lib/hooks/useCategories'
+import { useGetCategories } from 'lib/hooks/useGetCategories'
 
 const Categories = () => {
   const [isActive, setIsActive] = useState(0)
-  const [categories] = useCategories()
+  const { data: cats } = useGetCategories()
+  console.log('cats: ', cats)
+
   return (
     <div className="flex flex-wrap gap-5 rounded-[10px] bg-white p-5">
       <button
@@ -18,21 +20,22 @@ const Categories = () => {
       >
         All
       </button>
-      {categories.map((filter, i) => (
-        <button
-          onClick={() => setIsActive(i + 1)}
-          className={`button-small
+      {cats &&
+        cats.map((filter, i) => (
+          <button
+            onClick={() => setIsActive(i + 1)}
+            className={`button-small
                 ${
                   i + 1 === isActive
                     ? 'bg-blue text-gray-light'
                     : 'bg-gray-light text-blue '
                 }
                 `}
-          key={filter.type}
-        >
-          {filter.name}
-        </button>
-      ))}
+            key={filter.type}
+          >
+            {filter.name}
+          </button>
+        ))}
     </div>
   )
 }
