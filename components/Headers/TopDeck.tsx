@@ -1,5 +1,5 @@
-import Categories from './Categories'
-import Statuses from './Statuses'
+import Categories from '../Categories'
+import Statuses from '../Statuses'
 import Image from 'next/image'
 
 const TopDeck = () => {

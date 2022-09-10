@@ -1,7 +1,7 @@
 import { AnimatePresence, m } from 'framer-motion'
 import useShowMobileNav from 'lib/hooks/useShowMobileNav'
-import Categories from './Categories'
-import Statuses from './Statuses'
+import Categories from '../Categories'
+import Statuses from '../Statuses'
 
 export default function Menu() {
   const [showMobileNav] = useShowMobileNav()

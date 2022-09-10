@@ -2,7 +2,7 @@ import { XIcon, MenuIcon } from '@heroicons/react/solid'
 import useShowMobileNav from 'lib/hooks/useShowMobileNav'
 import Image from 'next/image'
 
-const Header = () => {
+const MobileHeader = () => {
   const [showMobileNav, setShowMobileNav] = useShowMobileNav()
 
   return (
@@ -31,4 +31,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default MobileHeader

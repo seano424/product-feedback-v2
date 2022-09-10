@@ -1,5 +1,6 @@
 import { dehydrate, QueryClient } from 'react-query'
 import { getSuggestions } from 'lib/hooks/useGetSuggestions'
+import TopDeck from '@/components/Headers/TopDeck'
 
 import Suggestions from '@/components/Suggestions'
 import type { GetServerSideProps } from 'next'

@@ -1,6 +1,6 @@
 import useShowMobileNav from 'lib/hooks/useShowMobileNav'
 
-const Overlay = () => {
+const MobileOverlay = () => {
   const [isMenuOpen] = useShowMobileNav()
 
   return (
@@ -14,4 +14,4 @@ const Overlay = () => {
   )
 }
 
-export default Overlay
+export default MobileOverlay

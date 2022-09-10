@@ -5,7 +5,7 @@ const Suggestions = () => {
   const { data: suggestions } = useGetSuggestions()
 
   return (
-    <div className="py-base flex flex-col gap-5">
+    <div className="py-base container flex flex-col gap-5 xl:px-0">
       {suggestions &&
         suggestions.map((sug) => (
           <button
