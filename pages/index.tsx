@@ -3,12 +3,14 @@ import { getSuggestions } from 'lib/hooks/useGetSuggestions'
 
 import Suggestions from '@/components/Suggestions'
 import type { GetServerSideProps } from 'next'
+import Layout from '@/components/Layout'
 
 const Home = () => {
   return (
-    <section className="wrapper h-screen">
+    <Layout>
       <Suggestions />
-    </section>
+      <Suggestions />
+    </Layout>
   )
 }
 

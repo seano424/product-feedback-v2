@@ -11,9 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <LazyMotion features={domAnimation}>
         <RecoilRoot>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <Component {...pageProps} />
         </RecoilRoot>
       </LazyMotion>
     </QueryClientProvider>

@@ -6,4 +6,8 @@
   .wrapper {
     @apply p-4 lg:container xl:px-0;
   }
+
+  .py-base {
+    @apply py-5;
+  }
 }
