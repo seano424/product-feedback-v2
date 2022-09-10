@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { Plus, Bulb } from '@/icons/index'
-import useSuggestions from 'hooks/useSuggestions'
+import useSuggestions from 'lib/hooks/useSuggestions'
 
 const sortBy = [
   {

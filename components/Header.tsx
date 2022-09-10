@@ -1,5 +1,5 @@
 import { XIcon, MenuIcon } from '@heroicons/react/solid'
-import useShowMobileNav from 'hooks/useShowMobileNav'
+import useShowMobileNav from 'lib/hooks/useShowMobileNav'
 import Image from 'next/image'
 
 const Header = () => {

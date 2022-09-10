@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import prisma from 'lib/prisma'
-import { categoriesState } from 'hooks/useCategories'
-import { statusesState } from 'hooks/useStatuses'
-import { suggestionsState } from 'hooks/useSuggestions'
+import { categoriesState } from 'lib/hooks/useCategories'
+import { statusesState } from 'lib/hooks/useStatuses'
+import { suggestionsState } from 'lib/hooks/useSuggestions'
 import { useSetRecoilState } from 'recoil'
 import Suggestions from '@/components/Suggestions'
 

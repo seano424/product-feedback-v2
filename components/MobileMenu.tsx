@@ -1,5 +1,5 @@
 import { AnimatePresence, m } from 'framer-motion'
-import useShowMobileNav from 'hooks/useShowMobileNav'
+import useShowMobileNav from 'lib/hooks/useShowMobileNav'
 import Categories from './Categories'
 import Statuses from './Statuses'
 

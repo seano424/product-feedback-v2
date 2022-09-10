@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import useStatuses from 'hooks/useStatuses'
+import useStatuses from 'lib/hooks/useStatuses'
 
 const Statuses = () => {
   const [statuses] = useStatuses()

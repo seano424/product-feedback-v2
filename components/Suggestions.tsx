@@ -1,4 +1,4 @@
-import useSuggestions from 'hooks/useSuggestions'
+import useSuggestions from 'lib/hooks/useSuggestions'
 import { ArrowUp, Comments } from '@/icons/index'
 
 const Suggestions = () => {

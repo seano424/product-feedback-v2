@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import useCategories from 'hooks/useCategories'
+import useCategories from 'lib/hooks/useCategories'
 
 const Categories = () => {
   const [isActive, setIsActive] = useState(0)

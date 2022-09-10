@@ -1,4 +1,4 @@
-import useShowMobileNav from 'hooks/useShowMobileNav'
+import useShowMobileNav from 'lib/hooks/useShowMobileNav'
 
 const Overlay = () => {
   const [isMenuOpen] = useShowMobileNav()
