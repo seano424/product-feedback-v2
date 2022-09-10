@@ -18,7 +18,7 @@ export default function Layout({ children }) {
       <MobileOverlay />
       <ToolBar />
       <TopDeck />
-      <main className="relative -top-[500px] flex-1 xl:pl-96 xl:pr-20">
+      <main className="relative flex-1 pt-52 lg:pt-[400px] xl:pt-36 xl:pl-96 xl:pr-20">
         {children}
       </main>
     </div>
