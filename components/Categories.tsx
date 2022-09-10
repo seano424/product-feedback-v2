@@ -35,9 +35,10 @@ const Categories = () => {
         className={`button-small
           ${
             isActive === 0
-              ? 'bg-blue text-gray-light opacity-40'
+              ? 'bg-blue text-gray-light'
               : 'bg-gray-light text-blue '
           }
+          ${isLoading && 'opacity-40'}
         `}
       >
         All
