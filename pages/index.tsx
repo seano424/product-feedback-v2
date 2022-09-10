@@ -1,19 +1,13 @@
 import { useEffect } from 'react'
 import prisma from 'lib/prisma'
-import { categoriesState } from 'lib/hooks/useCategories'
-import { statusesState } from 'lib/hooks/useStatuses'
 import { suggestionsState } from 'lib/hooks/useSuggestions'
 import { useSetRecoilState } from 'recoil'
 import Suggestions from '@/components/Suggestions'
 
 const Home = ({ categories, statuses, suggestions }) => {
-  const setCategoryState = useSetRecoilState(categoriesState)
-  const setStatusesState = useSetRecoilState(statusesState)
   const setSuggestionsState = useSetRecoilState(suggestionsState)
 
   useEffect(() => {
-    setCategoryState(categories)
-    setStatusesState(statuses)
     setSuggestionsState(suggestions)
   }, [categories, statuses])
 
