@@ -9,10 +9,14 @@ const Suggestions = () => {
     <div className="py-base container flex flex-col gap-5 xl:px-0">
       {isLoading
         ? suggestions.map((suggestion) => (
-            <Suggestion key={suggestion.id} suggestion={suggestion} />
+            <Suggestion key={suggestion.id} suggestion={suggestion} loading />
           ))
         : data.map((suggestion) => (
-            <Suggestion key={suggestion.id} suggestion={suggestion} />
+            <Suggestion
+              key={suggestion.id}
+              suggestion={suggestion}
+              loading={false}
+            />
           ))}
     </div>
   )

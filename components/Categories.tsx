@@ -35,7 +35,7 @@ const Categories = () => {
         className={`button-small
           ${
             isActive === 0
-              ? 'bg-blue text-gray-light'
+              ? 'bg-blue text-gray-light opacity-40'
               : 'bg-gray-light text-blue '
           }
         `}
@@ -46,7 +46,7 @@ const Categories = () => {
         ? cats.map((filter, i) => (
             <button
               onClick={() => setIsActive(i + 1)}
-              className={`button-small animate-pulse
+              className={`button-small animate-pulse opacity-40
                 ${
                   i + 1 === isActive
                     ? 'bg-blue text-gray-light'
