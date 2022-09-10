@@ -7,16 +7,16 @@ const Categories = () => {
   console.log('cats: ', cats)
 
   return (
-    <div className="flex flex-wrap gap-5 rounded-[10px] bg-white p-5">
+    <div className="flex h-full flex-wrap gap-5 rounded-[10px] bg-white p-5">
       <button
         onClick={() => setIsActive(0)}
         className={`button-small
-                ${
-                  isActive === 0
-                    ? 'bg-blue text-gray-light'
-                    : 'bg-gray-light text-blue '
-                }
-                `}
+          ${
+            isActive === 0
+              ? 'bg-blue text-gray-light'
+              : 'bg-gray-light text-blue '
+          }
+        `}
       >
         All
       </button>
@@ -25,12 +25,12 @@ const Categories = () => {
           <button
             onClick={() => setIsActive(i + 1)}
             className={`button-small
-                ${
-                  i + 1 === isActive
-                    ? 'bg-blue text-gray-light'
-                    : 'bg-gray-light text-blue '
-                }
-                `}
+              ${
+                i + 1 === isActive
+                  ? 'bg-blue text-gray-light'
+                  : 'bg-gray-light text-blue '
+              }
+            `}
             key={filter.type}
           >
             {filter.name}

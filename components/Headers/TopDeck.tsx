@@ -20,7 +20,7 @@ const TopDeck = () => {
             </div>
           </div>
         </div>
-        <div className="w-1/3 rounded-xl shadow-xl  xl:w-full xl:border xl:border-gray-light">
+        <div className="w-1/3 rounded-xl shadow-xl xl:w-full xl:border xl:border-gray-light">
           <Categories />
         </div>
         <div className="w-1/3 rounded-xl shadow-xl  xl:w-full xl:border xl:border-gray-light">

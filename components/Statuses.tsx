@@ -5,7 +5,7 @@ const Statuses = () => {
   const { data: stats } = useGetStatuses()
 
   return (
-    <div className="flex flex-col gap-10 rounded-[10px] bg-white p-5 lg:gap-4">
+    <div className="flex h-full flex-col gap-10 rounded-[10px] bg-white p-5 lg:gap-4">
       <div className="flex justify-between">
         <h2 className="h2">Roadmap</h2>
         <Link href="/">
