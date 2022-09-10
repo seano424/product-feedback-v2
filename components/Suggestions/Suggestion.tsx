@@ -33,14 +33,14 @@ const Suggestion = (props: Props) => {
             </div>
             <div className="flex items-center gap-2">
               <Comments />
-              {suggestion.comments?.length ?? Math.floor(Math.random() * 100)}
+              {suggestion.comments?.length ?? '100'}
             </div>
           </div>
         </div>
       </div>
       <div className="hidden items-center gap-2 lg:flex">
         <Comments />
-        {suggestion.comments?.length ?? Math.floor(Math.random() * 100)}
+        {suggestion.comments?.length ?? '88'}
       </div>
     </button>
   )

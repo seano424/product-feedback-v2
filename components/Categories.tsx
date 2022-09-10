@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useGetCategories } from 'lib/hooks/useGetCategories'
 
 const cats = [
