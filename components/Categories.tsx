@@ -1,10 +1,32 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useGetCategories } from 'lib/hooks/useGetCategories'
+
+const cats = [
+  {
+    name: 'UX',
+    type: 'ux',
+  },
+  {
+    name: 'UI',
+    type: 'ui',
+  },
+  {
+    name: 'Bug',
+    type: 'bug',
+  },
+  {
+    name: 'Feature',
+    type: 'feature',
+  },
+  {
+    name: 'Enhancement',
+    type: 'enhancement',
+  },
+]
 
 const Categories = () => {
   const [isActive, setIsActive] = useState(0)
-  const { data: cats } = useGetCategories()
-  console.log('cats: ', cats)
+  const { data, isLoading } = useGetCategories()
 
   return (
     <div className="flex h-full flex-wrap gap-5 rounded-[10px] bg-white p-5">
@@ -20,22 +42,37 @@ const Categories = () => {
       >
         All
       </button>
-      {cats &&
-        cats.map((filter, i) => (
-          <button
-            onClick={() => setIsActive(i + 1)}
-            className={`button-small
-              ${
-                i + 1 === isActive
-                  ? 'bg-blue text-gray-light'
-                  : 'bg-gray-light text-blue '
-              }
-            `}
-            key={filter.type}
-          >
-            {filter.name}
-          </button>
-        ))}
+      {isLoading
+        ? cats.map((filter, i) => (
+            <button
+              onClick={() => setIsActive(i + 1)}
+              className={`button-small animate-pulse
+                ${
+                  i + 1 === isActive
+                    ? 'bg-blue text-gray-light'
+                    : 'bg-gray-light text-blue '
+                }
+              `}
+              key={filter.type}
+            >
+              {filter.name}
+            </button>
+          ))
+        : data.map((filter, i) => (
+            <button
+              onClick={() => setIsActive(i + 1)}
+              className={`button-small
+                ${
+                  i + 1 === isActive
+                    ? 'bg-blue text-gray-light'
+                    : 'bg-gray-light text-blue '
+                }
+              `}
+              key={filter.type}
+            >
+              {filter.name}
+            </button>
+          ))}
     </div>
   )
 }

@@ -386,6 +386,10 @@ const suggestions: {
   title: string
   description: string
   votes: number
+  category?: {
+    name: string
+  }
+  comments?: []
 }[] = [
   {
     id: uuidv4(),
