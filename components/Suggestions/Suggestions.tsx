@@ -1,7 +1,7 @@
 import { useGetSuggestions } from 'lib/hooks/useGetSuggestions'
 import Suggestion from './Suggestion'
 import { suggestions } from 'lib/data'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { sortByState } from 'lib/sortBy'
 import { useEffect, useState } from 'react'
 
