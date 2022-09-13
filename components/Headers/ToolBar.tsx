@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { Plus, Bulb } from '@/icons/index'
 import { useGetSuggestions } from 'lib/hooks/useGetSuggestions'
+import { sortByState } from 'lib/sortBy'
 
 const sortBy = [
   {
@@ -26,6 +28,13 @@ const ToolBar = () => {
   const [filter, setFilter] = useState(sortBy[0])
   const [isOpen, setFilterOpen] = useState(false)
   const { data: suggestions } = useGetSuggestions()
+  const setSortByState = useSetRecoilState(sortByState)
+
+  const handleSetSortBy = async (choice, type) => {
+    await setSortByState(type)
+    await setFilter(choice)
+    setFilterOpen((state) => !state)
+  }
 
   return (
     <div className="fixed top-20 z-10 flex w-full bg-gray-light text-white lg:top-0 lg:pt-72 xl:top-0 xl:pt-10 xl:pl-96 xl:pr-20">
@@ -62,7 +71,7 @@ const ToolBar = () => {
                       className={`h3 flex w-full justify-start border-b border-gray-light px-5 py-3 transition-all duration-300 hover:text-fuschia ${
                         filter.type === choice.type && 'text-fuschia'
                       }`}
-                      onClick={() => setFilter(choice)}
+                      onClick={() => handleSetSortBy(choice, choice.type)}
                     >
                       {choice.text}
                     </button>
