@@ -10,4 +10,8 @@
   .py-base {
     @apply py-3;
   }
+
+  .my-base {
+    @apply my-10;
+  }
 }
