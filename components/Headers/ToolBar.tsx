@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useState } from 'react'
+import { useSetRecoilState } from 'recoil'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { Plus, Bulb } from '@/icons/index'
 import { useGetSuggestions } from 'lib/hooks/useGetSuggestions'
