@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useGetCategories } from 'lib/hooks/useGetCategories'
+import { filterByState } from 'lib/filterBy'
+import { useSetRecoilState, useRecoilState } from 'recoil'
 
 const cats = [
   {
@@ -27,14 +29,21 @@ const cats = [
 const Categories = () => {
   const [isActive, setIsActive] = useState(0)
   const { data, isLoading } = useGetCategories()
+  const [state, setState] = useRecoilState(filterByState)
+
+  const handleClick = (index, type) => {
+    setIsActive(index)
+    setState(type)
+  }
+  console.log(state)
 
   return (
     <div className="flex h-full flex-wrap gap-5 rounded-[10px] bg-white p-5">
       <button
-        onClick={() => setIsActive(0)}
+        onClick={() => handleClick(0, 'all')}
         className={`button-small
           ${
-            isActive === 0
+            state === 'all'
               ? 'bg-blue text-gray-light'
               : 'bg-gray-light text-blue '
           }
@@ -46,10 +55,11 @@ const Categories = () => {
       {isLoading
         ? cats.map((filter, i) => (
             <button
-              onClick={() => setIsActive(i + 1)}
+              // onClick={() => handleClick(i + 1, filter.type)}
+              disabled
               className={`button-small animate-pulse opacity-40
                 ${
-                  i + 1 === isActive
+                  state === filter.type
                     ? 'bg-blue text-gray-light'
                     : 'bg-gray-light text-blue '
                 }
@@ -61,10 +71,10 @@ const Categories = () => {
           ))
         : data.map((filter, i) => (
             <button
-              onClick={() => setIsActive(i + 1)}
+              onClick={() => handleClick(i + 1, filter.type)}
               className={`button-small
                 ${
-                  i + 1 === isActive
+                  state === filter.type
                     ? 'bg-blue text-gray-light'
                     : 'bg-gray-light text-blue '
                 }

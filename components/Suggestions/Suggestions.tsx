@@ -3,31 +3,49 @@ import Suggestion from './Suggestion'
 import { suggestions } from 'lib/data'
 import { useRecoilValue } from 'recoil'
 import { sortByState } from 'lib/sortBy'
+import { filterByState } from 'lib/filterBy'
 import { useEffect, useState } from 'react'
 
 const Suggestions = () => {
   const { data, isLoading } = useGetSuggestions()
   const sortType = useRecoilValue(sortByState)
+  const filterType = useRecoilValue(filterByState)
   const [sortedData, setSortedData] = useState([])
 
   useEffect(() => {
-    if (!isLoading && data) {
-      const mostUpvotes = sortType === 'most-upvotes'
-      const leastUpvotes = sortType === 'least-upvotes'
-      const mostComments = sortType === 'most-comments'
-      const leastComments = sortType === 'least-comments'
-      mostUpvotes && setSortedData([...data].sort((a, b) => b.votes - a.votes))
-      leastUpvotes && setSortedData([...data].sort((a, b) => a.votes - b.votes))
+    const mostUpvotes = sortType === 'most-upvotes'
+    const leastUpvotes = sortType === 'least-upvotes'
+    const mostComments = sortType === 'most-comments'
+    const leastComments = sortType === 'least-comments'
+
+    const sortData = async () => {
+      const filteredData =
+        filterType === 'all'
+          ? data
+          : data.filter((d) => d.category.type === filterType)
+
+      mostUpvotes &&
+        setSortedData([...filteredData].sort((a, b) => b.votes - a.votes))
+      leastUpvotes &&
+        setSortedData([...filteredData].sort((a, b) => a.votes - b.votes))
       mostComments &&
         setSortedData(
-          [...data].sort((a, b) => b.comments.length - a.comments.length)
+          [...filteredData].sort(
+            (a, b) => b.comments.length - a.comments.length
+          )
         )
       leastComments &&
         setSortedData(
-          [...data].sort((a, b) => a.comments.length - b.comments.length)
+          [...filteredData].sort(
+            (a, b) => a.comments.length - b.comments.length
+          )
         )
     }
-  }, [sortType])
+
+    if (!isLoading && data) {
+      sortData()
+    }
+  }, [sortType, filterType])
 
   return (
     <div className="py-base container flex flex-col gap-5 xl:px-0">
