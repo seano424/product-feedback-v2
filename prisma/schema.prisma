@@ -19,6 +19,7 @@ model User {
   image       String?
   comments    Comment[]
   suggestions Suggestion[]
+  votes       Vote[]
 }
 
 model Suggestion {
@@ -27,7 +28,7 @@ model Suggestion {
   updatedAt   DateTime  @updatedAt
   title       String    @unique
   description String
-  votes       Int
+  votes       Vote[]
   userId      Int
   user        User      @relation(fields: [userId], references: [id])
   category    Category  @relation(fields: [categoryId], references: [id])
@@ -35,6 +36,17 @@ model Suggestion {
   status      Status    @relation(fields: [statusType], references: [type])
   statusType  String
   categoryId  Int
+}
+
+model Vote {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  suggestion   Suggestion? @relation(fields: [suggestionId], references: [id])
+  suggestionId Int?
+  user         User?       @relation(fields: [userId], references: [id])
+  userId       Int?
 }
 
 model Comment {

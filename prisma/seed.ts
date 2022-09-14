@@ -56,7 +56,6 @@ const run = async () => {
         create: {
           title: suggestion.title,
           description: suggestion.description,
-          votes: suggestion.votes,
           user: {
             connect: {
               id: fakeUsers[Math.floor(Math.random() * fakeUsers.length)].id,
@@ -73,6 +72,28 @@ const run = async () => {
             },
           },
         },
+      })
+    })
+  )
+
+  // Votes
+  await Promise.all(
+    fakeUsers.map(async (user) => {
+      fakeSuggestions.map(async (suggestion) => {
+        return prisma.vote.create({
+          data: {
+            user: {
+              connect: {
+                id: user.id,
+              },
+            },
+            suggestion: {
+              connect: {
+                id: suggestion.id,
+              },
+            },
+          },
+        })
       })
     })
   )

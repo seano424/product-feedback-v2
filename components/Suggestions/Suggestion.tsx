@@ -2,10 +2,14 @@ import { useState } from 'react'
 import { ArrowUp, Comments } from '../../public/icons'
 import { useSetRecoilState } from 'recoil'
 import { categoriesState } from 'lib/atoms/categoriesState'
+import prisma from 'lib/prisma'
 
 interface Props {
   suggestion: {
-    votes: number
+    votes: {
+      id: number
+      userId: number
+    }[]
     id: number
     title: string
     description: string
@@ -22,6 +26,7 @@ const Suggestion = (props: Props) => {
   const { suggestion, loading } = props
   const [clicked, setClicked] = useState(false)
   const setCategory = useSetRecoilState(categoriesState)
+  const [voted, setVoted] = useState(false)
 
   const handleSuggestionClick = () => {
     console.log('clicked suggestion')
@@ -30,6 +35,15 @@ const Suggestion = (props: Props) => {
   const handleVoteClick = (e) => {
     e.stopPropagation()
     console.log('clicked vote')
+    console.log(suggestion)
+    // prisma.suggestion.update({
+    //   data: {
+    //     votes: suggestion.votes + 1
+    //   },
+    //   where: {
+    //     id: suggestion.id
+    //   }
+    // })
   }
 
   const handleCategoryClick = (e) => {
@@ -51,7 +65,7 @@ const Suggestion = (props: Props) => {
             className="button-small hidden items-center gap-2 text-blue-navy lg:flex"
           >
             <ArrowUp />
-            {suggestion.votes}
+            {suggestion.votes.length}
           </button>
           <div className="flex w-full flex-col items-start gap-3">
             <p className="h3">{suggestion.title}</p>
@@ -69,7 +83,7 @@ const Suggestion = (props: Props) => {
                 className="button-small flex items-center gap-2 text-blue-navy"
               >
                 <ArrowUp />
-                {suggestion.votes}
+                {suggestion.votes.length}
               </button>
               <div className="flex items-center gap-3 text-lg">
                 <Comments />

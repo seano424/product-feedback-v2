@@ -8,6 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         comments: true,
         category: true,
         status: true,
+        votes: true,
       },
     })
 
