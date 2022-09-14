@@ -9,7 +9,6 @@ export default function Menu() {
   const [showMobileNav, setShowMobileNav] = useShowMobileNav()
   const ref = useRef(null)
   useClickAway(ref, () => {
-    console.log('clicked outside!')
     setShowMobileNav(false)
   })
 
