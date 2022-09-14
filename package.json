@@ -29,6 +29,7 @@
     "react-dom": "^18.1.0",
     "react-query": "^3.39.2",
     "react-scroll": "^1.8.7",
+    "react-use": "^17.4.0",
     "recoil": "^0.7.5",
     "tailwindcss-debug-screens": "^2.2.1",
     "uuid": "^8.3.2"

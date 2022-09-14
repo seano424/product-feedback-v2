@@ -41,7 +41,7 @@ const Suggestion = (props: Props) => {
 
   return (
     <section>
-      <button
+      <div
         onClick={handleSuggestionClick}
         className="flex w-full items-center justify-between rounded-xl bg-white/80 p-5 shadow-xl"
       >
@@ -82,7 +82,7 @@ const Suggestion = (props: Props) => {
           <Comments />
           {suggestion.comments?.length ?? '88'}
         </div>
-      </button>
+      </div>
     </section>
   )
 }

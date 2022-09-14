@@ -2,9 +2,16 @@ import { AnimatePresence, m } from 'framer-motion'
 import useShowMobileNav from 'lib/hooks/useShowMobileNav'
 import Categories from '../Categories'
 import Statuses from '../Statuses'
+import { useClickAway } from 'react-use'
+import { useRef } from 'react'
 
 export default function Menu() {
-  const [showMobileNav] = useShowMobileNav()
+  const [showMobileNav, setShowMobileNav] = useShowMobileNav()
+  const ref = useRef(null)
+  useClickAway(ref, () => {
+    console.log('clicked outside!')
+    setShowMobileNav(false)
+  })
 
   const mobileMenuVariants = {
     hidden: { x: 600 },
@@ -26,6 +33,7 @@ export default function Menu() {
     <AnimatePresence exitBeforeEnter>
       {showMobileNav && (
         <m.div
+          ref={ref}
           key="mobileMenu"
           variants={mobileMenuVariants}
           initial="hidden"
