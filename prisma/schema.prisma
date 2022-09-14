@@ -7,19 +7,58 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+  oauth_token_secret String?
+  oauth_token        String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 model User {
-  id          Int          @id @default(autoincrement())
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  email       String?      @unique
-  password    String
-  firstName   String
-  lastName    String
-  username    String       @unique
-  image       String?
-  comments    Comment[]
-  suggestions Suggestion[]
-  votes       Vote[]
+  id            String       @id @default(cuid())
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  email         String?      @unique
+  emailVerified DateTime?
+  password      String?
+  name          String?
+  username      String?      @unique
+  image         String?
+  comments      Comment[]
+  suggestions   Suggestion[]
+  votes         Vote[]
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 model Suggestion {
@@ -29,24 +68,23 @@ model Suggestion {
   title       String    @unique
   description String
   votes       Vote[]
-  userId      Int
   user        User      @relation(fields: [userId], references: [id])
   category    Category  @relation(fields: [categoryId], references: [id])
   comments    Comment[]
   status      Status    @relation(fields: [statusType], references: [type])
   statusType  String
   categoryId  Int
+  userId      String
 }
 
 model Vote {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id           Int         @id @default(autoincrement())
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
   suggestion   Suggestion? @relation(fields: [suggestionId], references: [id])
   suggestionId Int?
   user         User?       @relation(fields: [userId], references: [id])
-  userId       Int?
+  userId       String
 }
 
 model Comment {
@@ -54,7 +92,7 @@ model Comment {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   body         String
-  userId       Int
+  userId       String
   suggestionId Int
   suggestion   Suggestion @relation(fields: [suggestionId], references: [id])
   user         User       @relation(fields: [userId], references: [id])
