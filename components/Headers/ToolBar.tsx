@@ -99,10 +99,15 @@ const ToolBar = () => {
               </AnimatePresence>
             </div>
           </div>
-          <button className="button flex">
-            <Plus className="text-white" />
-            Add Feedback
-          </button>
+          <div className="flex gap-10">
+            <button className="button flex bg-white py-2 text-lg text-black">
+              Login
+            </button>
+            <button className="button flex">
+              <Plus className="text-white" />
+              Add Feedback
+            </button>
+          </div>
         </div>
       </div>
     </div>
