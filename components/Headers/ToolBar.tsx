@@ -3,7 +3,7 @@ import { useSetRecoilState } from 'recoil'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { Plus, Bulb } from '@/icons/index'
 import { useGetSuggestions } from 'lib/hooks/useGetSuggestions'
-import { sortByState } from 'lib/sortBy'
+import { sortByState } from 'lib/atoms/sortByState'
 
 const sortBy = [
   {

@@ -2,14 +2,15 @@ import { useGetSuggestions } from 'lib/hooks/useGetSuggestions'
 import Suggestion from './Suggestion'
 import { suggestions } from 'lib/data'
 import { useRecoilValue } from 'recoil'
-import { sortByState } from 'lib/sortBy'
-import { filterByState } from 'lib/filterBy'
+import { sortByState } from 'lib/atoms/sortByState'
+import { categoriesState } from 'lib/atoms/categoriesState'
 import { useEffect, useState } from 'react'
+import GhostSuggestion from './GhostSuggestion'
 
 const Suggestions = () => {
   const { data, isLoading } = useGetSuggestions()
   const sortType = useRecoilValue(sortByState)
-  const filterType = useRecoilValue(filterByState)
+  const filterType = useRecoilValue(categoriesState)
   const [sortedData, setSortedData] = useState([])
 
   useEffect(() => {
@@ -45,13 +46,13 @@ const Suggestions = () => {
     if (!isLoading && data) {
       sortData()
     }
-  }, [sortType, filterType])
+  }, [sortType, filterType, isLoading, data])
 
   return (
     <div className="py-base container flex flex-col gap-5 xl:px-0">
       {isLoading
         ? suggestions.map((suggestion) => (
-            <Suggestion key={suggestion.id} suggestion={suggestion} loading />
+            <GhostSuggestion key={suggestion.id} suggestion={suggestion} />
           ))
         : sortedData &&
           sortedData.map((suggestion) => (
