@@ -1,20 +1,22 @@
 import type { AppProps } from 'next/app'
 import { LazyMotion, domAnimation } from 'framer-motion'
 import { RecoilRoot } from 'recoil'
-import Layout from '@/components/Layout'
 import '../styles/globals.css'
 import { QueryClientProvider, QueryClient } from 'react-query'
+import { SessionProvider as AuthProvider } from 'next-auth/react'
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const queryClient = new QueryClient()
   return (
-    <QueryClientProvider client={queryClient}>
-      <LazyMotion features={domAnimation}>
-        <RecoilRoot>
-          <Component {...pageProps} />
-        </RecoilRoot>
-      </LazyMotion>
-    </QueryClientProvider>
+    <AuthProvider session={session}>
+      <QueryClientProvider client={queryClient}>
+        <LazyMotion features={domAnimation}>
+          <RecoilRoot>
+            <Component {...pageProps} />
+          </RecoilRoot>
+        </LazyMotion>
+      </QueryClientProvider>
+    </AuthProvider>
   )
 }
 
