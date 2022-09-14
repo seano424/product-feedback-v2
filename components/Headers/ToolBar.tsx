@@ -56,7 +56,7 @@ const ToolBar = () => {
   return (
     <div className="fixed top-20 z-10 flex w-full bg-gray-light text-white lg:top-0 lg:pt-72 xl:top-0 xl:pt-10 xl:pl-96 xl:pr-20">
       <div className="w-full rounded-lg lg:container xl:px-0">
-        <div className="flex w-full items-center justify-between bg-blue-navy p-4 xl:rounded-xl">
+        <div className="flex w-full items-center justify-between bg-blue-navy p-4 lg:rounded-xl">
           <div className="flex items-center gap-10">
             <div className="hidden items-center gap-5 lg:flex">
               <Bulb />
