@@ -43,7 +43,7 @@ const Suggestion = (props: Props) => {
     <section>
       <div
         onClick={handleSuggestionClick}
-        className="flex w-full items-center justify-between rounded-xl bg-white/80 p-5 shadow-xl"
+        className="flex w-full cursor-pointer items-center justify-between rounded-xl bg-white/80 p-5 shadow-xl"
       >
         <div className="flex w-full items-center gap-10">
           <button
@@ -71,14 +71,14 @@ const Suggestion = (props: Props) => {
                 <ArrowUp />
                 {suggestion.votes}
               </button>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3 text-lg">
                 <Comments />
                 {suggestion.comments?.length ?? '100'}
               </div>
             </div>
           </div>
         </div>
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden items-center gap-3 text-lg lg:flex">
           <Comments />
           {suggestion.comments?.length ?? '88'}
         </div>

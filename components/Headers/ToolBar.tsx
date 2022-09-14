@@ -53,8 +53,6 @@ const ToolBar = () => {
     !isOpen && !clickedAway && setFilterOpen((state) => !state)
   }
 
-  console.log(isOpen)
-
   return (
     <div className="fixed top-20 z-10 flex w-full bg-gray-light text-white lg:top-0 lg:pt-72 xl:top-0 xl:pt-10 xl:pl-96 xl:pr-20">
       <div className="w-full rounded-lg lg:container xl:px-0">
