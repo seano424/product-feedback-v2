@@ -1,17 +1,17 @@
-import prisma from 'lib/prisma'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { ArrowUp, Comments } from '../../public/icons'
+import { ArrowUp, Comments, ArrowDown } from '../../public/icons'
 import { useSetRecoilState } from 'recoil'
 import { categoriesState } from 'lib/atoms/categoriesState'
 import { createVote, deleteVote } from 'lib/api/votes'
+import { useMutation, useQueryClient } from 'react-query'
 
 interface Props {
-  suggestion: {
+  data: {
     votes: {
-      id: number
-      userId: number
-      user: {
+      id?: number
+      userId?: number
+      user?: {
         email: string
       }
     }[]
@@ -28,40 +28,60 @@ interface Props {
 }
 
 const Suggestion = (props: Props) => {
-  const { suggestion, loading } = props
+  const { data, loading } = props
   const [clicked, setClicked] = useState(false)
   const setCategory = useSetRecoilState(categoriesState)
-  const [voted, setVoted] = useState(false)
   const { data: session, status } = useSession()
   const authenticated = status === 'authenticated'
+  const [voted, setVoted] = useState(null)
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation(createVote, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['suggestions'])
+    },
+  })
+
+  useEffect(() => {
+    setVoted(
+      data.votes.find((v) => v.user.email === session?.user?.email)
+        ? true
+        : false
+    )
+  }, [data])
 
   const handleSuggestionClick = () => {
     console.log('clicked suggestion')
   }
 
-  const handleVoteClick = (e) => {
+  const handleVoteClick = async (e) => {
     e.stopPropagation()
-    !authenticated && console.log('Sign in to upvote')
-    authenticated && console.log(session.user.email)
-    console.log(suggestion.votes[0].user.email)
     if (authenticated) {
-      const hasVoted = suggestion.votes.find(
-        (vote) => vote.user.email === session.user.email
+      const hasVoted = await data.votes.find(
+        (v) => v.user.email === session?.user?.email
       )
-      hasVoted && console.log('has voted', hasVoted)
-      !hasVoted && console.log('hasNotVoted', suggestion.votes)
       if (hasVoted) {
-        deleteVote({ voteId: hasVoted.id })
+        console.log('deleting...')
+        const deletedVote = await deleteVote({ voteId: hasVoted.id })
+        mutation.mutate({
+          id: data.id,
+          votes: [...data.votes, deletedVote],
+        })
       }
       if (!hasVoted) {
-        createVote({ suggestionId: suggestion.id })
+        console.log('adding...')
+        const createdVote = await createVote({ suggestionId: data.id })
+        mutation.mutate({
+          id: data.id,
+          votes: [...data.votes, createdVote],
+        })
       }
     }
   }
 
   const handleCategoryClick = (e) => {
     e.stopPropagation()
-    setCategory(clicked ? 'all' : suggestion.category.type)
+    setCategory(clicked ? 'all' : data.category.type)
     setClicked((state) => !state)
   }
 
@@ -74,39 +94,43 @@ const Suggestion = (props: Props) => {
         <div className="flex w-full items-center gap-10">
           <button
             onClick={handleVoteClick}
-            className="button-small hidden items-center gap-2 text-blue-navy lg:flex"
+            className={`button-small hidden items-center gap-2 text-blue-navy hover:bg-opacity-80 lg:flex ${
+              voted && 'bg-fuschia text-white'
+            }`}
           >
-            <ArrowUp />
-            {suggestion.votes.length}
+            {voted ? <ArrowDown /> : <ArrowUp />}
+            {data.votes.length}
           </button>
           <div className="flex w-full flex-col items-start gap-3">
-            <p className="h3">{suggestion.title}</p>
-            <p className="body-1 text-gray">{suggestion.description}</p>
+            <p className="h3">{data.title}</p>
+            <p className="body-1 text-gray">{data.description}</p>
             <button
               disabled={loading}
               onClick={handleCategoryClick}
               className="button-small"
             >
-              {suggestion.category?.name ?? 'UI'}
+              {data.category?.name ?? 'UI'}
             </button>
             <div className="flex w-full items-center justify-between lg:hidden">
               <button
                 onClick={handleVoteClick}
-                className="button-small flex items-center gap-2 text-blue-navy"
+                className={`button-small flex items-center gap-2 text-blue-navy hover:bg-opacity-80 ${
+                  voted && 'bg-fuschia text-white'
+                }`}
               >
-                <ArrowUp />
-                {suggestion.votes.length}
+                {voted ? <ArrowDown /> : <ArrowUp />}
+                {data.votes.length}
               </button>
               <div className="flex items-center gap-3 text-lg">
                 <Comments />
-                {suggestion.comments?.length ?? '100'}
+                {data.comments?.length ?? '100'}
               </div>
             </div>
           </div>
         </div>
         <div className="hidden items-center gap-3 text-lg lg:flex">
           <Comments />
-          {suggestion.comments?.length ?? '88'}
+          {data.comments?.length ?? '88'}
         </div>
       </div>
     </section>

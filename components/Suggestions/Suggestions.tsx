@@ -9,6 +9,8 @@ import { useGetSuggestions } from 'lib/hooks/useGetSuggestions'
 
 const Suggestions = () => {
   const { data, isLoading } = useGetSuggestions()
+  console.log('data', data)
+
   const sortType = useRecoilValue(sortByState)
   const filterType = useRecoilValue(categoriesState)
   const sortedData = useSort(sortType, filterType, data, isLoading)
@@ -21,11 +23,7 @@ const Suggestions = () => {
           ))
         : sortedData &&
           sortedData.map((suggestion) => (
-            <Suggestion
-              key={suggestion.id}
-              suggestion={suggestion}
-              loading={false}
-            />
+            <Suggestion key={suggestion.id} data={suggestion} loading={false} />
           ))}
     </div>
   )
