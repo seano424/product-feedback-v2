@@ -5,20 +5,20 @@ import { useQuery } from 'react-query'
 import { getSuggestions } from 'lib/hooks/useGetSuggestions'
 
 const Home = (props) => {
-  const suggestionQuery = useQuery('suggestions', getSuggestions, {
+  const suggestions = useQuery('suggestions', getSuggestions, {
     initialData: props.suggestions,
   })
 
   return (
     <Layout>
-      <Suggestions suggestionsQuery={suggestionQuery} />
+      <Suggestions suggestions={suggestions} />
     </Layout>
   )
 }
 
 export default Home
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const suggestions = await prisma.suggestion.findMany({
     include: {
       comments: true,
@@ -27,5 +27,9 @@ export async function getStaticProps() {
       votes: true,
     },
   })
-  return { props: { suggestions: JSON.parse(JSON.stringify(suggestions)) } }
+  return {
+    props: {
+      suggestions: JSON.parse(JSON.stringify(suggestions)),
+    },
+  }
 }
