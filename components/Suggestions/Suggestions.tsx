@@ -26,9 +26,13 @@ const Suggestions = () => {
           : data.filter((d) => d.category.type === filterType)
 
       mostUpvotes &&
-        setSortedData([...filteredData].sort((a, b) => b.votes - a.votes))
+        setSortedData(
+          [...filteredData].sort((a, b) => b.votes.length - a.votes.length)
+        )
       leastUpvotes &&
-        setSortedData([...filteredData].sort((a, b) => a.votes - b.votes))
+        setSortedData(
+          [...filteredData].sort((a, b) => a.votes.length - b.votes.length)
+        )
       mostComments &&
         setSortedData(
           [...filteredData].sort(
