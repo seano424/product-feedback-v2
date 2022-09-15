@@ -5,9 +5,10 @@ import { fakeSuggestions } from 'lib/data'
 import Suggestion from './Suggestion'
 import GhostSuggestion from './GhostSuggestion'
 import { useSort } from 'lib/hooks/useSort'
+import { useGetSuggestions } from 'lib/hooks/useGetSuggestions'
 
-const Suggestions = ({ suggestionsQuery }) => {
-  const { data, isLoading } = suggestionsQuery
+const Suggestions = () => {
+  const { data, isLoading } = useGetSuggestions()
   const sortType = useRecoilValue(sortByState)
   const filterType = useRecoilValue(categoriesState)
   const sortedData = useSort(sortType, filterType, data, isLoading)

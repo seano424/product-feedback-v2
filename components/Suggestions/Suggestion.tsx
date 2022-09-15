@@ -1,8 +1,9 @@
+import prisma from 'lib/prisma'
 import { useState } from 'react'
+import { useSession } from 'next-auth/react'
 import { ArrowUp, Comments } from '../../public/icons'
 import { useSetRecoilState } from 'recoil'
 import { categoriesState } from 'lib/atoms/categoriesState'
-import prisma from 'lib/prisma'
 
 interface Props {
   suggestion: {
@@ -27,6 +28,8 @@ const Suggestion = (props: Props) => {
   const [clicked, setClicked] = useState(false)
   const setCategory = useSetRecoilState(categoriesState)
   const [voted, setVoted] = useState(false)
+  const { data: session, status } = useSession()
+  const authenticated = status === 'authenticated'
 
   const handleSuggestionClick = () => {
     console.log('clicked suggestion')
@@ -34,8 +37,12 @@ const Suggestion = (props: Props) => {
 
   const handleVoteClick = (e) => {
     e.stopPropagation()
-    console.log('clicked vote')
-    console.log(suggestion)
+    !authenticated && console.log('Sign in to upvote')
+    authenticated && console.log(session)
+    console.log(status)
+
+    console.log(suggestion.votes[0])
+
     // prisma.suggestion.update({
     //   data: {
     //     votes: suggestion.votes + 1
@@ -48,7 +55,6 @@ const Suggestion = (props: Props) => {
 
   const handleCategoryClick = (e) => {
     e.stopPropagation()
-    console.log('clicked cat')
     setCategory(clicked ? 'all' : suggestion.category.type)
     setClicked((state) => !state)
   }
