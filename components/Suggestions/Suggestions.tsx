@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { useGetSuggestions } from 'lib/hooks/useGetSuggestions'
 import { sortByState } from 'lib/atoms/sortByState'
@@ -8,8 +7,8 @@ import Suggestion from './Suggestion'
 import GhostSuggestion from './GhostSuggestion'
 import { useSort } from 'lib/hooks/useSort'
 
-const Suggestions = () => {
-  const { data, isLoading } = useGetSuggestions()
+const Suggestions = ({ suggestionsQuery }) => {
+  const { data, isLoading } = suggestionsQuery
   const sortType = useRecoilValue(sortByState)
   const filterType = useRecoilValue(categoriesState)
   const sortedData = useSort(sortType, filterType, data, isLoading)
