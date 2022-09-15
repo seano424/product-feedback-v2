@@ -6,6 +6,7 @@ import { useGetSuggestions } from 'lib/hooks/useGetSuggestions'
 import { sortByState } from 'lib/atoms/sortByState'
 import { AnimatePresence } from 'framer-motion'
 import { useClickAway } from 'react-use'
+import { useSession, signIn, signOut } from 'next-auth/react'
 
 const sortBy = [
   {
@@ -27,12 +28,18 @@ const sortBy = [
 ]
 
 const ToolBar = () => {
+  const ref = useRef()
+
+  const { data: session, status } = useSession()
+  const { data: suggestions } = useGetSuggestions()
+  const setSortByState = useSetRecoilState(sortByState)
+
   const [filter, setFilter] = useState(sortBy[0])
   const [isOpen, setFilterOpen] = useState(false)
   const [clickedAway, setClickedAway] = useState(false)
-  const { data: suggestions } = useGetSuggestions()
-  const setSortByState = useSetRecoilState(sortByState)
-  const ref = useRef()
+
+  const user = session?.user
+  const isLoadingUser = status === 'loading'
 
   useClickAway(ref, () => {
     setFilterOpen(false)
@@ -100,9 +107,22 @@ const ToolBar = () => {
             </div>
           </div>
           <div className="flex gap-10">
-            <button className="button flex bg-white py-2 text-lg text-black">
-              Login
-            </button>
+            {user && (
+              <button
+                onClick={() => signOut()}
+                className="button flex bg-white py-2 text-lg text-black"
+              >
+                Signout
+              </button>
+            )}
+            {!user && (
+              <button
+                onClick={() => signIn()}
+                className="button flex bg-white py-2 text-lg text-black"
+              >
+                Signin
+              </button>
+            )}
             <button className="button flex">
               <Plus className="text-white" />
               Add Feedback
