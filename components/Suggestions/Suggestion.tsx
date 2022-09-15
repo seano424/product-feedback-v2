@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 import { ArrowUp, Comments } from '../../public/icons'
 import { useSetRecoilState } from 'recoil'
 import { categoriesState } from 'lib/atoms/categoriesState'
+import { createVote, deleteVote } from 'lib/api/votes'
 
 interface Props {
   suggestion: {
@@ -47,31 +48,14 @@ const Suggestion = (props: Props) => {
       const hasVoted = suggestion.votes.find(
         (vote) => vote.user.email === session.user.email
       )
-      hasVoted && console.log('has voted')
-      !hasVoted && console.log(suggestion.votes)
-      // if (!hasVoted) {
-      //   prisma.vote.create({
-      //     data: {
-      //       user: {
-      //         connect: {
-      //           email: session.user.email,
-      //         },
-      //       },
-      //       suggestion: {
-      //         connect: {
-      //           id: suggestion.id,
-      //         },
-      //       },
-      //     },
-      //   })
-      // }
-      // if (hasVoted) {
-      //   prisma.vote.delete({
-      //     where: {
-      //       id:
-      //     }
-      //   })
-      // }
+      hasVoted && console.log('has voted', hasVoted)
+      !hasVoted && console.log('hasNotVoted', suggestion.votes)
+      if (hasVoted) {
+        deleteVote({ voteId: hasVoted.id })
+      }
+      if (!hasVoted) {
+        createVote({ suggestionId: suggestion.id })
+      }
     }
   }
 

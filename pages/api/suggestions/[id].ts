@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import prisma from 'lib/prisma'
+import { db } from 'lib/prisma'
 import { resolve } from 'path'
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const suggestion = await prisma.suggestion.findUnique({
+    const suggestion = await db.suggestion.findUnique({
       where: {
         id: +req.query.id,
       },
