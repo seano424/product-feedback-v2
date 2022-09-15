@@ -5,13 +5,13 @@ import { useQuery } from 'react-query'
 import { getSuggestions } from 'lib/hooks/useGetSuggestions'
 
 const Home = (props) => {
-  const suggestions = useQuery('suggestions', getSuggestions, {
+  const suggestionsQuery = useQuery('suggestions', getSuggestions, {
     initialData: props.suggestions,
   })
 
   return (
     <Layout>
-      <Suggestions suggestions={suggestions} />
+      <Suggestions suggestionsQuery={suggestionsQuery} />
     </Layout>
   )
 }

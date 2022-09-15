@@ -381,7 +381,7 @@ const statuses: {
 //   comments    Comment[]
 //   status      Status
 
-const suggestions: {
+const fakeSuggestions: {
   id: number
   title: string
   description: string
@@ -524,4 +524,4 @@ const comments: {
   },
 ]
 
-export { data, categories, statuses, suggestions, users, comments }
+export { data, categories, statuses, fakeSuggestions, users, comments }
