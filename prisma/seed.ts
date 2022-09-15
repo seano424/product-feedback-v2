@@ -3,9 +3,9 @@ import bcrypt from 'bcrypt'
 import {
   categories,
   statuses,
+  fakeSuggestions,
   users,
   comments,
-  fakeSuggestions,
 } from '../lib/data'
 
 const prisma = new PrismaClient()
@@ -53,7 +53,7 @@ const run = async () => {
     })
   )
 
-  const fakeSuggs = await Promise.all(
+  const suggestions = await Promise.all(
     fakeSuggestions.map(async (suggestion, i) => {
       return prisma.suggestion.upsert({
         where: { title: suggestion.title },
@@ -83,10 +83,14 @@ const run = async () => {
 
   // Votes
   await Promise.all(
-    fakeUsers.map(async (user) => {
-      fakeSuggs.map(async (suggestion) => {
-        return prisma.vote.create({
-          data: {
+    fakeUsers.map(async (user, i) => {
+      suggestions.map(async (suggestion) => {
+        return prisma.vote.upsert({
+          where: {
+            id: i + 1,
+          },
+          update: {},
+          create: {
             user: {
               connect: {
                 id: user.id,
@@ -117,7 +121,9 @@ const run = async () => {
           },
           suggestion: {
             connect: {
-              id: fakeSuggs[Math.floor(Math.random() * fakeSuggs.length)].id,
+              id: suggestions[
+                Math.floor(Math.random() * fakeSuggestions.length)
+              ].id,
             },
           },
         },

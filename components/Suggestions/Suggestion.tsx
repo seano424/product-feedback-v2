@@ -10,6 +10,9 @@ interface Props {
     votes: {
       id: number
       userId: number
+      user: {
+        email: string
+      }
     }[]
     id: number
     title: string
@@ -38,19 +41,38 @@ const Suggestion = (props: Props) => {
   const handleVoteClick = (e) => {
     e.stopPropagation()
     !authenticated && console.log('Sign in to upvote')
-    authenticated && console.log(session)
-    console.log(status)
-
-    console.log(suggestion.votes[0])
-
-    // prisma.suggestion.update({
-    //   data: {
-    //     votes: suggestion.votes + 1
-    //   },
-    //   where: {
-    //     id: suggestion.id
-    //   }
-    // })
+    authenticated && console.log(session.user.email)
+    console.log(suggestion.votes[0].user.email)
+    if (authenticated) {
+      const hasVoted = suggestion.votes.find(
+        (vote) => vote.user.email === session.user.email
+      )
+      hasVoted && console.log('has voted')
+      !hasVoted && console.log(suggestion.votes)
+      // if (!hasVoted) {
+      //   prisma.vote.create({
+      //     data: {
+      //       user: {
+      //         connect: {
+      //           email: session.user.email,
+      //         },
+      //       },
+      //       suggestion: {
+      //         connect: {
+      //           id: suggestion.id,
+      //         },
+      //       },
+      //     },
+      //   })
+      // }
+      // if (hasVoted) {
+      //   prisma.vote.delete({
+      //     where: {
+      //       id:
+      //     }
+      //   })
+      // }
+    }
   }
 
   const handleCategoryClick = (e) => {
