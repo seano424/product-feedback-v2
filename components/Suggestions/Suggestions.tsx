@@ -1,56 +1,18 @@
-import { useGetSuggestions } from 'lib/hooks/useGetSuggestions'
-import Suggestion from './Suggestion'
-import { suggestions } from 'lib/data'
+import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
+import { useGetSuggestions } from 'lib/hooks/useGetSuggestions'
 import { sortByState } from 'lib/atoms/sortByState'
 import { categoriesState } from 'lib/atoms/categoriesState'
-import { useEffect, useState } from 'react'
+import { suggestions } from 'lib/data'
+import Suggestion from './Suggestion'
 import GhostSuggestion from './GhostSuggestion'
+import { useSort } from 'lib/hooks/useSort'
 
 const Suggestions = () => {
   const { data, isLoading } = useGetSuggestions()
   const sortType = useRecoilValue(sortByState)
   const filterType = useRecoilValue(categoriesState)
-  const [sortedData, setSortedData] = useState([])
-
-  useEffect(() => {
-    const mostUpvotes = sortType === 'most-upvotes'
-    const leastUpvotes = sortType === 'least-upvotes'
-    const mostComments = sortType === 'most-comments'
-    const leastComments = sortType === 'least-comments'
-
-    const sortData = async () => {
-      const filteredData =
-        filterType === 'all'
-          ? data
-          : data.filter((d) => d.category.type === filterType)
-
-      mostUpvotes &&
-        setSortedData(
-          [...filteredData].sort((a, b) => b.votes.length - a.votes.length)
-        )
-      leastUpvotes &&
-        setSortedData(
-          [...filteredData].sort((a, b) => a.votes.length - b.votes.length)
-        )
-      mostComments &&
-        setSortedData(
-          [...filteredData].sort(
-            (a, b) => b.comments.length - a.comments.length
-          )
-        )
-      leastComments &&
-        setSortedData(
-          [...filteredData].sort(
-            (a, b) => a.comments.length - b.comments.length
-          )
-        )
-    }
-
-    if (!isLoading && data) {
-      sortData()
-    }
-  }, [sortType, filterType, isLoading, data])
+  const sortedData = useSort(sortType, filterType, data, isLoading)
 
   return (
     <div className="py-base container flex flex-col gap-5 xl:px-0">
