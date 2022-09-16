@@ -130,7 +130,7 @@ const AuthModal = ({ show = false, onClose = () => null }) => {
                     <button
                       disabled={disabled}
                       onClick={() => signInWithGoogle()}
-                      className="text-gray-500 hover:text-gray-600 hover:border-gray-400 hover:bg-gray-50 focus:ring-gray-400 disabled:hover:text-gray-500 disabled:hover:border-gray-200 mx-auto flex h-[46px] w-full items-center justify-center space-x-2 rounded-md border p-2 transition-colors focus:outline-none focus:ring-4 focus:ring-opacity-25 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent"
+                      className="disabled:hover:text-gray-500 mx-auto flex h-[46px] w-full items-center justify-center space-x-2 rounded-md border border-gray-dark p-2 text-gray-dark transition-colors hover:border-gray-light hover:bg-gray-light hover:text-gray focus:outline-none focus:ring-4 focus:ring-gray focus:ring-opacity-25 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-gray-light disabled:hover:bg-transparent"
                     >
                       <Image
                         src="/google.svg"
