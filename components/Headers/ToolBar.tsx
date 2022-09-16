@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, Dispatch, SetStateAction } from 'react'
 import { useSetRecoilState } from 'recoil'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { Plus, Bulb } from '@/icons/index'
@@ -27,7 +27,12 @@ const sortBy = [
   },
 ]
 
-const ToolBar = () => {
+interface Props {
+  setShowModal: Dispatch<SetStateAction<boolean>>
+}
+
+const ToolBar = (props: Props) => {
+  const { setShowModal } = props
   const ref = useRef()
 
   const { data: session, status } = useSession()
@@ -39,7 +44,6 @@ const ToolBar = () => {
   const [clickedAway, setClickedAway] = useState(false)
 
   const user = session?.user
-  const isLoadingUser = status === 'loading'
 
   useClickAway(ref, () => {
     setFilterOpen(false)
@@ -117,7 +121,7 @@ const ToolBar = () => {
             )}
             {!user && (
               <button
-                onClick={() => signIn()}
+                onClick={() => setShowModal(true)}
                 className="button flex bg-white py-2 text-lg text-black"
               >
                 Signin

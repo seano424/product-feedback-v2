@@ -8,12 +8,13 @@ import nodemailer from 'nodemailer'
 const prisma = new PrismaClient()
 
 export default NextAuth({
-  // pages: {
-  //   signIn: '/',
-  //   signOut: '/',
-  //   error: '/',
-  //   verifyRequest: '/',
-  // },
+  pages: {
+    signIn: '/',
+    signOut: '/',
+    error: '/',
+    verifyRequest: '/',
+  },
+  secret: process.env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(prisma),
   providers: [
     EmailProvider({
