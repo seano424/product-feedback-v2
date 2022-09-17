@@ -12,6 +12,7 @@ const MobileHeader = () => {
           src="/images/background/tablet-header.png"
           alt="background image"
           layout="fill"
+          priority
         />
       </div>
       <div className="z-20 flex w-full items-center justify-between p-4">
