@@ -1,29 +1,42 @@
 import Suggestions from '@/components/Suggestions/Suggestions'
 import Layout from '@/components/Layout'
-import { signIn } from 'next-auth/react'
+import { PrismaClient } from '@prisma/client'
+import { useQuery } from 'react-query'
+import { getSuggestions } from 'lib/api/suggestions'
 
-const Home = () => {
-  const signInWithEmail = async () => {
-    try {
-      // Perform sign in
-      const { error } = await signIn('gmail', {
-        redirect: false,
-        callbackUrl: window.location.href,
-      })
-      // Something went wrong
-      if (error) {
-        throw new Error(error)
-      }
-    } catch (err) {
-    } finally {
-    }
-  }
+const Home = (props) => {
+  const { suggestions } = props
+  const { data, isLoading } = useQuery(['suggestions'], getSuggestions, {
+    initialData: suggestions,
+  })
 
   return (
     <Layout>
-      <Suggestions />
+      <Suggestions data={data} isLoading={isLoading} />
     </Layout>
   )
 }
 
 export default Home
+
+export async function getStaticProps() {
+  const prisma = new PrismaClient()
+  const suggestions = await prisma.suggestion.findMany({
+    include: {
+      comments: true,
+      category: true,
+      status: true,
+      votes: {
+        include: {
+          user: true,
+        },
+      },
+    },
+  })
+
+  return {
+    props: {
+      suggestions: JSON.parse(JSON.stringify(suggestions)),
+    },
+  }
+}

@@ -4,6 +4,7 @@ import { RecoilRoot } from 'recoil'
 import '../styles/globals.css'
 import { QueryClientProvider, QueryClient, Hydrate } from 'react-query'
 import { SessionProvider as AuthProvider } from 'next-auth/react'
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const queryClient = new QueryClient()
@@ -14,6 +15,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
           <LazyMotion features={domAnimation}>
             <RecoilRoot>
               <Component {...pageProps} />
+              <ReactQueryDevtools initialIsOpen={false} />
             </RecoilRoot>
           </LazyMotion>
         </Hydrate>
