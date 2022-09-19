@@ -7,16 +7,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'DELETE') {
     try {
       const { voteId } = req.body
-      console.log(req.body)
 
-      // const vote = await prisma.vote.delete({
-      //   where: {
-      //     id: voteId,
-      //   },
-      // })
-      // res.status(200).json(vote)
+      const deletedVote = await prisma.vote.delete({
+        where: {
+          id: voteId,
+        },
+      })
+      console.log('Deleted Vote: ', deletedVote)
+      return res.status(200).json(deletedVote)
     } catch (error) {
-      res.status(500).json({ message: 'Something went wrong: ', error })
+      console.log('Error: ', error)
+      return res.status(500).json({ message: 'Something went wrong: ', error })
     }
   }
 }

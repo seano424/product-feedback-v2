@@ -1,9 +1,9 @@
 import fetcher from 'lib/fetcher'
 
-export const deleteVote = async (voteId) => {
-  return await fetcher(`votes/${voteId}`, voteId, 'DELETE')
+export const deleteVote = async (param) => {
+  return await fetcher(`votes/${param.voteId}`, param, 'DELETE')
 }
 
-export const createVote = async (suggestionId) => {
-  return await fetcher('votes', suggestionId, 'POST')
+export const createVote = async (param) => {
+  return await fetcher('votes', param, 'POST')
 }

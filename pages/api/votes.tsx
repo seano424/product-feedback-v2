@@ -11,9 +11,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
     try {
       const { suggestionId } = req.body
-      console.log(suggestionId)
 
-      const vote = await prisma.vote.create({
+      const createdVote = await prisma.vote.create({
         data: {
           user: {
             connect: {
@@ -27,24 +26,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           },
         },
       })
-      return res.status(200).json(vote)
+      console.log('Added Vote: ', createdVote)
+      return res.status(200).json(createdVote)
     } catch (error) {
       return res.status(500).json({ message: 'Something went wrong: ', error })
     }
   }
-
-  // if (req.method === 'DELETE') {
-  //   try {
-  //     const { voteId } = req.body
-
-  //     const vote = await prisma.vote.delete({
-  //       where: {
-  //         id: voteId,
-  //       },
-  //     })
-  //     res.status(200).json(vote)
-  //   } catch (error) {
-  //     res.status(500).json({ message: 'Something went wrong: ', error })
-  //   }
-  // }
 }
