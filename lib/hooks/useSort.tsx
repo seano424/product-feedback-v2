@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil'
 import { sortByState } from 'lib/atoms/sortByState'
 import { categoriesState } from 'lib/atoms/categoriesState'
 
-export const useSort = (data, isLoading) => {
+export const useSort = (data) => {
   const sortType = useRecoilValue(sortByState)
   const filterType = useRecoilValue(categoriesState)
   const [sortedData, setSortedData] = useState([])
@@ -41,9 +41,9 @@ export const useSort = (data, isLoading) => {
         )
     }
 
-    if (!isLoading && data) {
+    if (data) {
       sortData()
     }
-  }, [sortType, filterType, isLoading, data])
+  }, [sortType, filterType, data])
   return sortedData
 }

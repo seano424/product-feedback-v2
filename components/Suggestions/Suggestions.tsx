@@ -1,11 +1,12 @@
 import { fakeSuggestions } from 'lib/data'
 import { useSort } from 'lib/hooks/useSort'
+import { useQuery } from 'react-query'
 import GhostSuggestion from './GhostSuggestion'
 import Suggestion from './Suggestion'
 
-const Suggestions = (props) => {
-  const { data, isLoading } = props
-  const sortedData = useSort(data, isLoading)
+const Suggestions = () => {
+  const { data, isLoading } = useQuery(['suggestions'])
+  const sortedData = useSort(data)
 
   if (isLoading)
     return (
