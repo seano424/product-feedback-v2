@@ -44,7 +44,7 @@ const Suggestion = (props: Props) => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['suggestions'])
+        queryClient.invalidateQueries(['suggestions'], suggestion.id, 'votes')
       },
     }
   )
@@ -66,7 +66,7 @@ const Suggestion = (props: Props) => {
         ? true
         : false
     )
-  }, [createVoteMutation])
+  }, [createVoteMutation, deleteVoteMutation])
 
   const handleSuggestionClick = () => {
     console.log('clicked suggestion')
@@ -97,8 +97,6 @@ const Suggestion = (props: Props) => {
 
   return (
     <section>
-      {createVoteMutation.isSuccess ? <div>Todo added!</div> : null}
-
       <div
         onClick={handleSuggestionClick}
         className="flex w-full cursor-pointer items-center justify-between rounded-xl bg-white/80 p-5 shadow-xl"
