@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/react'
-import { db } from 'lib/prisma'
+import prisma from 'lib/prisma'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req })
@@ -11,8 +11,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
     try {
       const { suggestionId } = req.body
+      console.log(suggestionId)
 
-      const vote = await db.vote.create({
+      const vote = await prisma.vote.create({
         data: {
           user: {
             connect: {
@@ -26,24 +27,24 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           },
         },
       })
-      res.status(200).json(vote)
+      return res.status(200).json(vote)
     } catch (error) {
-      res.status(500).json({ message: 'Something went wrong: ', error })
+      return res.status(500).json({ message: 'Something went wrong: ', error })
     }
   }
 
-  if (req.method === 'DELETE') {
-    try {
-      const { voteId } = req.body
+  // if (req.method === 'DELETE') {
+  //   try {
+  //     const { voteId } = req.body
 
-      const vote = await db.vote.delete({
-        where: {
-          id: voteId,
-        },
-      })
-      res.status(200).json(vote)
-    } catch (error) {
-      res.status(500).json({ message: 'Something went wrong: ', error })
-    }
-  }
+  //     const vote = await prisma.vote.delete({
+  //       where: {
+  //         id: voteId,
+  //       },
+  //     })
+  //     res.status(200).json(vote)
+  //   } catch (error) {
+  //     res.status(500).json({ message: 'Something went wrong: ', error })
+  //   }
+  // }
 }

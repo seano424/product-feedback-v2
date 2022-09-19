@@ -4,7 +4,7 @@ import { ArrowUp, Comments, ArrowDown } from '../../public/icons'
 import { useSetRecoilState } from 'recoil'
 import { categoriesState } from 'lib/atoms/categoriesState'
 import { createVote, deleteVote } from 'lib/api/votes'
-import { useMutation, useQueryClient } from 'react-query'
+import { useMutation } from 'react-query'
 
 interface Props {
   data: {
@@ -32,14 +32,16 @@ const Suggestion = (props: Props) => {
   const [clicked, setClicked] = useState(false)
   const setCategory = useSetRecoilState(categoriesState)
   const { data: session, status } = useSession()
-  const authenticated = status === 'authenticated'
   const [voted, setVoted] = useState(null)
-  const queryClient = useQueryClient()
 
-  const mutation = useMutation(createVote, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['suggestions'])
-    },
+  const authenticated = status === 'authenticated'
+
+  const createVoteMutation = useMutation((param: {}): Promise<number> => {
+    return createVote(param)
+  })
+
+  const deleteVoteMutation = useMutation((param: {}): Promise<number> => {
+    return deleteVote(param)
   })
 
   useEffect(() => {
@@ -48,7 +50,7 @@ const Suggestion = (props: Props) => {
         ? true
         : false
     )
-  }, [data])
+  }, [session, data])
 
   const handleSuggestionClick = () => {
     console.log('clicked suggestion')
@@ -62,19 +64,11 @@ const Suggestion = (props: Props) => {
       )
       if (hasVoted) {
         console.log('deleting...')
-        const deletedVote = await deleteVote({ voteId: hasVoted.id })
-        mutation.mutate({
-          id: data.id,
-          votes: [...data.votes, deletedVote],
-        })
+        deleteVoteMutation.mutate({ voteId: hasVoted.id })
       }
       if (!hasVoted) {
         console.log('adding...')
-        const createdVote = await createVote({ suggestionId: data.id })
-        mutation.mutate({
-          id: data.id,
-          votes: [...data.votes, createdVote],
-        })
+        createVoteMutation.mutate({ suggestionId: data.id })
       }
     }
   }

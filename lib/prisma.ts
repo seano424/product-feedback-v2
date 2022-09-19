@@ -1,17 +1,15 @@
 import { PrismaClient } from '@prisma/client'
 
-let db
-//check if we are running in production mode
+let prisma
+
 if (process.env.NODE_ENV === 'production') {
-  db = new PrismaClient()
+  prisma = new PrismaClient()
 } else {
-  //check if there is already a connection to the database
-  if (!global.db) {
-    global.db = new PrismaClient()
+  if (!global.prisma) {
+    global.prisma = new PrismaClient()
   }
-  db = global.db
+
+  prisma = global.prisma
 }
 
-export { db }
-
-export default new PrismaClient()
+export default prisma

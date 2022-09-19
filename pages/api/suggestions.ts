@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { db } from 'lib/prisma'
+import prisma from 'lib/prisma'
 import { resolve } from 'path'
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const suggestions = await db.suggestion.findMany({
+    const suggestions = await prisma.suggestion.findMany({
       include: {
         comments: true,
         category: true,
