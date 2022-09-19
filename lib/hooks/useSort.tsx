@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'
+import { sortByState } from 'lib/atoms/sortByState'
+import { categoriesState } from 'lib/atoms/categoriesState'
 
-export const useSort = (sortType, filterType, data, isLoading) => {
+export const useSort = (data, isLoading) => {
+  const sortType = useRecoilValue(sortByState)
+  const filterType = useRecoilValue(categoriesState)
   const [sortedData, setSortedData] = useState([])
   useEffect(() => {
     const mostUpvotes = sortType === 'most-upvotes'
