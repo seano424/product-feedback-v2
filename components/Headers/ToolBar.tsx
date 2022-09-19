@@ -80,7 +80,7 @@ const ToolBar = (props: Props) => {
             </div>
             <div className="h3 relative">
               <button onClick={handleOpen} className="flex items-center gap-2">
-                <span>Sort by:</span>
+                <span className="hidden sm:flex">Sort by:</span>
                 {filter.text}
                 <ChevronDownIcon
                   className={`${
