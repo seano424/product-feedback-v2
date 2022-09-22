@@ -35,7 +35,7 @@ const ToolBar = (props: Props) => {
   const { setShowModal } = props
   const ref = useRef()
 
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
   const { data: suggestions } = useGetSuggestions()
   const setSortByState = useSetRecoilState(sortByState)
 

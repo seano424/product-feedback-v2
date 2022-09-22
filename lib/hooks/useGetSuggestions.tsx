@@ -1,4 +1,4 @@
-import { getSuggestions } from 'lib/api/suggestions'
+import { getSuggestions } from 'lib/api'
 import { useQuery } from 'react-query'
 
 export const useGetSuggestions = () => {

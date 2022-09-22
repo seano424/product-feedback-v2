@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react'
 import { ArrowUp, Comments, ArrowDown } from '../../public/icons'
 import { useSetRecoilState } from 'recoil'
 import { categoriesState } from 'lib/atoms/categoriesState'
-import { createVote, deleteVote } from 'lib/api/votes'
+import { createVote, deleteVote } from 'lib/api'
 import { useMutation, useQueryClient } from 'react-query'
 
 interface Props {

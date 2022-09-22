@@ -1,6 +1,6 @@
-import { getCategories } from 'lib/api/categories'
+import { getCategories } from 'lib/api'
 
 import { useQuery } from 'react-query'
 export const useGetCategories = () => {
-  return useQuery('cats', getCategories)
+  return useQuery('categories', getCategories)
 }
