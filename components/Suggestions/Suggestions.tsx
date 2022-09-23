@@ -12,7 +12,7 @@ const Suggestions = () => {
     return (
       <div className="py-base container flex flex-col gap-5 xl:px-0">
         {fakeSuggestions.map((suggestion) => (
-          <GhostSuggestion key={suggestion.id} suggestion={suggestion} />
+          <GhostSuggestion key={suggestion.id} />
         ))}
       </div>
     )
@@ -21,7 +21,7 @@ const Suggestions = () => {
     <div className="py-base container flex flex-col gap-5 xl:px-0">
       {sortedData &&
         sortedData.map((suggestion) => (
-          <Suggestion key={suggestion.id} data={suggestion} loading={false} />
+          <Suggestion key={suggestion.id} data={suggestion} />
         ))}
     </div>
   )

@@ -24,19 +24,26 @@ interface Props {
     }
     comments?: []
   }
-  loading: boolean
 }
 
 const Suggestion = (props: Props) => {
-  const { data: suggestion, loading } = props
-  const [clicked, setClicked] = useState(false)
-  const [voted, setVoted] = useState(null)
+  const { data: suggestion } = props
   const queryClient = useQueryClient()
-
   const setCategory = useSetRecoilState(categoriesState)
   const { data: session, status } = useSession()
-
   const authenticated = status === 'authenticated'
+
+  const [clicked, setClicked] = useState(false)
+  const [voteCount, setVoteCount] = useState(suggestion.votes.length)
+  const [voted, setVoted] = useState(false)
+
+  useEffect(() => {
+    if (session?.user) {
+      setVoted(
+        suggestion.votes.some((v) => v.user.email === session.user.email)
+      )
+    }
+  }, [session])
 
   const createVoteMutation = useMutation(
     (param: {}): Promise<number> => {
@@ -44,7 +51,8 @@ const Suggestion = (props: Props) => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['suggestions'], suggestion.id, 'votes')
+        queryClient.invalidateQueries(['suggestions'])
+        console.log('success!')
       },
     }
   )
@@ -56,20 +64,19 @@ const Suggestion = (props: Props) => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['suggestions'])
+        console.log('woohoo')
       },
     }
   )
 
-  useEffect(() => {
-    setVoted(
-      suggestion.votes.find((v) => v.user.email === session?.user?.email)
-        ? true
-        : false
-    )
-  }, [createVoteMutation, deleteVoteMutation])
-
   const handleSuggestionClick = () => {
     console.log('clicked suggestion')
+  }
+
+  const handleCategoryClick = (e) => {
+    e.stopPropagation()
+    setCategory(clicked ? 'all' : suggestion.category.type)
+    setClicked((state) => !state)
   }
 
   const handleVoteClick = async (e) => {
@@ -80,19 +87,34 @@ const Suggestion = (props: Props) => {
       )
       if (hasVoted) {
         console.log('deleting...')
+        setVoted(false)
+        setVoteCount((prev) => prev - 1)
         deleteVoteMutation.mutate({ voteId: hasVoted.id })
       }
       if (!hasVoted) {
         console.log('adding...')
+        setVoted(true)
+        setVoteCount((prev) => prev + 1)
         createVoteMutation.mutate({ suggestionId: suggestion.id })
       }
     }
   }
 
-  const handleCategoryClick = (e) => {
-    e.stopPropagation()
-    setCategory(clicked ? 'all' : suggestion.category.type)
-    setClicked((state) => !state)
+  const VoteButton = (props) => {
+    const { viewport = 'small' } = props
+    const small = viewport === 'small'
+    return (
+      <button
+        disabled={createVoteMutation.isLoading || deleteVoteMutation.isLoading}
+        onClick={handleVoteClick}
+        className={`button-small items-center gap-2 hover:bg-opacity-80 ${
+          voted ? 'bg-fuschia text-white' : 'text-blue-navy'
+        } ${small ? 'flex lg:hidden' : 'hidden lg:flex'}`}
+      >
+        {voted ? <ArrowDown /> : <ArrowUp />}
+        {voteCount}
+      </button>
+    )
   }
 
   return (
@@ -102,45 +124,21 @@ const Suggestion = (props: Props) => {
         className="flex w-full cursor-pointer items-center justify-between rounded-xl bg-white/80 p-5 shadow-xl"
       >
         <div className="flex w-full items-center gap-10">
-          <button
-            disabled={
-              createVoteMutation.isLoading || deleteVoteMutation.isLoading
-            }
-            onClick={handleVoteClick}
-            className={`button-small hidden items-center gap-2 text-blue-navy hover:bg-opacity-80 lg:flex ${
-              voted && 'bg-fuschia text-white'
-            } ${createVoteMutation.isLoading && 'opacity-50'} ${
-              deleteVoteMutation.isLoading && 'opacity-50'
-            }`}
-          >
-            {voted ? <ArrowDown /> : <ArrowUp />}
-            {suggestion.votes.length}
-          </button>
+          <VoteButton viewport="large" />
           <div className="flex w-full flex-col items-start gap-3">
             <p className="h3">{suggestion.title}</p>
             <p className="body-1 text-gray">{suggestion.description}</p>
             <button
-              disabled={loading}
+              disabled={
+                createVoteMutation.isLoading || deleteVoteMutation.isLoading
+              }
               onClick={handleCategoryClick}
               className="button-small"
             >
               {suggestion.category?.name ?? 'UI'}
             </button>
             <div className="flex w-full items-center justify-between lg:hidden">
-              <button
-                disabled={
-                  createVoteMutation.isLoading || deleteVoteMutation.isLoading
-                }
-                onClick={handleVoteClick}
-                className={`button-small flex items-center gap-2 text-blue-navy hover:bg-opacity-80 ${
-                  voted && 'bg-fuschia text-white'
-                } ${createVoteMutation.isLoading && 'opacity-50'} ${
-                  deleteVoteMutation.isLoading && 'opacity-50'
-                }`}
-              >
-                {voted ? <ArrowDown /> : <ArrowUp />}
-                {suggestion.votes.length}
-              </button>
+              <VoteButton viewport="small" />
               <div className="flex items-center gap-3 text-lg">
                 <Comments />
                 {suggestion.comments?.length ?? '100'}
