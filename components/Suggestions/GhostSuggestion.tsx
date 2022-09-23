@@ -1,4 +1,4 @@
-import { ArrowUp, Comments } from '@/icons/index'
+import { ArrowUp, Comments } from '@/icons'
 
 const GhostSuggestion = () => {
   return (

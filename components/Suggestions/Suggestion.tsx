@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Comments } from '../../public/icons'
 import { useSetRecoilState } from 'recoil'
-import { categoriesState } from 'lib/atoms/categoriesState'
-import VoteButton from './VoteButton'
+import VoteButton from '@/components/Suggestions/VoteButton'
+import { categoriesState } from '@/lib/atoms/categoriesState'
+import { Comments } from '@/icons'
 
 interface Props {
   data: {

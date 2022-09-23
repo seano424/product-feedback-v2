@@ -1,6 +1,6 @@
-import { fakeSuggestions } from 'lib/data'
-import { useSort } from 'lib/hooks/useSort'
 import { useQuery } from 'react-query'
+import { fakeSuggestions } from '@/lib/data'
+import { useSort } from '@/lib/hooks/useSort'
 import GhostSuggestion from './GhostSuggestion'
 import Suggestion from './Suggestion'
 

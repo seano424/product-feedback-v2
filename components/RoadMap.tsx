@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useGetStatuses } from 'lib/hooks/useGetStatuses'
+import { useGetStatuses } from '@/lib/hooks/useGetStatuses'
 
 const fakeStats = [
   {

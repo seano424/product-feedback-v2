@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import { ArrowUp, ArrowDown } from '../../public/icons'
-import { useSession } from 'next-auth/react'
-import { createVote, deleteVote } from 'lib/api'
 import { useMutation, useQueryClient } from 'react-query'
-import { SuggestionProps } from '../../lib/interfaces'
+import { useSession } from 'next-auth/react'
+import { createVote, deleteVote } from '@/lib/api'
+import { SuggestionProps } from '@/lib/interfaces'
+import { ArrowUp, ArrowDown } from '@/icons'
 
 interface MutationProps {
   type: string

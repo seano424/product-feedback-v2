@@ -1,6 +1,6 @@
-import { useGetCategories } from 'lib/hooks/useGetCategories'
-import { categoriesState } from 'lib/atoms/categoriesState'
 import { useRecoilState } from 'recoil'
+import { categoriesState } from '@/lib/atoms/categoriesState'
+import { useGetCategories } from '@/lib/hooks/useGetCategories'
 
 const cats = [
   {
