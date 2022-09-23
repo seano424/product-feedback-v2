@@ -1,12 +1,13 @@
 import { useState, useRef, Dispatch, SetStateAction } from 'react'
 import { useSetRecoilState } from 'recoil'
-import { ChevronDownIcon } from '@heroicons/react/solid'
-import { Plus, Bulb } from '@/icons/index'
-import { useGetSuggestions } from 'lib/hooks/useGetSuggestions'
-import { sortByState } from 'lib/atoms/sortByState'
-import { AnimatePresence } from 'framer-motion'
 import { useClickAway } from 'react-use'
+import { AnimatePresence } from 'framer-motion'
 import { useSession, signOut } from 'next-auth/react'
+import { ChevronDownIcon } from '@heroicons/react/solid'
+
+import { Plus, Bulb } from '@/icons'
+import { useGetSuggestions } from '@/lib/hooks/useGetSuggestions'
+import { sortByState } from '@/lib/atoms/sortByState'
 
 const sortBy = [
   {

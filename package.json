@@ -37,8 +37,7 @@
     "react-use": "^17.4.0",
     "recoil": "^0.7.5",
     "tailwindcss-debug-screens": "^2.2.1",
-    "uuid": "^8.3.2",
-    "yup": "^0.32.11"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@svgr/cli": "^6.3.1",
