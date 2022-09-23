@@ -2,17 +2,9 @@ import { Fragment, useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { signIn } from 'next-auth/react'
-import * as Yup from 'yup'
 import { toast } from 'react-hot-toast'
 import { Dialog, Transition } from '@headlessui/react'
 import { SparklesIcon, XIcon } from '@heroicons/react/outline'
-
-const SignInSchema = Yup.object().shape({
-  email: Yup.string()
-    .trim()
-    .email('Invalid email')
-    .required('This field is required'),
-})
 
 const AuthModal = ({ show = false, onClose = () => null }) => {
   const [disabled, setDisabled] = useState(false)
