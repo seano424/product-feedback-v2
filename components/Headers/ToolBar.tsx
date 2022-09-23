@@ -6,7 +6,7 @@ import { useGetSuggestions } from 'lib/hooks/useGetSuggestions'
 import { sortByState } from 'lib/atoms/sortByState'
 import { AnimatePresence } from 'framer-motion'
 import { useClickAway } from 'react-use'
-import { useSession, signIn, signOut } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 
 const sortBy = [
   {
