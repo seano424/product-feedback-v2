@@ -17,5 +17,7 @@ export const deleteVote = async (param) => {
 }
 
 export const createVote = async (param) => {
+  console.log(param)
+
   return await fetcher('votes', param, 'POST')
 }

@@ -26,6 +26,12 @@ interface Props {
   }
 }
 
+interface MutationProps {
+  type: string
+  voteId?: number
+  suggestionId?: number
+}
+
 const Suggestion = (props: Props) => {
   const { data: suggestion } = props
   const queryClient = useQueryClient()
@@ -45,26 +51,16 @@ const Suggestion = (props: Props) => {
     }
   }, [session])
 
-  const createVoteMutation = useMutation(
-    (param: {}): Promise<number> => {
-      return createVote(param)
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['suggestions'])
-        console.log('success!')
-      },
-    }
-  )
-
-  const deleteVoteMutation = useMutation(
-    (param: {}): Promise<number> => {
+  const mutation = useMutation(
+    (param: MutationProps): Promise<number> => {
+      if (param.type === 'create') {
+        return createVote(param)
+      }
       return deleteVote(param)
     },
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['suggestions'])
-        console.log('woohoo')
       },
     }
   )
@@ -82,20 +78,23 @@ const Suggestion = (props: Props) => {
   const handleVoteClick = async (e) => {
     e.stopPropagation()
     if (authenticated) {
-      const hasVoted = await suggestion.votes.find(
-        (v) => v.user.email === session?.user?.email
-      )
-      if (hasVoted) {
+      if (voted && !mutation.isLoading) {
+        const vote = await suggestion.votes.find(
+          (v) => v.user.email === session?.user?.email
+        )
         console.log('deleting...')
         setVoted(false)
         setVoteCount((prev) => prev - 1)
-        deleteVoteMutation.mutate({ voteId: hasVoted.id })
+        mutation.mutate({ voteId: vote.id, type: 'delete' })
       }
-      if (!hasVoted) {
+      if (!voted && !mutation.isLoading) {
         console.log('adding...')
         setVoted(true)
         setVoteCount((prev) => prev + 1)
-        createVoteMutation.mutate({ suggestionId: suggestion.id })
+        mutation.mutate({
+          suggestionId: suggestion.id,
+          type: 'create',
+        })
       }
     }
   }
@@ -105,7 +104,7 @@ const Suggestion = (props: Props) => {
     const small = viewport === 'small'
     return (
       <button
-        disabled={createVoteMutation.isLoading || deleteVoteMutation.isLoading}
+        disabled={mutation.isLoading}
         onClick={handleVoteClick}
         className={`button-small items-center gap-2 hover:bg-opacity-80 ${
           voted ? 'bg-fuschia text-white' : 'text-blue-navy'
@@ -128,13 +127,7 @@ const Suggestion = (props: Props) => {
           <div className="flex w-full flex-col items-start gap-3">
             <p className="h3">{suggestion.title}</p>
             <p className="body-1 text-gray">{suggestion.description}</p>
-            <button
-              disabled={
-                createVoteMutation.isLoading || deleteVoteMutation.isLoading
-              }
-              onClick={handleCategoryClick}
-              className="button-small"
-            >
+            <button onClick={handleCategoryClick} className="button-small">
               {suggestion.category?.name ?? 'UI'}
             </button>
             <div className="flex w-full items-center justify-between lg:hidden">
