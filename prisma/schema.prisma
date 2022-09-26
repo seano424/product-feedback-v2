@@ -50,6 +50,7 @@ model User {
   sessions      Session[]
   suggestions   Suggestion[]
   votes         Vote[]
+  Reply         Reply[]
 }
 
 model VerificationToken {
@@ -74,6 +75,7 @@ model Suggestion {
   user        User      @relation(fields: [userId], references: [id])
   comments    Comment[]
   votes       Vote[]
+  Reply       Reply[]
 }
 
 model Comment {
@@ -85,6 +87,21 @@ model Comment {
   suggestionId Int
   suggestion   Suggestion @relation(fields: [suggestionId], references: [id])
   user         User       @relation(fields: [userId], references: [id])
+  Reply        Reply[]
+}
+
+model Reply {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  body      String
+
+  comment      Comment    @relation(fields: [commentId], references: [id])
+  commentId    Int
+  user         User       @relation(fields: [userId], references: [id])
+  userId       String
+  suggestion   Suggestion @relation(fields: [suggestionId], references: [id])
+  suggestionId Int
 }
 
 model Category {

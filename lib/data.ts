@@ -515,4 +515,66 @@ const comments: {
   },
 ]
 
-export { data, categories, statuses, fakeSuggestions, users, comments }
+const replies: {
+  body: string
+  id: number
+}[] = [
+  {
+    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque aliquid est porro possimus, repellendus aliquam in non nulla quas amet!',
+    id: 12,
+  },
+  {
+    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque aliquid est porro possimus, repellendus aliquam in non nulla quas amet!',
+    id: 21,
+  },
+  {
+    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque aliquid est porro possimus, repellendus aliquam in non nulla quas amet!',
+    id: 32,
+  },
+  {
+    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque aliquid est porro possimus, repellendus aliquam in non nulla quas amet!',
+    id: 45,
+  },
+  {
+    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque aliquid est porro possimus, repellendus aliquam in non nulla quas amet!',
+    id: 77,
+  },
+  {
+    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque aliquid est porro possimus, repellendus aliquam in non nulla quas amet!',
+    id: 66,
+  },
+  {
+    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque aliquid est porro possimus, repellendus aliquam in non nulla quas amet!',
+    id: 13,
+  },
+  {
+    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque aliquid est porro possimus, repellendus aliquam in non nulla quas amet!',
+    id: 31,
+  },
+  {
+    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque aliquid est porro possimus, repellendus aliquam in non nulla quas amet!',
+    id: 89,
+  },
+  {
+    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque aliquid est porro possimus, repellendus aliquam in non nulla quas amet!',
+    id: 88,
+  },
+  {
+    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque aliquid est porro possimus, repellendus aliquam in non nulla quas amet!',
+    id: 87,
+  },
+  {
+    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque aliquid est porro possimus, repellendus aliquam in non nulla quas amet!',
+    id: 86,
+  },
+  {
+    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque aliquid est porro possimus, repellendus aliquam in non nulla quas amet!',
+    id: 84,
+  },
+  {
+    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque aliquid est porro possimus, repellendus aliquam in non nulla quas amet!',
+    id: 82,
+  },
+]
+
+export { data, categories, statuses, fakeSuggestions, users, comments, replies }

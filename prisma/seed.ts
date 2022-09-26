@@ -6,8 +6,8 @@ import {
   categories,
   statuses,
   fakeSuggestions,
-  users,
   comments,
+  replies,
 } from '../lib/data'
 
 const prisma = new PrismaClient()
@@ -105,7 +105,7 @@ const run = async () => {
   console.log('created suggestions', suggestions)
   console.log('creating comments...')
 
-  await Promise.all(
+  const newComments = await Promise.all(
     comments.map(async (comment) => {
       return prisma.comment.upsert({
         where: { id: comment.id },
@@ -129,30 +129,60 @@ const run = async () => {
     })
   )
 
-  console.log('creating votes...')
-
   await Promise.all(
-    suggestions.map(async (suggestion) => {
-      users.map(async (user) => {
-        return prisma.vote.upsert({
-          where: { id: uuidv4() },
-          update: {},
-          create: {
-            user: {
-              connect: {
-                id: user.id,
-              },
-            },
-            suggestion: {
-              connect: {
-                id: suggestion.id,
-              },
+    replies.map(async (comment) => {
+      return prisma.reply.upsert({
+        where: { id: comment.id },
+        update: {},
+        create: {
+          body: comment.body,
+          comment: {
+            connect: {
+              id: newComments[Math.floor(Math.random() * newComments.length)]
+                .id,
             },
           },
-        })
+          user: {
+            connect: {
+              id: users[Math.floor(Math.random() * users.length)].id,
+            },
+          },
+          suggestion: {
+            connect: {
+              id: suggestions[
+                Math.floor(Math.random() * fakeSuggestions.length)
+              ].id,
+            },
+          },
+        },
       })
     })
   )
+
+  // console.log('creating votes...')
+
+  // await Promise.all(
+  //   suggestions.map(async (suggestion) => {
+  //     users.map(async (user) => {
+  //       return prisma.vote.upsert({
+  //         where: { id: uuidv4() },
+  //         update: {},
+  //         create: {
+  //           user: {
+  //             connect: {
+  //               id: user.id,
+  //             },
+  //           },
+  //           suggestion: {
+  //             connect: {
+  //               id: suggestion.id,
+  //             },
+  //           },
+  //         },
+  //       })
+  //     })
+  //   })
+  // )
 }
 
 run()
