@@ -1,5 +1,4 @@
 export interface SuggestionProps {
-  viewport: string
   suggestion: {
     votes: {
       id?: number
