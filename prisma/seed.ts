@@ -1,5 +1,7 @@
 import { PrismaClient } from '@prisma/client'
-import bcrypt from 'bcrypt'
+import { faker } from '@faker-js/faker'
+import { v4 as uuidv4 } from 'uuid'
+
 import {
   categories,
   statuses,
@@ -11,6 +13,8 @@ import {
 const prisma = new PrismaClient()
 
 const run = async () => {
+  console.log('creating categories...')
+
   const cats = await Promise.all(
     categories.map(async (category) => {
       return prisma.category.upsert({
@@ -23,6 +27,9 @@ const run = async () => {
       })
     })
   )
+
+  console.log('success')
+  console.log('now creating statuses...')
 
   const stats = await Promise.all(
     statuses.map(async (status) => {
@@ -37,16 +44,30 @@ const run = async () => {
     })
   )
 
-  const fakeUsers = await Promise.all(
-    users.map(async (user, i) => {
-      const salt = bcrypt.genSaltSync()
+  console.log('successfully created stats')
+  console.log('now running faker')
+
+  const fakers = await Promise.all(
+    new Array(10).fill(1).map(async () => {
+      return {
+        email: faker.internet.email(),
+        name: faker.name.fullName(),
+        id: faker.datatype.string(),
+        username: faker.internet.userName(),
+        image: faker.internet.avatar(),
+      }
+    })
+  )
+
+  const users = await Promise.all(
+    fakers.map(async (user) => {
       return prisma.user.upsert({
-        where: { email: `user-${i}@test.com` },
+        where: { email: user.email },
         update: {},
         create: {
-          email: `user-${i}@test.com`,
-          password: bcrypt.hashSync(user.password, salt),
-          name: user.firstName + ' ' + user.lastName,
+          email: user.email,
+          name: user.name,
+          image: user.image,
           username: user.username,
         },
       })
@@ -63,7 +84,7 @@ const run = async () => {
           description: suggestion.description,
           user: {
             connect: {
-              id: fakeUsers[Math.floor(Math.random() * fakeUsers.length)].id,
+              id: users[Math.floor(Math.random() * users.length)].id,
             },
           },
           category: {
@@ -81,14 +102,40 @@ const run = async () => {
     })
   )
 
-  // Votes
+  console.log('created suggestions', suggestions)
+  console.log('creating comments...')
+
   await Promise.all(
-    fakeUsers.map(async (user, i) => {
-      suggestions.map(async (suggestion) => {
-        return prisma.vote.upsert({
-          where: {
-            id: i + 1,
+    comments.map(async (comment) => {
+      return prisma.comment.upsert({
+        where: { id: comment.id },
+        update: {},
+        create: {
+          body: comment.body,
+          user: {
+            connect: {
+              id: users[Math.floor(Math.random() * users.length)].id,
+            },
           },
+          suggestion: {
+            connect: {
+              id: suggestions[
+                Math.floor(Math.random() * fakeSuggestions.length)
+              ].id,
+            },
+          },
+        },
+      })
+    })
+  )
+
+  console.log('creating votes...')
+
+  await Promise.all(
+    suggestions.map(async (suggestion) => {
+      users.map(async (user) => {
+        return prisma.vote.upsert({
+          where: { id: uuidv4() },
           update: {},
           create: {
             user: {
@@ -106,30 +153,6 @@ const run = async () => {
       })
     })
   )
-
-  await Promise.all(
-    comments.map(async (comment) => {
-      return prisma.comment.upsert({
-        where: { id: comment.id },
-        update: {},
-        create: {
-          body: comment.body,
-          user: {
-            connect: {
-              id: fakeUsers[Math.floor(Math.random() * fakeUsers.length)].id,
-            },
-          },
-          suggestion: {
-            connect: {
-              id: suggestions[
-                Math.floor(Math.random() * fakeSuggestions.length)
-              ].id,
-            },
-          },
-        },
-      })
-    })
-  )
 }
 
 run()
@@ -138,6 +161,6 @@ run()
     process.exit(1)
   })
   .finally(async () => {
-    console.log('woohoo!')
+    console.log('woohoo! Seed finished.')
     await prisma.$disconnect()
   })

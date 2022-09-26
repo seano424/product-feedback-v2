@@ -3,10 +3,13 @@ import { ArrowLeft } from '@/icons'
 import Suggestion from '@/components/Feedback/Suggestion'
 import { SuggestionProps } from '@/lib/interfaces'
 import prisma from '@/lib/prisma'
+import { useSession } from 'next-auth/react'
 
 const Feedback = (props: SuggestionProps) => {
   console.log(props)
   const { suggestion } = props
+  const { data: session, status } = useSession()
+  console.log(session)
 
   return (
     <section className="min-h-screen bg-gray-light py-10">

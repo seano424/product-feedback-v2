@@ -372,15 +372,6 @@ const statuses: {
   },
 ]
 
-// title       String
-//   description String
-//   votes       Int
-//   userId      Int
-//   user        User      @relation(fields: [userId], references: [id])
-//   category    Category  @relation(fields: [categoryId], references: [id])
-//   comments    Comment[]
-//   status      Status
-
 const fakeSuggestions: {
   id: number
   title: string
