@@ -1,4 +1,4 @@
-import Suggestions from '@/components/Suggestions/Suggestions'
+import Suggestions from '@/components/Feedback/Suggestions'
 import Layout from '@/components/Layout'
 import { PrismaClient } from '@prisma/client'
 import { useQuery } from 'react-query'
