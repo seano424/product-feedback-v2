@@ -44,6 +44,6 @@ export const useSort = (data) => {
     if (data) {
       sortData()
     }
-  }, [sortType, filterType])
+  }, [sortType, filterType, data])
   return sortedData
 }
