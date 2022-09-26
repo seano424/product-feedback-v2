@@ -19,7 +19,7 @@
 }
 
 .body-2 {
-  @apply text-[15px] leading-[22px];
+  @apply text-[15px] font-normal leading-[22px] text-gray;
 }
 
 .body-3 {

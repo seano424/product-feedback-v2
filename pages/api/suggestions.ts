@@ -5,7 +5,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const suggestions = await prisma.suggestion.findMany({
       include: {
-        comments: true,
+        comments: {
+          include: {
+            user: true,
+          },
+        },
         category: true,
         status: true,
         votes: {

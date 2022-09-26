@@ -14,6 +14,23 @@ export interface SuggestionProps {
       name: string
       type: string
     }
-    comments?: []
+    comments?: {
+      body: string
+      createdAt: string
+      id: number
+      suggestionId: number
+      updatedAt: string
+      user: {
+        createdAt: string
+        email: string
+        emailVerified: any
+        id: string
+        image: string
+        name: string
+        password: any
+        updatedAt: string
+        username: string
+      }
+    }[]
   }
 }
