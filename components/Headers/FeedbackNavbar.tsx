@@ -5,7 +5,8 @@ import { UserProps } from '@/lib/interfaces'
 
 const FeedbackNavbar = ({ user }: UserProps) => {
   const { data: session, status } = useSession()
-  console.log(session)
+  console.log('User: ', user)
+  console.log('Session: ', status)
   const authenticated = status === 'authenticated'
   return (
     <nav className="flex justify-between">
@@ -15,7 +16,7 @@ const FeedbackNavbar = ({ user }: UserProps) => {
           Go Back
         </a>
       </Link>
-      {authenticated && (
+      {authenticated && user === session.user && (
         <button className="button bg-blue py-3">Edit Feedback</button>
       )}
     </nav>
