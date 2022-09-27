@@ -9,6 +9,25 @@ export interface User {
   updatedAt: string
   username: string
 }
+
+export interface Comments {
+  comments: {
+    body: string
+    createdAt: string
+    id: number
+    suggestionId: number
+    updatedAt: string
+    replies?: {
+      body: string
+      commentId: number
+      suggestionId: number
+      user: User
+      id: string
+    }[]
+    user: User
+  }[]
+}
+
 export interface SuggestionProps {
   suggestion: {
     votes: {
