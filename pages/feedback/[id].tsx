@@ -9,13 +9,13 @@ const Feedback = (props: SuggestionProps) => {
   console.log(suggestion)
 
   return (
-    <section className="min-h-screen bg-gray-light py-10">
-      <div className="container mx-auto flex max-w-4xl flex-col gap-5">
+    <main className="min-h-screen bg-gray-light py-10">
+      <section className="container mx-auto flex max-w-4xl flex-col gap-5">
         <FeedbackNavbar />
         <Suggestion suggestion={suggestion} />
         <Comments comments={suggestion.comments} />
-      </div>
-    </section>
+      </section>
+    </main>
   )
 }
 
