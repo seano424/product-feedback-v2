@@ -8,9 +8,9 @@ import { useRef } from 'react'
 export default function Menu() {
   const [showMobileNav, setShowMobileNav] = useShowMobileNav()
   const ref = useRef(null)
-  useClickAway(ref, () => {
-    setShowMobileNav(false)
-  })
+  // useClickAway(ref, () => {
+  //   setShowMobileNav(false)
+  // })
 
   const mobileMenuVariants = {
     hidden: { x: 600 },
