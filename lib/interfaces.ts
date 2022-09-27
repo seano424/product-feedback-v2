@@ -1,3 +1,14 @@
+export interface User {
+  createdAt: string
+  email: string
+  emailVerified: any
+  id: string
+  image: string
+  name: string
+  password: any
+  updatedAt: string
+  username: string
+}
 export interface SuggestionProps {
   suggestion: {
     votes: {
@@ -20,17 +31,14 @@ export interface SuggestionProps {
       id: number
       suggestionId: number
       updatedAt: string
-      user: {
-        createdAt: string
-        email: string
-        emailVerified: any
+      replies?: {
+        body: string
+        commentId: number
+        suggestionId: number
+        user: User
         id: string
-        image: string
-        name: string
-        password: any
-        updatedAt: string
-        username: string
-      }
+      }[]
+      user: User
     }[]
   }
 }
