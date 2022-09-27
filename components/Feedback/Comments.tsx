@@ -1,19 +1,50 @@
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { CommentsProps } from '@/lib/interfaces'
-import { useSession } from 'next-auth/react'
+import { useSession, signIn } from 'next-auth/react'
 import toast, { Toaster } from 'react-hot-toast'
-import { signIn } from 'next-auth/react'
+import MessageModal from './MessageModal'
+
+import { CommentsProps } from '@/lib/interfaces'
+
+export const ToastComment = () => {
+  return (
+    <div className="rounded-lg border border-gray-lightest bg-white shadow-2xl filter backdrop-brightness-150 hover:bg-white/90 hover:shadow-xl">
+      <button
+        onClick={() => signIn()}
+        className="button flex bg-white px-4 py-3 text-lg font-normal text-black"
+      >
+        Sign in to reply 🤷‍♂️
+      </button>
+    </div>
+  )
+}
 
 const Comments = ({ comments }: CommentsProps) => {
   console.log(comments)
-
   const { status } = useSession()
   const authenticated = status === 'authenticated'
+
+  const [openComment, setOpenComment] = useState(false)
+  const [openReply, setOpenReply] = useState(false)
+
   const handleComment = () => {
-    !authenticated && toast('Sign in to reply 🤷‍♂️')
+    !authenticated && toast.custom(<ToastComment />)
+    authenticated && setOpenComment(true)
   }
+
+  const handleReply = () => {
+    !authenticated && toast.custom(<ToastComment />)
+    authenticated && setOpenReply(true)
+  }
+
+  useEffect(() => {
+    toast.dismiss()
+  }, [])
+
   return (
     <div>
+      {openComment && <MessageModal type="comment" setOpen={setOpenComment} />}
+      {openReply && <MessageModal type="reply" setOpen={setOpenReply} />}
       <Toaster />
       <div className="w-full rounded-xl bg-white/80 p-5 shadow-xl">
         <div className="flex items-center justify-between">
@@ -91,7 +122,10 @@ const Comments = ({ comments }: CommentsProps) => {
                               @{reply.user.username}
                             </p>
                           </div>
-                          <button className="hidden font-bold text-blue sm:flex">
+                          <button
+                            onClick={() => handleReply()}
+                            className="hidden font-bold text-blue sm:flex"
+                          >
                             Reply
                           </button>
                         </div>
@@ -101,7 +135,10 @@ const Comments = ({ comments }: CommentsProps) => {
                           </span>{' '}
                           {reply.body}
                         </p>
-                        <button className="flex font-bold text-blue sm:hidden">
+                        <button
+                          onClick={() => handleReply()}
+                          className="flex font-bold text-blue sm:hidden"
+                        >
                           Reply
                         </button>
                       </div>
