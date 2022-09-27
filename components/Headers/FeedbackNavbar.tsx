@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { ArrowLeft } from '@/icons'
 import { UserProps } from '@/lib/interfaces'
@@ -18,6 +18,14 @@ const FeedbackNavbar = ({ user }: UserProps) => {
       </Link>
       {authenticated && user === session.user && (
         <button className="button bg-blue py-3">Edit Feedback</button>
+      )}
+      {!authenticated && (
+        <button
+          onClick={() => signIn()}
+          className="button flex bg-white py-2 text-lg text-black"
+        >
+          Signin
+        </button>
       )}
     </nav>
   )
