@@ -2,15 +2,13 @@ import { AnimatePresence, m } from 'framer-motion'
 import useShowMobileNav from 'lib/hooks/useShowMobileNav'
 import Categories from '../Categories'
 import RoadMap from '../RoadMap'
-import { useClickAway } from 'react-use'
 import { useRef } from 'react'
+import { useSession, signOut } from 'next-auth/react'
 
 export default function Menu() {
-  const [showMobileNav, setShowMobileNav] = useShowMobileNav()
+  const [showMobileNav] = useShowMobileNav()
   const ref = useRef(null)
-  // useClickAway(ref, () => {
-  //   setShowMobileNav(false)
-  // })
+  const { data: session } = useSession()
 
   const mobileMenuVariants = {
     hidden: { x: 600 },
@@ -42,6 +40,16 @@ export default function Menu() {
         >
           <Categories />
           <RoadMap />
+          {session.user && (
+            <div>
+              <button
+                onClick={() => signOut()}
+                className="button flex bg-white py-2 text-lg text-black"
+              >
+                Signout
+              </button>
+            </div>
+          )}
         </m.div>
       )}
     </AnimatePresence>

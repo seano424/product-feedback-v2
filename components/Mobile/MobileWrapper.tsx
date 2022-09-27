@@ -7,17 +7,19 @@ import useShowMobileNav from 'lib/hooks/useShowMobileNav'
 
 const MobileWrapper = () => {
   const ref = useRef(null)
-  const [showMobileNav, setShowMobileNav] = useShowMobileNav()
+  const [_, setShowMobileNav] = useShowMobileNav()
 
   useClickAway(ref, () => {
     setShowMobileNav(false)
   })
   return (
-    <div ref={ref}>
-      <MobileHeader />
-      <MobileMenu />
+    <>
+      <div ref={ref}>
+        <MobileHeader />
+        <MobileMenu />
+      </div>
       <MobileOverlay />
-    </div>
+    </>
   )
 }
 

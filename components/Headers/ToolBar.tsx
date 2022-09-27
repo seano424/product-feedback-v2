@@ -112,26 +112,41 @@ const ToolBar = (props: Props) => {
             </div>
           </div>
           <div className="flex gap-10">
-            {user && (
-              <button
-                onClick={() => signOut()}
-                className="button flex bg-white py-2 text-lg text-black"
-              >
-                Signout
+            <div className="hidden sm:flex">
+              {user && (
+                <button
+                  onClick={() => signOut()}
+                  className="button flex bg-white py-2 text-lg text-black"
+                >
+                  Signout
+                </button>
+              )}
+              {!user && (
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="button flex bg-white py-2 text-lg text-black"
+                >
+                  Signin
+                </button>
+              )}
+            </div>
+            <button className="button hidden sm:flex">
+              <Plus className="text-white" />
+              Add Feedback
+            </button>
+            {user ? (
+              <button className="button flex sm:hidden">
+                <Plus className="text-white" />
+                Add Feedback
               </button>
-            )}
-            {!user && (
+            ) : (
               <button
                 onClick={() => setShowModal(true)}
-                className="button flex bg-white py-2 text-lg text-black"
+                className="button flex bg-white py-2 text-lg text-black sm:hidden"
               >
                 Signin
               </button>
             )}
-            <button className="button flex">
-              <Plus className="text-white" />
-              Add Feedback
-            </button>
           </div>
         </div>
       </div>
