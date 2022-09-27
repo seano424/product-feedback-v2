@@ -1,6 +1,12 @@
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { ArrowLeft } from '@/icons'
-const FeedbackNavbar = () => {
+import { UserProps } from '@/lib/interfaces'
+
+const FeedbackNavbar = ({ user }: UserProps) => {
+  const { data: session, status } = useSession()
+  console.log(session)
+  const authenticated = status === 'authenticated'
   return (
     <nav className="flex justify-between">
       <Link href="/">
@@ -9,7 +15,9 @@ const FeedbackNavbar = () => {
           Go Back
         </a>
       </Link>
-      <button className="button bg-blue py-3">Edit Feedback</button>
+      {authenticated && (
+        <button className="button bg-blue py-3">Edit Feedback</button>
+      )}
     </nav>
   )
 }

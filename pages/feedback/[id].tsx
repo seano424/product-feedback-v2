@@ -4,14 +4,13 @@ import FeedbackNavbar from '@/components/Headers/FeedbackNavbar'
 import Suggestion from '@/components/Feedback/Suggestion'
 import Comments from '@/components/Feedback/Comments'
 
-const Feedback = (props: SuggestionProps) => {
-  const { suggestion } = props
+const Feedback = ({ suggestion }: SuggestionProps) => {
   console.log(suggestion)
 
   return (
     <main className="min-h-screen bg-gray-light py-10">
       <section className="container mx-auto flex max-w-4xl flex-col gap-5">
-        <FeedbackNavbar />
+        <FeedbackNavbar user={suggestion.user} />
         <Suggestion suggestion={suggestion} />
         <Comments comments={suggestion.comments} />
       </section>
@@ -27,6 +26,7 @@ export async function getServerSideProps(context) {
       id: +context.params.id,
     },
     include: {
+      user: true,
       comments: {
         include: {
           user: true,

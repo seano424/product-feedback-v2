@@ -1,16 +1,18 @@
-export interface User {
-  createdAt: string
-  email: string
-  emailVerified: any
-  id: string
-  image: string
-  name: string
-  password: any
-  updatedAt: string
-  username: string
+export interface UserProps {
+  user: {
+    createdAt: string
+    email: string
+    emailVerified: any
+    id: string
+    image: string
+    name: string
+    password: any
+    updatedAt: string
+    username: string
+  }
 }
 
-export interface Comments {
+export interface CommentsProps {
   comments: {
     body: string
     createdAt: string
@@ -21,10 +23,30 @@ export interface Comments {
       body: string
       commentId: number
       suggestionId: number
-      user: User
+      user: {
+        createdAt: string
+        email: string
+        emailVerified: any
+        id: string
+        image: string
+        name: string
+        password: any
+        updatedAt: string
+        username: string
+      }
       id: string
     }[]
-    user: User
+    user: {
+      createdAt: string
+      email: string
+      emailVerified: any
+      id: string
+      image: string
+      name: string
+      password: any
+      updatedAt: string
+      username: string
+    }
   }[]
 }
 
@@ -44,6 +66,17 @@ export interface SuggestionProps {
       name: string
       type: string
     }
+    user: {
+      createdAt: string
+      email: string
+      emailVerified: any
+      id: string
+      image: string
+      name: string
+      password: any
+      updatedAt: string
+      username: string
+    }
     comments?: {
       body: string
       createdAt: string
@@ -54,10 +87,30 @@ export interface SuggestionProps {
         body: string
         commentId: number
         suggestionId: number
-        user: User
+        user: {
+          createdAt: string
+          email: string
+          emailVerified: any
+          id: string
+          image: string
+          name: string
+          password: any
+          updatedAt: string
+          username: string
+        }
         id: string
       }[]
-      user: User
+      user: {
+        createdAt: string
+        email: string
+        emailVerified: any
+        id: string
+        image: string
+        name: string
+        password: any
+        updatedAt: string
+        username: string
+      }
     }[]
   }
 }
