@@ -87,6 +87,11 @@ export async function getServerSideProps(context) {
       comments: {
         include: {
           user: true,
+          replies: {
+            include: {
+              user: true,
+            },
+          },
         },
       },
       category: true,

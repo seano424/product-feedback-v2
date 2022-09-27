@@ -75,7 +75,7 @@ model Suggestion {
   user        User      @relation(fields: [userId], references: [id])
   comments    Comment[]
   votes       Vote[]
-  Reply       Reply[]
+  replies     Reply[]
 }
 
 model Comment {
@@ -87,7 +87,7 @@ model Comment {
   suggestionId Int
   suggestion   Suggestion @relation(fields: [suggestionId], references: [id])
   user         User       @relation(fields: [userId], references: [id])
-  Reply        Reply[]
+  replies      Reply[]
 }
 
 model Reply {
