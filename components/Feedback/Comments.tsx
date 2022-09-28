@@ -23,7 +23,6 @@ export const ToastComment = () => {
 }
 
 const Comments = ({ comments }: Props) => {
-  console.log(comments)
   const { status } = useSession()
   const authenticated = status === 'authenticated'
 

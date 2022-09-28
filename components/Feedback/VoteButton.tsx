@@ -54,13 +54,11 @@ const VoteButton = (props: Props) => {
         const vote = await suggestion.votes.find(
           (v) => v.user.email === session?.user?.email
         )
-        console.log('deleting...')
         setVoted(false)
         setVoteCount((prev) => prev - 1)
         mutation.mutate({ voteId: vote.id, type: 'delete' })
       }
       if (!voted && !mutation.isLoading) {
-        console.log('adding...')
         setVoted(true)
         setVoteCount((prev) => prev + 1)
         mutation.mutate({

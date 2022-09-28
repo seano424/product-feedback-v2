@@ -13,8 +13,6 @@ interface Props {
 }
 
 const Home: FC<Props> = ({ suggestions, categories, statuses }: Props) => {
-  console.log('stats:', statuses)
-
   useQuery(['suggestions'], getSuggestions, {
     initialData: suggestions,
   })

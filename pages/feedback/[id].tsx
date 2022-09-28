@@ -5,8 +5,6 @@ import Suggestion from '@/components/Feedback/Suggestion'
 import Comments from '@/components/Feedback/Comments'
 
 const Feedback = ({ suggestion }: SuggestionProps) => {
-  console.log(suggestion)
-
   return (
     <main className="min-h-screen bg-gray-light py-10">
       <section className="container mx-auto flex max-w-4xl flex-col gap-5">

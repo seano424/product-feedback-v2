@@ -5,8 +5,6 @@ import { UserProps } from '@/lib/interfaces'
 
 const FeedbackNavbar = ({ user }: UserProps) => {
   const { data: session, status } = useSession()
-  console.log('User: ', user)
-  console.log('Session: ', status)
   const authenticated = status === 'authenticated'
   return (
     <nav className="flex justify-between">
