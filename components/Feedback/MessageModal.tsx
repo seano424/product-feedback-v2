@@ -4,11 +4,12 @@ import { useRef } from 'react'
 
 interface MessageProps {
   type: 'comment' | 'reply'
+  at?: string
   setOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const MessageModal = (props: MessageProps) => {
-  const { type = 'comment', setOpen } = props
+  const { type = 'comment', setOpen, at } = props
   const [value, setValue] = useState('')
   const [charsLeft, setCharsLeft] = useState(value.length)
   const ref = useRef()
@@ -29,7 +30,9 @@ const MessageModal = (props: MessageProps) => {
           ref={ref}
           className="container flex w-full flex-col gap-5 rounded-xl bg-white py-10 shadow-xl"
         >
-          <h2 className="h2">Add {type}</h2>
+          <h2 className="h2">
+            Add {type} {at && `to @${at.toLowerCase()}`}
+          </h2>
           <textarea
             onChange={(e) => setValue(e.target.value)}
             value={value}

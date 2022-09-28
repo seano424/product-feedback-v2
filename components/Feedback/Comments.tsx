@@ -26,15 +26,19 @@ const Comments = ({ comments }: CommentsProps) => {
 
   const [openComment, setOpenComment] = useState(false)
   const [openReply, setOpenReply] = useState(false)
+  const [replyTo, setReplyTo] = useState(null)
 
   const handleComment = () => {
     !authenticated && toast.custom(<ToastComment />)
     authenticated && setOpenComment(true)
   }
 
-  const handleReply = () => {
+  const handleReply = (username) => {
     !authenticated && toast.custom(<ToastComment />)
-    authenticated && setOpenReply(true)
+    if (authenticated) {
+      setOpenReply(true)
+      setReplyTo(username)
+    }
   }
 
   useEffect(() => {
@@ -44,7 +48,9 @@ const Comments = ({ comments }: CommentsProps) => {
   return (
     <div>
       {openComment && <MessageModal type="comment" setOpen={setOpenComment} />}
-      {openReply && <MessageModal type="reply" setOpen={setOpenReply} />}
+      {openReply && (
+        <MessageModal type="reply" setOpen={setOpenReply} at={replyTo} />
+      )}
       <Toaster />
       <div className="w-full rounded-xl bg-white/80 p-5 shadow-xl">
         <div className="flex items-center justify-between">
@@ -83,7 +89,7 @@ const Comments = ({ comments }: CommentsProps) => {
                     <p className="body-2 lowercase">@{comment.user.username}</p>
                   </div>
                   <button
-                    onClick={() => handleComment()}
+                    onClick={() => handleReply(comment.user.username)}
                     className="hidden font-bold text-blue sm:flex"
                   >
                     Reply
@@ -91,7 +97,7 @@ const Comments = ({ comments }: CommentsProps) => {
                 </div>
                 <p className="body-2">{comment.body}</p>
                 <button
-                  onClick={() => handleComment()}
+                  onClick={() => handleReply(comment.user.username)}
                   className="flex font-bold text-blue sm:hidden"
                 >
                   Reply
