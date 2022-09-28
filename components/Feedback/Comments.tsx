@@ -23,6 +23,8 @@ export const ToastComment = () => {
 }
 
 const Comments = ({ comments }: Props) => {
+  console.log(comments)
+
   const { status } = useSession()
   const authenticated = status === 'authenticated'
 
@@ -131,7 +133,9 @@ const Comments = ({ comments }: Props) => {
                           <div className="flex flex-col gap-1">
                             <p className="h4">{reply.user.name}</p>
                             <p className="body-2 lowercase">
-                              @{reply.user.username}
+                              @
+                              {reply.user.username ??
+                                reply.user.email.toLocaleLowerCase()}
                             </p>
                           </div>
                           <button
@@ -143,7 +147,9 @@ const Comments = ({ comments }: Props) => {
                         </div>
                         <p className="body-2">
                           <span className="font-bold text-fuschia">
-                            @{comment.user.username}
+                            @
+                            {comment.user.username ??
+                              comment.user.email.toLocaleLowerCase()}
                           </span>{' '}
                           {reply.body}
                         </p>

@@ -3,7 +3,7 @@ import { useClickAway } from 'react-use'
 import { useSession } from 'next-auth/react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useMutation, useQueryClient } from 'react-query'
-import { createComment } from '@/lib/api'
+import { createComment, createReply } from '@/lib/api'
 import { CommentProps } from '@/lib/interfaces'
 
 interface MessageProps {
@@ -12,14 +12,22 @@ interface MessageProps {
   data: CommentProps
 }
 
+interface MutationProps {
+  suggestionId: number
+  userEmail: string
+  commentId?: number
+  body: string
+}
+
 const MessageModal = (props: MessageProps) => {
   const { type = 'comment', setOpen, data } = props
-  const { status } = useSession()
+  const { data: session, status } = useSession()
   const queryClient = useQueryClient()
   const ref = useRef()
 
+  console.log(session)
+
   const [value, setValue] = useState('')
-  const [placeholder, setPlaceholder] = useState(`Type your ${type} here`)
   const [charsLeft, setCharsLeft] = useState(value.length)
 
   const authenticated = status === 'authenticated'
@@ -34,6 +42,12 @@ const MessageModal = (props: MessageProps) => {
     setCharsLeft(limit - value.length)
   }, [value])
 
+  const mutation = useMutation((param: MutationProps): Promise<number> => {
+    if (reply) {
+      return createReply(param)
+    }
+  })
+
   const handleSubmitReply = (e) => {
     e.preventDefault()
     if (value.trim().length > 0) {
@@ -41,10 +55,11 @@ const MessageModal = (props: MessageProps) => {
         const body = {
           body: value,
           suggestionId: data.suggestionId,
-          userId: data.user.id,
+          userEmail: session.user.email,
+          commentId: data.id,
         }
         toast.success('Your comment has been added!')
-        return console.log('good', body)
+        mutation.mutate(body)
       }
     }
     toast('Please enter some feedback 😅')
@@ -72,7 +87,7 @@ const MessageModal = (props: MessageProps) => {
               onChange={(e) => setValue(e.target.value)}
               value={value}
               rows={4}
-              placeholder={placeholder}
+              placeholder={`Type your ${type} here`}
               className="w-full rounded-lg border-0 bg-gray-lightest focus:ring-0"
               name={type}
               id={type}

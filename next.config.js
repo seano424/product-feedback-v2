@@ -4,7 +4,11 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const nextConfig = {
   images: {
-    domains: ['images.unsplash.com', 'cloudflare-ipfs.com'],
+    domains: [
+      'images.unsplash.com',
+      'cloudflare-ipfs.com',
+      'lh3.googleusercontent.com',
+    ],
   },
   webpack(config) {
     config.module.rules.push({
