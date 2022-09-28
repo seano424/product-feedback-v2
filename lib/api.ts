@@ -21,5 +21,9 @@ export const createVote = async (param) => {
 }
 
 export const createComment = async (param) => {
-  return await fetcher('comments', param, 'POST')
+  return await fetcher('comment', param, 'POST')
+}
+
+export const createReply = async (param) => {
+  return await fetcher('reply', param, 'POST')
 }
