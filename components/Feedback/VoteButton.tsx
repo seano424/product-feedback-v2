@@ -21,8 +21,13 @@ const VoteButton = (props: Props) => {
   const [voted, setVoted] = useState(false)
   const { data: session, status } = useSession()
   const queryClient = useQueryClient()
+  const [test, setTest] = useState(null)
 
   const authenticated = status === 'authenticated'
+
+  useEffect(() => {
+    setTest(suggestion.votes)
+  }, [])
 
   useEffect(() => {
     if (session?.user) {
@@ -51,12 +56,17 @@ const VoteButton = (props: Props) => {
     e.stopPropagation()
     if (authenticated) {
       if (voted && !mutation.isLoading) {
-        const vote = await suggestion.votes.find(
+        let vote = await suggestion.votes.find(
           (v) => v.user.email === session?.user?.email
         )
-        setVoted(false)
-        setVoteCount((prev) => prev - 1)
-        mutation.mutate({ voteId: vote.id, type: 'delete' })
+        console.log(suggestion.votes)
+        setTest((prevState) =>
+          prevState.filter((v) => v.user.email !== session.user.email)
+        )
+
+        // setVoted(false)
+        // setVoteCount((prev) => prev - 1)
+        // mutation.mutate({ voteId: vote.id, type: 'delete' })
       }
       if (!voted && !mutation.isLoading) {
         setVoted(true)
@@ -68,6 +78,7 @@ const VoteButton = (props: Props) => {
       }
     }
   }
+
   return (
     <button
       disabled={mutation.isLoading}
@@ -78,6 +89,7 @@ const VoteButton = (props: Props) => {
     >
       {voted ? <ArrowDown /> : <ArrowUp />}
       {voteCount}
+      {mutation.isLoading && 'loading...'}
     </button>
   )
 }
