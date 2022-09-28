@@ -12,30 +12,16 @@ export interface UserProps {
   }
 }
 
-export interface CommentsProps {
-  comments: {
+export interface CommentProps {
+  body: string
+  createdAt: string
+  id: number
+  suggestionId: number
+  updatedAt: string
+  replies?: {
     body: string
-    createdAt: string
-    id: number
+    commentId: number
     suggestionId: number
-    updatedAt: string
-    replies?: {
-      body: string
-      commentId: number
-      suggestionId: number
-      user: {
-        createdAt: string
-        email: string
-        emailVerified: any
-        id: string
-        image: string
-        name: string
-        password: any
-        updatedAt: string
-        username: string
-      }
-      id: string
-    }[]
     user: {
       createdAt: string
       email: string
@@ -47,7 +33,19 @@ export interface CommentsProps {
       updatedAt: string
       username: string
     }
+    id: string
   }[]
+  user: {
+    createdAt: string
+    email: string
+    emailVerified: any
+    id: string
+    image: string
+    name: string
+    password: any
+    updatedAt: string
+    username: string
+  }
 }
 
 export interface SuggestionProps {
@@ -113,4 +111,26 @@ export interface SuggestionProps {
       }
     }[]
   }
+}
+
+export interface CategoryProps {
+  id: number
+  name: string
+  suggestionId?: number
+  type: string
+}
+
+export interface StatusProps {
+  type: string
+  name: string
+  suggestions: {
+    id: number
+    createdAt: string
+    updatedAt: string
+    title: string
+    description: string
+    userId: string
+    categoryId: number
+    statusType: string
+  }[]
 }

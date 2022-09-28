@@ -1,6 +1,7 @@
-import { useEffect, useState, Dispatch, SetStateAction } from 'react'
+import { useEffect, useState, Dispatch, SetStateAction, useRef } from 'react'
 import { useClickAway } from 'react-use'
-import { useRef } from 'react'
+import { useMutation, useQueryClient } from 'react-query'
+import { createComment } from '@/lib/api'
 
 interface MessageProps {
   type: 'comment' | 'reply'

@@ -1,11 +1,20 @@
+import { FC } from 'react'
 import Suggestions from '@/components/Feedback/Suggestions'
 import Layout from '@/components/Layout'
 import { PrismaClient } from '@prisma/client'
 import { useQuery } from 'react-query'
 import { getCategories, getStatuses, getSuggestions } from 'lib/api'
+import { SuggestionProps, CategoryProps, StatusProps } from '@/lib/interfaces'
 
-const Home = (props) => {
-  const { suggestions, categories, statuses } = props
+interface Props {
+  suggestions: SuggestionProps[]
+  categories: CategoryProps[]
+  statuses: StatusProps[]
+}
+
+const Home: FC<Props> = ({ suggestions, categories, statuses }: Props) => {
+  console.log('stats:', statuses)
+
   useQuery(['suggestions'], getSuggestions, {
     initialData: suggestions,
   })

@@ -3,8 +3,11 @@ import Image from 'next/image'
 import { useSession, signIn } from 'next-auth/react'
 import toast, { Toaster } from 'react-hot-toast'
 import MessageModal from './MessageModal'
+import { CommentProps } from '@/lib/interfaces'
 
-import { CommentsProps } from '@/lib/interfaces'
+interface Props {
+  comments: CommentProps[]
+}
 
 export const ToastComment = () => {
   return (
@@ -19,7 +22,7 @@ export const ToastComment = () => {
   )
 }
 
-const Comments = ({ comments }: CommentsProps) => {
+const Comments = ({ comments }: Props) => {
   console.log(comments)
   const { status } = useSession()
   const authenticated = status === 'authenticated'
