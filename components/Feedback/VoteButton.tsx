@@ -29,12 +29,14 @@ const VoteButton = (props: Props) => {
 
   const createMutation = useMutation(createVote, {
     onSuccess: () => {
+      setHasVoted(true)
       queryClient.invalidateQueries('suggestions')
     },
   })
 
   const deleteMutation = useMutation(deleteVote, {
     onSuccess: () => {
+      setHasVoted(false)
       queryClient.invalidateQueries('suggestions')
     },
   })
