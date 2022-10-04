@@ -23,4 +23,44 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(500).json({ message: 'Something went wrong: ', error })
     }
   }
+
+  if (req.method === 'PATCH') {
+    if (!session) {
+      return res.status(401).json({ message: 'Unauthorized.' })
+    }
+    try {
+      const { commentId, body, suggestionId, replyId } = req.body
+      console.log('from the udpate api', req.body)
+
+      const updatedReply = await prisma.reply.upsert({
+        where: { id: replyId },
+        update: {
+          body: body,
+        },
+        create: {
+          body: body,
+          comment: {
+            connect: {
+              id: commentId,
+            },
+          },
+          user: {
+            connect: {
+              email: session.user.email,
+            },
+          },
+          suggestion: {
+            connect: {
+              id: suggestionId,
+            },
+          },
+        },
+      })
+      console.log('Updated Reply: ', updatedReply)
+      return res.status(200).json(updatedReply)
+    } catch (error) {
+      console.log('Error: ', error)
+      return res.status(500).json({ message: 'Something went wrong: ', error })
+    }
+  }
 }

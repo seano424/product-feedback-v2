@@ -3,7 +3,7 @@ import { useClickAway } from 'react-use'
 import { useSession } from 'next-auth/react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useMutation, useQueryClient } from 'react-query'
-import { createComment, createReply } from '@/lib/api'
+import { createComment, createReply, updateReply } from '@/lib/api'
 import { CommentProps } from '@/lib/interfaces'
 
 interface ModalCommentProps extends CommentProps {
@@ -12,18 +12,18 @@ interface ModalCommentProps extends CommentProps {
 
 interface MessageProps {
   type: 'comment' | 'reply'
+  isEditing: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   data: ModalCommentProps
 }
 
 const MessageModal = (props: MessageProps) => {
-  const { type = 'comment', setOpen, data } = props
+  const { type = 'comment', setOpen, data, isEditing } = props
   const ref = useRef()
   const queryClient = useQueryClient()
   const { data: session, status } = useSession()
   const [value, setValue] = useState('')
   const [charsLeft, setCharsLeft] = useState(value.length)
-
   const authenticated = status === 'authenticated'
   const reply = type === 'reply'
 
@@ -32,15 +32,28 @@ const MessageModal = (props: MessageProps) => {
   })
 
   useEffect(() => {
+    isEditing && setValue(data.body)
+  }, [])
+
+  useEffect(() => {
     let limit = 250
     setCharsLeft(limit - value.length)
   }, [value])
 
-  const replyMutation = useMutation(createReply, {
+  const createReplyMutation = useMutation(createReply, {
     onSuccess: () => {
       setOpen(false)
       queryClient.invalidateQueries('suggestion')
       queryClient.invalidateQueries('suggestions')
+    },
+  })
+
+  const updateReplyMutation = useMutation(updateReply, {
+    onSuccess: () => {
+      setOpen(false)
+      queryClient.invalidateQueries('suggestion')
+      queryClient.invalidateQueries('suggestions')
+      toast.success('updated reply')
     },
   })
 
@@ -56,7 +69,7 @@ const MessageModal = (props: MessageProps) => {
     e.preventDefault()
     if (value.trim().length > 0) {
       if (authenticated) {
-        if (reply) {
+        if (reply && !isEditing) {
           const body = {
             body: value,
             suggestionId: data.suggestionId,
@@ -64,7 +77,17 @@ const MessageModal = (props: MessageProps) => {
             commentId: data.commentId,
           }
           toast.success('Your reply has been added!')
-          return replyMutation.mutate(body)
+          return createReplyMutation.mutate(body)
+        }
+        if (reply && isEditing) {
+          console.log(data)
+
+          return updateReplyMutation.mutate({
+            commentId: data.commentId,
+            body: value,
+            suggestionId: data.suggestionId,
+            replyId: +data.id,
+          })
         }
       }
       toast('Please enter some feedback 😅')
@@ -86,7 +109,7 @@ const MessageModal = (props: MessageProps) => {
             className="container flex w-full flex-col gap-5 rounded-xl bg-white py-10 shadow-xl"
           >
             <h2 className="h2">
-              Add {type}{' '}
+              {isEditing ? 'Update' : 'Add'} {type}{' '}
               {data.user.username && `to @${data.user.username.toLowerCase()}`}
             </h2>
             <textarea
@@ -101,7 +124,7 @@ const MessageModal = (props: MessageProps) => {
             <div className="flex items-center justify-between">
               <p className="body-2">{charsLeft} characters left</p>
               <button type="submit" className="button">
-                Post {type}
+                {isEditing ? 'Edit' : 'Post'} {type}
               </button>
             </div>
           </form>

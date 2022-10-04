@@ -31,7 +31,12 @@ const Comments = ({ comments }: Props) => {
 
   const [openComment, setOpenComment] = useState(false)
   const [openReply, setOpenReply] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
   const [data, setData] = useState(null)
+
+  useEffect(() => {
+    toast.dismiss()
+  }, [])
 
   const handleComment = () => {
     !authenticated && toast.custom(<ToastComment />)
@@ -53,16 +58,14 @@ const Comments = ({ comments }: Props) => {
           commentId: data.id,
           ...data,
         }
+        setIsEditing(false)
         setOpenReply(true)
         setData(commentData)
       }
+      setIsEditing(false)
       setOpenReply(true)
     }
   }
-
-  useEffect(() => {
-    toast.dismiss()
-  }, [])
 
   const handleDelete = (reply) => {
     if (authenticated) {
@@ -74,13 +77,31 @@ const Comments = ({ comments }: Props) => {
     }
   }
 
+  const handleUpdateReply = (reply) => {
+    if (authenticated) {
+      setIsEditing(true)
+      setData(reply)
+      setOpenReply(true)
+    }
+  }
+
   return (
     <div>
       {openComment && (
-        <MessageModal type="comment" setOpen={setOpenComment} data={data} />
+        <MessageModal
+          type="comment"
+          setOpen={setOpenComment}
+          data={data}
+          isEditing={isEditing}
+        />
       )}
       {openReply && (
-        <MessageModal type="reply" setOpen={setOpenReply} data={data} />
+        <MessageModal
+          type="reply"
+          setOpen={setOpenReply}
+          data={data}
+          isEditing={isEditing}
+        />
       )}
       <Toaster />
       <div className="w-full rounded-xl bg-white/80 p-5 shadow-xl">
@@ -173,7 +194,10 @@ const Comments = ({ comments }: Props) => {
                               )}
                             {session &&
                               session.user.email === reply.user.email && (
-                                <button className="font-bold text-fuschia">
+                                <button
+                                  onClick={() => handleUpdateReply(reply)}
+                                  className="font-bold text-fuschia"
+                                >
                                   Edit
                                 </button>
                               )}
