@@ -1,5 +1,10 @@
+const dev = process.env.NODE_ENV !== 'production'
+export const server = dev
+  ? 'http://localhost:3000'
+  : 'https://your_deployment.server.com'
+
 export default function fetcher(url: string, data = undefined, method = 'GET') {
-  return fetch(`${window.location.origin}/api/${url}`, {
+  return fetch(`${server}/api/${url}`, {
     method,
     credentials: 'include',
     headers: {
