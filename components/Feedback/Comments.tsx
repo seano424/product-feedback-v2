@@ -3,6 +3,8 @@ import Image from 'next/image'
 import { useSession, signIn } from 'next-auth/react'
 import toast, { Toaster } from 'react-hot-toast'
 import MessageModal from './MessageModal'
+import { useMutation, useQueryClient } from 'react-query'
+import { deleteReply } from '@/lib/api'
 import { CommentProps } from '@/lib/interfaces'
 
 interface Props {
@@ -23,8 +25,9 @@ export const ToastComment = () => {
 }
 
 const Comments = ({ comments }: Props) => {
-  const { status } = useSession()
+  const { data: session, status } = useSession()
   const authenticated = status === 'authenticated'
+  const queryClient = useQueryClient()
 
   const [openComment, setOpenComment] = useState(false)
   const [openReply, setOpenReply] = useState(false)
@@ -34,6 +37,12 @@ const Comments = ({ comments }: Props) => {
     !authenticated && toast.custom(<ToastComment />)
     authenticated && setOpenComment(true)
   }
+
+  const deleteMutation = useMutation(deleteReply, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['suggestion', comments[0].suggestionId])
+    },
+  })
 
   const handleReply = (data, type) => {
     !authenticated && toast.custom(<ToastComment />)
@@ -54,6 +63,16 @@ const Comments = ({ comments }: Props) => {
   useEffect(() => {
     toast.dismiss()
   }, [])
+
+  const handleDelete = (reply) => {
+    if (authenticated) {
+      toast.error('deleting reply')
+      console.log('delete: ', reply)
+      return deleteMutation.mutate({
+        replyId: reply.id,
+      })
+    }
+  }
 
   return (
     <div>
@@ -142,12 +161,32 @@ const Comments = ({ comments }: Props) => {
                                 reply.user.email.toLocaleLowerCase()}
                             </p>
                           </div>
-                          <button
-                            onClick={() => handleReply(reply, 'reply')}
-                            className="hidden font-bold text-blue sm:flex"
-                          >
-                            Reply
-                          </button>
+                          <div className="hidden items-center gap-2 sm:flex">
+                            {session &&
+                              session.user.email === reply.user.email && (
+                                <button
+                                  onClick={() => handleDelete(reply)}
+                                  className="font-bold text-red"
+                                >
+                                  Delete
+                                </button>
+                              )}
+                            {session &&
+                              session.user.email === reply.user.email && (
+                                <button className="font-bold text-fuschia">
+                                  Edit
+                                </button>
+                              )}
+                            {session &&
+                              session.user.email !== reply.user.email && (
+                                <button
+                                  onClick={() => handleReply(reply, 'reply')}
+                                  className="font-bold text-blue"
+                                >
+                                  Reply
+                                </button>
+                              )}
+                          </div>
                         </div>
                         <p className="body-2">
                           <span className="font-bold text-fuschia">
