@@ -7,7 +7,7 @@ import { ArrowUp, ArrowDown } from '@/icons'
 import toast, { Toaster } from 'react-hot-toast'
 
 interface Props extends SuggestionProps {
-  viewport: string
+  viewport: 'large' | 'small'
 }
 
 const VoteButton = (props: Props) => {
