@@ -11,6 +11,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         comments: {
           include: {
             user: true,
+            replies: {
+              include: {
+                user: true,
+              },
+            },
           },
         },
         category: true,

@@ -8,6 +8,11 @@ export const getStatuses = async () => {
   return await fetcher('/statuses')
 }
 
+export const getSuggestion = async (param) => {
+  const suggestionId = param.queryKey[1]
+  return await fetcher(`/suggestions/${suggestionId}`)
+}
+
 export const getSuggestions = async () => {
   return await fetcher('/suggestions')
 }

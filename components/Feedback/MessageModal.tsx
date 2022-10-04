@@ -12,21 +12,11 @@ interface MessageProps {
   data: CommentProps
 }
 
-interface MutationProps {
-  suggestionId: number
-  userEmail: string
-  commentId?: number
-  body: string
-}
-
 const MessageModal = (props: MessageProps) => {
   const { type = 'comment', setOpen, data } = props
-  const { data: session, status } = useSession()
-  const queryClient = useQueryClient()
   const ref = useRef()
-
-  console.log(session)
-
+  const queryClient = useQueryClient()
+  const { data: session, status } = useSession()
   const [value, setValue] = useState('')
   const [charsLeft, setCharsLeft] = useState(value.length)
 
@@ -42,32 +32,42 @@ const MessageModal = (props: MessageProps) => {
     setCharsLeft(limit - value.length)
   }, [value])
 
-  const mutation = useMutation((param: MutationProps): Promise<number> => {
-    if (reply) {
-      return createReply(param)
-    }
+  const replyMutation = useMutation(createReply, {
+    onSuccess: () => {
+      setOpen(false)
+      queryClient.invalidateQueries('suggestion')
+    },
   })
 
-  const handleSubmitReply = (e) => {
+  const commentMutation = useMutation(createComment, {
+    onSuccess: () => {
+      setOpen(false)
+      queryClient.invalidateQueries('suggestion')
+    },
+  })
+
+  const handleSubmit = (e) => {
     e.preventDefault()
     if (value.trim().length > 0) {
       if (authenticated) {
-        const body = {
-          body: value,
-          suggestionId: data.suggestionId,
-          userEmail: session.user.email,
-          commentId: data.id,
+        if (reply) {
+          const body = {
+            body: value,
+            suggestionId: data.suggestionId,
+            userEmail: session.user.email,
+            commentId: data.id,
+          }
+          toast.success('Your reply has been added!')
+          return replyMutation.mutate(body)
         }
-        toast.success('Your comment has been added!')
-        mutation.mutate(body)
       }
+      toast('Please enter some feedback 😅')
     }
-    toast('Please enter some feedback 😅')
   }
 
-  const handleSubmitComment = () => {
-    console.log('oops')
-  }
+  // const handleSubmitComment = () => {
+  //   console.log('oops')
+  // }
 
   return (
     <>
@@ -75,7 +75,7 @@ const MessageModal = (props: MessageProps) => {
       <div className="fixed inset-0 z-50 flex bg-black/10 py-56 filter backdrop-blur-sm">
         <div className="container max-w-4xl">
           <form
-            onSubmit={reply ? handleSubmitReply : handleSubmitComment}
+            onSubmit={handleSubmit}
             ref={ref}
             className="container flex w-full flex-col gap-5 rounded-xl bg-white py-10 shadow-xl"
           >

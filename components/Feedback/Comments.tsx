@@ -23,8 +23,6 @@ export const ToastComment = () => {
 }
 
 const Comments = ({ comments }: Props) => {
-  console.log(comments)
-
   const { status } = useSession()
   const authenticated = status === 'authenticated'
 
@@ -85,7 +83,7 @@ const Comments = ({ comments }: Props) => {
                 height={50}
                 width={50}
               />
-              {comment.replies.length > 0 && (
+              {comment.replies && (
                 <div className="absolute top-[54px] bottom-0 left-1/2 w-[2px] -translate-x-1/2 transform bg-gray-light"></div>
               )}
             </div>
