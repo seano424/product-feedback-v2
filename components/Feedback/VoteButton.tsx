@@ -4,8 +4,7 @@ import { useSession } from 'next-auth/react'
 import { createVote, deleteVote } from '@/lib/api'
 import { SuggestionProps } from '@/lib/interfaces'
 import { ArrowUp, ArrowDown } from '@/icons'
-import { useQuery } from 'react-query'
-import { getSuggestion } from '@/lib/api'
+
 import toast, { Toaster } from 'react-hot-toast'
 
 interface Props extends SuggestionProps {
@@ -17,11 +16,6 @@ const VoteButton = (props: Props) => {
   const queryClient = useQueryClient()
   const { data: session, status } = useSession()
   const [hasVoted, setHasVoted] = useState(null)
-  const { data, status: queryStatus } = useQuery(
-    ['suggestion', suggestion.id],
-    getSuggestion
-  )
-  console.log(queryStatus)
 
   useEffect(() => {
     if (session) {
@@ -29,7 +23,7 @@ const VoteButton = (props: Props) => {
         suggestion.votes.find((v) => v.user.email === session.user.email)
       )
     }
-  }, [session, data])
+  }, [session, suggestion])
 
   const authenticated = status === 'authenticated'
   const small = viewport === 'small'
@@ -38,7 +32,6 @@ const VoteButton = (props: Props) => {
     onSuccess: () => {
       setHasVoted(true)
       queryClient.invalidateQueries('suggestions')
-      queryClient.invalidateQueries('suggestion')
     },
   })
 
@@ -46,7 +39,6 @@ const VoteButton = (props: Props) => {
     onSuccess: () => {
       setHasVoted(false)
       queryClient.invalidateQueries('suggestions')
-      queryClient.invalidateQueries('suggestion')
     },
   })
 

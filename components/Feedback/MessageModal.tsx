@@ -36,6 +36,7 @@ const MessageModal = (props: MessageProps) => {
     onSuccess: () => {
       setOpen(false)
       queryClient.invalidateQueries('suggestion')
+      queryClient.invalidateQueries('suggestions')
     },
   })
 
@@ -43,6 +44,7 @@ const MessageModal = (props: MessageProps) => {
     onSuccess: () => {
       setOpen(false)
       queryClient.invalidateQueries('suggestion')
+      queryClient.invalidateQueries('suggestions')
     },
   })
 
