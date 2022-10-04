@@ -28,7 +28,6 @@ const Comments = ({ comments }: Props) => {
 
   const [openComment, setOpenComment] = useState(false)
   const [openReply, setOpenReply] = useState(false)
-  const [replyTo, setReplyTo] = useState(null)
   const [data, setData] = useState(null)
 
   const handleComment = () => {
@@ -36,12 +35,19 @@ const Comments = ({ comments }: Props) => {
     authenticated && setOpenComment(true)
   }
 
-  const handleReply = (comment) => {
+  const handleReply = (data, type) => {
     !authenticated && toast.custom(<ToastComment />)
     if (authenticated) {
+      if (type === 'comment') {
+        const commentData = {
+          suggestionId: data.suggestionId,
+          commentId: data.id,
+          ...data,
+        }
+        setOpenReply(true)
+        setData(commentData)
+      }
       setOpenReply(true)
-      setReplyTo(comment.user.username)
-      setData(comment)
     }
   }
 
@@ -95,7 +101,7 @@ const Comments = ({ comments }: Props) => {
                     <p className="body-2 lowercase">@{comment.user.username}</p>
                   </div>
                   <button
-                    onClick={() => handleReply(comment)}
+                    onClick={() => handleReply(comment, 'comment')}
                     className="hidden font-bold text-blue sm:flex"
                   >
                     Reply
@@ -103,7 +109,7 @@ const Comments = ({ comments }: Props) => {
                 </div>
                 <p className="body-2">{comment.body}</p>
                 <button
-                  onClick={() => handleReply(comment)}
+                  onClick={() => handleReply(comment, 'comment')}
                   className="flex font-bold text-blue sm:hidden"
                 >
                   Reply
@@ -137,7 +143,7 @@ const Comments = ({ comments }: Props) => {
                             </p>
                           </div>
                           <button
-                            onClick={() => handleReply(reply)}
+                            onClick={() => handleReply(reply, 'reply')}
                             className="hidden font-bold text-blue sm:flex"
                           >
                             Reply
@@ -152,7 +158,7 @@ const Comments = ({ comments }: Props) => {
                           {reply.body}
                         </p>
                         <button
-                          onClick={() => handleReply(reply)}
+                          onClick={() => handleReply(reply, 'reply')}
                           className="flex font-bold text-blue sm:hidden"
                         >
                           Reply

@@ -6,10 +6,14 @@ import { useMutation, useQueryClient } from 'react-query'
 import { createComment, createReply } from '@/lib/api'
 import { CommentProps } from '@/lib/interfaces'
 
+interface ModalCommentProps extends CommentProps {
+  commentId: number
+}
+
 interface MessageProps {
   type: 'comment' | 'reply'
   setOpen: Dispatch<SetStateAction<boolean>>
-  data: CommentProps
+  data: ModalCommentProps
 }
 
 const MessageModal = (props: MessageProps) => {
@@ -57,7 +61,7 @@ const MessageModal = (props: MessageProps) => {
             body: value,
             suggestionId: data.suggestionId,
             userEmail: session.user.email,
-            commentId: data.id,
+            commentId: data.commentId,
           }
           toast.success('Your reply has been added!')
           return replyMutation.mutate(body)
