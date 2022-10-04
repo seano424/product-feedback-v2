@@ -5,6 +5,9 @@ import prisma from 'lib/prisma'
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req })
   if (req.method === 'DELETE') {
+    if (!session) {
+      return res.status(401).json({ message: 'Unauthorized.' })
+    }
     try {
       const { voteId } = req.body
 

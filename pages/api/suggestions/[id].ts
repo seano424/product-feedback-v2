@@ -8,9 +8,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         id: +req.query.id,
       },
       include: {
-        comments: true,
+        comments: {
+          include: {
+            user: true,
+          },
+        },
         category: true,
         status: true,
+        votes: {
+          include: {
+            user: true,
+          },
+        },
       },
     })
 

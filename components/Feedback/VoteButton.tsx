@@ -4,93 +4,69 @@ import { useSession } from 'next-auth/react'
 import { createVote, deleteVote } from '@/lib/api'
 import { SuggestionProps } from '@/lib/interfaces'
 import { ArrowUp, ArrowDown } from '@/icons'
+import toast, { Toaster } from 'react-hot-toast'
 
 interface Props extends SuggestionProps {
   viewport: string
 }
 
-interface MutationProps {
-  type: string
-  voteId?: number
-  suggestionId?: number
-}
-
 const VoteButton = (props: Props) => {
   const { viewport = 'small', suggestion } = props
-  const [voteCount, setVoteCount] = useState(suggestion.votes.length)
-  const [voted, setVoted] = useState(false)
-  const { data: session, status } = useSession()
   const queryClient = useQueryClient()
-  const [test, setTest] = useState(null)
-
-  const authenticated = status === 'authenticated'
-
-  useEffect(() => {
-    setTest(suggestion.votes)
-  }, [])
+  const { data: session, status } = useSession()
+  const [hasVoted, setHasVoted] = useState(null)
 
   useEffect(() => {
-    if (session?.user) {
-      setVoted(
-        suggestion.votes.some((v) => v.user.email === session.user.email)
+    if (session) {
+      setHasVoted(
+        suggestion.votes.find((v) => v.user.email === session.user.email)
       )
     }
   }, [session])
 
-  const mutation = useMutation(
-    (param: MutationProps): Promise<number> => {
-      if (param.type === 'create') {
-        return createVote(param)
-      }
-      return deleteVote(param)
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['suggestions'])
-      },
-    }
-  )
-
+  const authenticated = status === 'authenticated'
   const small = viewport === 'small'
+
+  const createMutation = useMutation(createVote, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('suggestions')
+    },
+  })
+
+  const deleteMutation = useMutation(deleteVote, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('suggestions')
+    },
+  })
+
   const handleVoteClick = async (e) => {
     e.stopPropagation()
     if (authenticated) {
-      if (voted && !mutation.isLoading) {
-        let vote = await suggestion.votes.find(
-          (v) => v.user.email === session?.user?.email
-        )
-        console.log(suggestion.votes)
-        setTest((prevState) =>
-          prevState.filter((v) => v.user.email !== session.user.email)
-        )
-
-        // setVoted(false)
-        // setVoteCount((prev) => prev - 1)
-        // mutation.mutate({ voteId: vote.id, type: 'delete' })
+      if (hasVoted) {
+        return deleteMutation.mutate({ voteId: hasVoted.id })
       }
-      if (!voted && !mutation.isLoading) {
-        setVoted(true)
-        setVoteCount((prev) => prev + 1)
-        mutation.mutate({
-          suggestionId: suggestion.id,
-          type: 'create',
-        })
-      }
+      return createMutation.mutate({
+        suggestionId: suggestion.id,
+      })
     }
+    toast('Please sign in to vote 🫶')
   }
 
   return (
-    <button
-      disabled={mutation.isLoading}
-      onClick={handleVoteClick}
-      className={`button-small items-center gap-2 hover:bg-opacity-80 ${
-        voted ? 'bg-fuschia text-white' : 'text-blue-navy'
-      } ${small ? 'flex lg:hidden' : 'hidden lg:flex'}`}
-    >
-      {voted ? <ArrowDown /> : <ArrowUp />}
-      {voteCount}
-      {mutation.isLoading && 'loading...'}
-    </button>
+    <>
+      <Toaster />
+      <button
+        onClick={handleVoteClick}
+        className={`button-small items-center gap-2 hover:bg-opacity-80 ${
+          small ? 'flex lg:hidden' : 'hidden lg:flex'
+        }
+        ${hasVoted ? 'bg-fuschia text-white' : 'text-blue-navy'}
+        `}
+      >
+        {hasVoted ? <ArrowDown /> : <ArrowUp />}
+        {suggestion.votes.length}
+      </button>
+    </>
   )
 }
 
