@@ -1,9 +1,13 @@
 @layer components {
   .button {
-    @apply flex w-max items-center justify-center gap-2 rounded-[10px] bg-fuschia py-4 px-8 text-[14px] font-bold leading-[20px] text-gray-light hover:bg-opacity-60;
+    @apply flex w-max items-center justify-center gap-2 rounded-[10px] bg-fuschia py-4 px-8 text-[14px] font-bold leading-[20px] text-gray-light transition-all duration-150 ease-linear hover:bg-opacity-90;
   }
 
   .button-small {
     @apply w-max rounded-[10px] bg-gray-light py-2 px-5 text-[13px] font-semibold leading-[19px] text-blue transition-all duration-100 ease-in-out hover:bg-opacity-90;
+  }
+
+  .input {
+    @apply w-full rounded-lg border-0 bg-gray-lightest px-5 py-3 focus:ring-0;
   }
 }

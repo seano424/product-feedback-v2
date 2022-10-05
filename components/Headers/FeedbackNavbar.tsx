@@ -2,8 +2,11 @@ import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { ArrowLeft } from '@/icons'
 import { UserProps } from '@/lib/interfaces'
+interface Props {
+  user?: UserProps
+}
 
-const FeedbackNavbar = ({ user }: UserProps) => {
+const FeedbackNavbar = ({ user }: Props) => {
   const { data: session, status } = useSession()
   const authenticated = status === 'authenticated'
   return (
@@ -14,7 +17,7 @@ const FeedbackNavbar = ({ user }: UserProps) => {
           Go Back
         </a>
       </Link>
-      {authenticated && user === session.user && (
+      {authenticated && user && user === session.user && (
         <button className="button bg-blue py-3">Edit Feedback</button>
       )}
       {!authenticated && (

@@ -117,7 +117,7 @@ const MessageModal = (props: MessageProps) => {
               value={value}
               rows={4}
               placeholder={`Type your ${type} here`}
-              className="w-full rounded-lg border-0 bg-gray-lightest focus:ring-0"
+              className="input"
               name={type}
               id={type}
             ></textarea>

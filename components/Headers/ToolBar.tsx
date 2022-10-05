@@ -4,6 +4,7 @@ import { useClickAway } from 'react-use'
 import { AnimatePresence } from 'framer-motion'
 import { useSession, signOut } from 'next-auth/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
+import Link from 'next/link'
 
 import { Plus, Bulb } from '@/icons'
 import { useGetSuggestions } from '@/lib/hooks/useGetSuggestions'
@@ -130,15 +131,19 @@ const ToolBar = (props: Props) => {
                 </button>
               )}
             </div>
-            <button className="button hidden sm:flex">
-              <Plus className="text-white" />
-              Add Feedback
-            </button>
-            {user ? (
-              <button className="button flex sm:hidden">
+            <Link href="/feedback/create">
+              <a className="button hidden sm:flex">
                 <Plus className="text-white" />
                 Add Feedback
-              </button>
+              </a>
+            </Link>
+            {user ? (
+              <Link href="/feedback/create">
+                <a className="button flex sm:hidden">
+                  <Plus className="text-white" />
+                  Add Feedback
+                </a>
+              </Link>
             ) : (
               <button
                 onClick={() => setShowModal(true)}
