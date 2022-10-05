@@ -10,7 +10,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
     try {
       const { voteId } = req.body
-
       const deletedVote = await prisma.vote.delete({
         where: {
           id: voteId,

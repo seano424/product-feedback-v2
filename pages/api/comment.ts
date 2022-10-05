@@ -11,7 +11,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
     try {
       const { suggestionId, userId, body } = req.body
-
       const createdComment = await prisma.comment.create({
         data: {
           suggestion: {

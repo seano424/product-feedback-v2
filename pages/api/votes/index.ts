@@ -11,7 +11,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
     try {
       const { suggestionId } = req.body
-
       const createdVote = await prisma.vote.create({
         data: {
           user: {

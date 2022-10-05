@@ -4,13 +4,13 @@ import prisma from 'lib/prisma'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req })
+
   if (req.method === 'DELETE') {
     if (!session) {
       return res.status(401).json({ message: 'Unauthorized.' })
     }
     try {
       const { replyId } = req.body
-
       const deletedReply = await prisma.reply.delete({
         where: {
           id: replyId,
@@ -30,8 +30,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
     try {
       const { commentId, body, suggestionId, replyId } = req.body
-      console.log('from the udpate api', req.body)
-
       const updatedReply = await prisma.reply.upsert({
         where: { id: replyId },
         update: {
