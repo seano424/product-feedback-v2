@@ -8,8 +8,8 @@ export const getStatuses = async () => {
   return await fetcher('/statuses')
 }
 
-export const getSuggestion = async (param) => {
-  const suggestionId = param.queryKey[1]
+export const getSuggestion = async (body) => {
+  const suggestionId = body.queryKey[1]
   return await fetcher(`/suggestions/${suggestionId}`)
 }
 
@@ -17,26 +17,30 @@ export const getSuggestions = async () => {
   return await fetcher('/suggestions')
 }
 
-export const deleteVote = async (param) => {
-  return await fetcher(`votes/${param.voteId}`, param, 'DELETE')
+export const deleteVote = async (body) => {
+  return await fetcher(`votes/${body.voteId}`, body, 'DELETE')
 }
 
-export const deleteReply = async (param) => {
-  return await fetcher(`replies/${param.replyId}`, param, 'DELETE')
+export const deleteReply = async (body) => {
+  return await fetcher(`replies/${body.replyId}`, body, 'DELETE')
 }
 
-export const updateReply = async (param) => {
-  return await fetcher(`replies/${param.replyId}`, param, 'PATCH')
+export const updateReply = async (body) => {
+  return await fetcher(`replies/${body.replyId}`, body, 'PATCH')
 }
 
-export const createVote = async (param) => {
-  return await fetcher('votes', param, 'POST')
+export const createSuggestion = async (body) => {
+  return await fetcher('suggestions', body, 'POST')
 }
 
-export const createComment = async (param) => {
-  return await fetcher('comment', param, 'POST')
+export const createVote = async (body) => {
+  return await fetcher('votes', body, 'POST')
 }
 
-export const createReply = async (param) => {
-  return await fetcher('reply', param, 'POST')
+export const createComment = async (body) => {
+  return await fetcher('comment', body, 'POST')
+}
+
+export const createReply = async (body) => {
+  return await fetcher('reply', body, 'POST')
 }

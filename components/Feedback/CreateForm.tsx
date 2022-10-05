@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { categories } from '@/lib/data'
 import toast, { Toaster } from 'react-hot-toast'
+import { useMutation, useQueryClient } from 'react-query'
+import { createSuggestion } from '@/lib/api'
 
 const CreateForm = () => {
   const [values, setValues] = useState({
@@ -8,10 +10,13 @@ const CreateForm = () => {
     description: '',
     category: categories[0].name,
   })
+  const queryClient = useQueryClient()
 
-  useEffect(() => {
-    toast.dismiss()
-  }, [])
+  const createMutation = useMutation(createSuggestion, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['suggestions'])
+    },
+  })
 
   const handleChange = (e) => {
     e.preventDefault()
@@ -58,14 +63,11 @@ const CreateForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    toast(values.category)
-    // status
-    // user
     const body = {
       ...values,
-      statusName: 'In-Progress',
+      status: 'In-Progress',
     }
-    console.log(body)
+    return createMutation.mutate(body)
   }
 
   return (
