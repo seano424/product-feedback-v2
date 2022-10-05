@@ -10,7 +10,6 @@ const Suggestion = (props: SuggestionProps) => {
   const { suggestion } = props
   const setCategory = useSetRecoilState(categoriesState)
   const router = useRouter()
-
   const [clicked, setClicked] = useState(false)
 
   const handleSuggestionClick = () => {
@@ -30,11 +29,7 @@ const Suggestion = (props: SuggestionProps) => {
         className="flex w-full cursor-pointer items-center justify-between rounded-xl bg-white/80 p-5 shadow-xl"
       >
         <div className="flex w-full items-center gap-10">
-          <VoteButton
-            viewport="large"
-            suggestion={suggestion}
-            id={suggestion.id}
-          />
+          <VoteButton viewport="large" suggestion={suggestion} />
           <div className="flex w-full flex-col items-start gap-3">
             <p className="h3">{suggestion.title}</p>
             <p className="body-1 text-gray">{suggestion.description}</p>
@@ -42,11 +37,7 @@ const Suggestion = (props: SuggestionProps) => {
               {suggestion.category?.name ?? 'UI'}
             </button>
             <div className="flex w-full items-center justify-between lg:hidden">
-              <VoteButton
-                viewport="small"
-                suggestion={suggestion}
-                id={suggestion.id}
-              />
+              <VoteButton viewport="small" suggestion={suggestion} />
               <div className="flex items-center gap-3 text-lg">
                 <Comments />
                 {suggestion.comments?.length ?? '100'}

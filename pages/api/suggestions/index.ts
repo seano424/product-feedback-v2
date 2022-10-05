@@ -21,6 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
               user: true,
             },
           },
+          user: true,
         },
       })
 
