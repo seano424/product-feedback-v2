@@ -49,7 +49,7 @@ export interface CommentProps {
 }
 
 export interface SuggestionProps {
-  suggestion: {
+  suggestion?: {
     votes: {
       id?: number
       userId?: number

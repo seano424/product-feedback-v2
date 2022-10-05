@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react'
 import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { ArrowLeft } from '@/icons'
@@ -13,9 +14,11 @@ interface Props {
     updatedAt: string
     username: string
   }
+
+  toggle?: Dispatch<SetStateAction<boolean>>
 }
 
-const FeedbackNavbar = ({ user }: Props) => {
+const FeedbackNavbar = ({ user, toggle }: Props) => {
   const { data: session, status } = useSession()
   const authenticated = status === 'authenticated'
 
@@ -28,7 +31,12 @@ const FeedbackNavbar = ({ user }: Props) => {
         </a>
       </Link>
       {authenticated && user && user.email === session.user.email && (
-        <button className="button bg-blue py-3">Edit Feedback</button>
+        <button
+          onClick={() => toggle((state) => !state)}
+          className="button bg-blue py-3"
+        >
+          Edit Feedback
+        </button>
       )}
       {!authenticated && (
         <button

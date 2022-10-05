@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'lib/prisma'
 import { resolve } from 'path'
 import { getSession } from 'next-auth/react'
+import { connect } from 'tls'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req })
@@ -44,10 +45,23 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(401).json({ message: 'Unauthorized.' })
     }
     try {
-      const { title, description, category, status } = req.body
+      const { title, description, category, status, id } = req.body
       const createdReply = await prisma.suggestion.upsert({
-        where: { title: title },
-        update: {},
+        where: { id: id },
+        update: {
+          title: title,
+          description: description,
+          category: {
+            connect: {
+              name: category,
+            },
+          },
+          status: {
+            connect: {
+              name: status,
+            },
+          },
+        },
         create: {
           title: title,
           description: description,

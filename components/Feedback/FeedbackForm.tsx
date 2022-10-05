@@ -1,20 +1,31 @@
-import { useState } from 'react'
+import { useState, Dispatch, SetStateAction } from 'react'
 import { categories } from '@/lib/data'
 import toast, { Toaster } from 'react-hot-toast'
 import { useMutation, useQueryClient } from 'react-query'
 import { createSuggestion } from '@/lib/api'
+import { useRouter } from 'next/router'
+import { SuggestionProps } from '@/lib/interfaces'
+interface Props extends SuggestionProps {
+  toggle?: Dispatch<SetStateAction<boolean>>
+}
 
-const CreateForm = () => {
+const FeedbackForm = ({ toggle, suggestion }: Props) => {
+  const router = useRouter()
   const [values, setValues] = useState({
-    title: '',
-    description: '',
-    category: categories[0].name,
+    title: suggestion ? suggestion.title : '',
+    description: suggestion ? suggestion.description : '',
+    category: suggestion ? suggestion.category.name : categories[0].name,
   })
   const queryClient = useQueryClient()
 
   const createMutation = useMutation(createSuggestion, {
     onSuccess: () => {
       queryClient.invalidateQueries(['suggestions'])
+      if (toggle) {
+        queryClient.invalidateQueries(['suggestion', suggestion.id])
+        return toggle((state) => !state)
+      }
+      router.push('/')
     },
   })
 
@@ -28,8 +39,8 @@ const CreateForm = () => {
 
   const handleCancel = (e) => {
     e.preventDefault()
-
     const handleClearValues = (id) => {
+      toggle && toggle((state) => !state)
       setValues({
         title: '',
         description: '',
@@ -37,7 +48,6 @@ const CreateForm = () => {
       })
       toast.dismiss(id)
     }
-
     toast((t) => (
       <div className="flex flex-col items-center justify-center gap-5 p-4">
         <p>You're about to undo everything 😱</p>
@@ -66,6 +76,7 @@ const CreateForm = () => {
     const body = {
       ...values,
       status: 'In-Progress',
+      id: suggestion ? suggestion.id : 0,
     }
     return createMutation.mutate(body)
   }
@@ -77,7 +88,9 @@ const CreateForm = () => {
         onSubmit={handleSubmit}
         className="w-full rounded-xl bg-white/80 p-10 text-gray-dark shadow-xl"
       >
-        <h1 className="h1 mt-4">Create New Feedback</h1>
+        <h1 className="h1 mt-4">
+          {suggestion ? 'Edit' : 'Create New'} Feedback
+        </h1>
         <div className="mt-8 flex flex-col gap-5">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
@@ -118,7 +131,7 @@ const CreateForm = () => {
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
-              <h3 className="h3">Feedback Title</h3>
+              <h3 className="h3">Feedback Description</h3>
               <label className="body-1">
                 Include any specific comments on what should be improved, added,
                 etc.
@@ -145,7 +158,7 @@ const CreateForm = () => {
             Cancel
           </button>
           <button type="submit" className="button">
-            Add Feedback
+            {suggestion ? 'Edit' : 'Add'} Feedback
           </button>
         </div>
       </form>
@@ -153,4 +166,4 @@ const CreateForm = () => {
   )
 }
 
-export default CreateForm
+export default FeedbackForm
