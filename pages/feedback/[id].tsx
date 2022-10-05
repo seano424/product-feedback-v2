@@ -28,7 +28,7 @@ const Feedback = ({ id }) => {
                 </div>
               </div>
             )}
-            <FeedbackNavbar toggle={setIsFormOpen} user={suggestion.user} />
+            <FeedbackNavbar toggle={setIsFormOpen} suggestion={suggestion} />
             <Suggestion suggestion={suggestion} />
             <Comments comments={suggestion.comments} />
           </>

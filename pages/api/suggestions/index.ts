@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'lib/prisma'
 import { resolve } from 'path'
 import { getSession } from 'next-auth/react'
-import { connect } from 'tls'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req })

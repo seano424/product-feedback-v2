@@ -17,6 +17,10 @@ export const getSuggestions = async () => {
   return await fetcher('/suggestions')
 }
 
+export const deleteSuggestion = async (body) => {
+  return await fetcher(`suggestions/${body.suggestionId}`, body, 'DELETE')
+}
+
 export const deleteVote = async (body) => {
   return await fetcher(`votes/${body.voteId}`, body, 'DELETE')
 }
