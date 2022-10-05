@@ -138,7 +138,11 @@ const Comments = ({ comments }: Props) => {
                 <div className="flex w-full flex-row justify-between md:items-end">
                   <div className="flex flex-col gap-1">
                     <p className="h4">{comment.user.name}</p>
-                    <p className="body-2 lowercase">@{comment.user.username}</p>
+                    <p className="body-2 lowercase">
+                      @
+                      {comment.user.username ??
+                        comment.user.email.toLocaleLowerCase()}
+                    </p>
                   </div>
                   <button
                     onClick={() => handleReply(comment, 'comment')}

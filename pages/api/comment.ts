@@ -9,8 +9,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     if (!session) {
       return res.status(401).json({ message: 'Unauthorized.' })
     }
+    console.log('hello there')
     try {
-      const { suggestionId, userId, body } = req.body
+      const { suggestionId, body } = req.body
       const createdComment = await prisma.comment.create({
         data: {
           suggestion: {
@@ -20,7 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           },
           user: {
             connect: {
-              id: userId,
+              email: session.user.email,
             },
           },
           body: body,

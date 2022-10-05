@@ -31,7 +31,7 @@ const Suggestion = (props: SuggestionProps) => {
         <div className="flex w-full items-center gap-10">
           <VoteButton viewport="large" suggestion={suggestion} />
           <div className="flex w-full flex-col items-start gap-3">
-            <p className="h3">{suggestion.title}</p>
+            <h3 className="h3">{suggestion.title}</h3>
             <p className="body-1 text-gray">{suggestion.description}</p>
             <button onClick={handleCategoryClick} className="button-small">
               {suggestion.category?.name ?? 'UI'}

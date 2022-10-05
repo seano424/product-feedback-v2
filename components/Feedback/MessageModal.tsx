@@ -26,6 +26,7 @@ const MessageModal = (props: MessageProps) => {
   const [charsLeft, setCharsLeft] = useState(value.length)
   const authenticated = status === 'authenticated'
   const reply = type === 'reply'
+  console.log(data)
 
   useClickAway(ref, () => {
     setOpen(false)
@@ -57,14 +58,6 @@ const MessageModal = (props: MessageProps) => {
     },
   })
 
-  const commentMutation = useMutation(createComment, {
-    onSuccess: () => {
-      setOpen(false)
-      queryClient.invalidateQueries('suggestion')
-      queryClient.invalidateQueries('suggestions')
-    },
-  })
-
   const handleSubmit = (e) => {
     e.preventDefault()
     if (value.trim().length > 0) {
@@ -93,10 +86,6 @@ const MessageModal = (props: MessageProps) => {
       toast('Please enter some feedback 😅')
     }
   }
-
-  // const handleSubmitComment = () => {
-  //   console.log('oops')
-  // }
 
   return (
     <>
