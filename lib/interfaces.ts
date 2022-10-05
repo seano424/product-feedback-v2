@@ -64,6 +64,10 @@ export interface SuggestionProps {
       name: string
       type: string
     }
+    status?: {
+      name: string
+      type: string
+    }
     user: {
       createdAt: string
       email: string

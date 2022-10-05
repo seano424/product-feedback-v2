@@ -359,12 +359,12 @@ const statuses: {
   type: string
 }[] = [
   {
-    name: 'Planned',
-    type: 'planned',
-  },
-  {
     name: 'In-Progress',
     type: 'in-progress',
+  },
+  {
+    name: 'Planned',
+    type: 'planned',
   },
   {
     name: 'Live',
