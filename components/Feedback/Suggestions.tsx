@@ -3,13 +3,9 @@ import { fakeSuggestions } from '@/lib/data'
 import { useSort } from '@/lib/hooks/useSort'
 import GhostSuggestion from './GhostSuggestion'
 import Suggestion from './Suggestion'
-import { getSuggestions } from '@/lib/api'
 
 const Suggestions = () => {
-  const { data: suggestions, isLoading } = useQuery(
-    ['suggestions'],
-    getSuggestions
-  )
+  const { data: suggestions, isLoading } = useQuery(['suggestions'])
   const sortedData = useSort(suggestions)
 
   if (isLoading)
