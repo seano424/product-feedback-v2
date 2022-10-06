@@ -167,7 +167,6 @@ const FeedbackForm = ({ toggle, suggestion }: Props) => {
               </label>
             </div>
             <textarea
-              required
               onChange={handleChange}
               value={values.description}
               rows={4}
