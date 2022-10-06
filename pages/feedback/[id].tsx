@@ -3,7 +3,7 @@ import FeedbackNavbar from '@/components/Headers/FeedbackNavbar'
 import Suggestion from '@/components/Feedback/Suggestion'
 import Comments from '@/components/Feedback/Comments'
 import FeedbackForm from '@/components/Feedback/FeedbackForm'
-import { dehydrate, QueryClient, useQuery } from 'react-query'
+import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
 import { getSuggestion } from '@/lib/api'
 import CommentForm from '@/components/Feedback/CommentForm'
 

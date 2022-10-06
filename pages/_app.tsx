@@ -3,9 +3,13 @@ import type { AppProps } from 'next/app'
 import { LazyMotion, domAnimation } from 'framer-motion'
 import { RecoilRoot } from 'recoil'
 import '../styles/globals.css'
-import { QueryClientProvider, QueryClient, Hydrate } from 'react-query'
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 import { SessionProvider as AuthProvider } from 'next-auth/react'
-import { ReactQueryDevtools } from 'react-query/devtools'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [queryClient] = useState(() => new QueryClient())

@@ -1,4 +1,4 @@
-import { dehydrate, QueryClient } from 'react-query'
+import { dehydrate, QueryClient } from '@tanstack/react-query'
 import Suggestions from '@/components/Feedback/Suggestions'
 import Layout from '@/components/Layout'
 import { getCategories, getStatuses, getSuggestions } from 'lib/api'

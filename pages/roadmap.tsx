@@ -1,5 +1,5 @@
 import { getStatuses } from '@/lib/api'
-import { QueryClient, dehydrate } from 'react-query'
+import { QueryClient, dehydrate } from '@tanstack/react-query'
 import RoadmapNavbar from '@/components/Roadmap/RoadmapNavbar'
 import RoadmapGrid from '@/components/Roadmap/RoadmapGrid'
 

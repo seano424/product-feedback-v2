@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { Dispatch, SetStateAction } from 'react'
-import { useMutation, useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { signIn, useSession } from 'next-auth/react'
 import { SuggestionProps } from '@/lib/interfaces'
 import { deleteSuggestion } from '@/lib/api'

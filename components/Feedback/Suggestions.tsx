@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { fakeSuggestions } from '@/lib/data'
 import { useSort } from '@/lib/hooks/useSort'
 import GhostSuggestion from './GhostSuggestion'

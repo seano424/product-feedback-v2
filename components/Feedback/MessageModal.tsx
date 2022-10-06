@@ -2,7 +2,7 @@ import { useEffect, useState, Dispatch, SetStateAction, useRef } from 'react'
 import { useClickAway } from 'react-use'
 import { useSession } from 'next-auth/react'
 import toast, { Toaster } from 'react-hot-toast'
-import { useMutation, useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { updateComment, createReply, updateReply } from '@/lib/api'
 import { CommentProps } from '@/lib/interfaces'
 

@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useSession, signIn } from 'next-auth/react'
 import toast, { Toaster } from 'react-hot-toast'
 import MessageModal from './MessageModal'
-import { useMutation, useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { deleteReply, deleteComment } from '@/lib/api'
 import { CommentProps } from '@/lib/interfaces'
 

@@ -1,12 +1,12 @@
 import { useState, Dispatch, SetStateAction } from 'react'
 import { categories, statuses } from '@/lib/data'
 import toast, { Toaster } from 'react-hot-toast'
-import { useMutation, useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createSuggestion } from '@/lib/api'
 import { useRouter } from 'next/router'
 import { SuggestionProps } from '@/lib/interfaces'
 
-interface Props extends SuggestionProps {
+interface Props {
   toggle?: Dispatch<SetStateAction<boolean>>
   suggestion: SuggestionProps
 }
