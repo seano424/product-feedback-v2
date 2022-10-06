@@ -21,8 +21,8 @@ const Feedback = ({ id }) => {
         {!isLoading && (
           <>
             {isFormOpen && (
-              <div className="absolute inset-0 bg-gray-light py-10">
-                <div className="container mx-auto flex max-w-4xl flex-col">
+              <div className="absolute inset-0">
+                <div className="container mx-auto flex max-w-4xl flex-col bg-gray-light py-10">
                   <FeedbackForm
                     suggestion={suggestion}
                     toggle={setIsFormOpen}

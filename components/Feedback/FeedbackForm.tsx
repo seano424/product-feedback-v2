@@ -52,22 +52,20 @@ const FeedbackForm = ({ toggle, suggestion }: Props) => {
       toast.dismiss(id)
     }
     toast((t) => (
-      <div className="flex flex-col items-center justify-center gap-5 p-4">
-        <p>You're about to undo everything 😱</p>
-        <div className="flex gap-5">
+      <div className="flex flex-col items-center justify-center gap-2 p-2">
+        <p>You sure?</p>
+        <div className="flex gap-1">
           <button
-            className="button bg-red px-3"
+            className="button w-20 px-3 focus:border-2"
             onClick={() => handleClearValues(t.id)}
           >
-            {' '}
-            Continue
+            Yes
           </button>
           <button
-            className="button bg-green-500 px-3 "
+            className="button w-20 bg-red px-3 focus:border-2"
             onClick={() => toast.dismiss(t.id)}
           >
-            {' '}
-            Oops nevermind
+            Dismiss
           </button>
         </div>
       </div>
@@ -172,7 +170,7 @@ const FeedbackForm = ({ toggle, suggestion }: Props) => {
               required
               onChange={handleChange}
               value={values.description}
-              rows={8}
+              rows={4}
               placeholder=""
               className="input"
               name="description"
