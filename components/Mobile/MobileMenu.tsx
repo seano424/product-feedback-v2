@@ -1,7 +1,7 @@
 import { AnimatePresence, m } from 'framer-motion'
 import useShowMobileNav from 'lib/hooks/useShowMobileNav'
 import Categories from '../Categories'
-import RoadMap from '../RoadMap'
+import RoadMapCard from '../RoadMapCard'
 import { useRef } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 
@@ -39,7 +39,7 @@ export default function Menu() {
           className="fixed right-0 top-20 z-50 flex min-h-screen  w-2/3 flex-col gap-8 bg-gray-light p-5 pt-10 lg:hidden"
         >
           <Categories />
-          <RoadMap />
+          <RoadMapCard />
           {session.user && (
             <div>
               <button

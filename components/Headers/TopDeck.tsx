@@ -1,5 +1,5 @@
 import Categories from '../Categories'
-import RoadMap from '../RoadMap'
+import RoadMapCard from '../RoadMapCard'
 import Image from 'next/image'
 
 const TopDeck = () => {
@@ -25,7 +25,7 @@ const TopDeck = () => {
           <Categories />
         </div>
         <div className="w-1/3 rounded-xl shadow-xl  xl:w-full xl:border xl:border-gray-light">
-          <RoadMap />
+          <RoadMapCard />
         </div>
       </div>
     </div>
