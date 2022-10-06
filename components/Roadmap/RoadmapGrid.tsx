@@ -12,7 +12,7 @@ const descriptions = {
 const RoadmapGrid = () => {
   const { data: statuses } = useGetStatuses()
   return (
-    <section className="container mx-auto mt-8 grid max-w-4xl grid-cols-2 gap-5 sm:grid-cols-3">
+    <section className="container mx-auto mt-8 grid max-w-4xl grid-cols-2 gap-5 lg:grid-cols-3">
       {statuses &&
         statuses.map((status, i) => (
           <div key={status.name} className="flex flex-col gap-4">
@@ -29,7 +29,7 @@ const RoadmapGrid = () => {
               <div
                 key={suggestion.id}
                 className={clsx(
-                  'flex flex-col gap-3 rounded-lg border-t-2 bg-white p-4 shadow',
+                  'flex flex-col gap-3 rounded border-t-8 bg-white p-5',
                   i === 0 && 'border-orange',
                   i === 1 && 'border-fuschia',
                   i === 2 && 'border-blue-light'

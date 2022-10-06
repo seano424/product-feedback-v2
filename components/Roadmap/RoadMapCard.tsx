@@ -27,7 +27,7 @@ const RoadmapCard = () => {
     >
       <div className="flex justify-between">
         <h2 className="h2">Roadmap</h2>
-        <Link href="/">
+        <Link href="/roadmap">
           <a className="body-1 text-blue underline underline-offset-1">View</a>
         </Link>
       </div>
