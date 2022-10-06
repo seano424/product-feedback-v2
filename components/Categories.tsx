@@ -27,10 +27,10 @@ const cats = [
 
 const Categories = () => {
   const { data, isLoading } = useGetCategories()
-  const [state, setState] = useRecoilState(categoriesState)
+  const [categories, setCategories] = useRecoilState(categoriesState)
 
   const handleClick = (type) => {
-    setState(type)
+    setCategories(type)
   }
 
   return (
@@ -39,7 +39,7 @@ const Categories = () => {
         onClick={() => handleClick('all')}
         className={`button-small
           ${
-            state === 'all'
+            categories === 'all'
               ? 'bg-blue text-gray-light'
               : 'bg-gray-light text-blue '
           }
@@ -54,7 +54,7 @@ const Categories = () => {
               disabled
               className={`button-small animate-pulse opacity-40
                 ${
-                  state === filter.type
+                  categories === filter.type
                     ? 'bg-blue text-gray-light'
                     : 'bg-gray-light text-blue '
                 }
@@ -69,7 +69,7 @@ const Categories = () => {
               onClick={() => handleClick(filter.type)}
               className={`button-small
                 ${
-                  state === filter.type
+                  categories === filter.type
                     ? 'bg-blue text-gray-light'
                     : 'bg-gray-light text-blue '
                 }
