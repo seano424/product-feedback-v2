@@ -4,7 +4,7 @@ import { useSession, signIn } from 'next-auth/react'
 import toast, { Toaster } from 'react-hot-toast'
 import MessageModal from './MessageModal'
 import { useMutation, useQueryClient } from 'react-query'
-import { deleteReply } from '@/lib/api'
+import { deleteReply, deleteComment } from '@/lib/api'
 import { CommentProps } from '@/lib/interfaces'
 
 interface Props {
@@ -49,6 +49,12 @@ const Comments = ({ comments }: Props) => {
     },
   })
 
+  const deleteCommentMutation = useMutation(deleteComment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['suggestion', comments[0].suggestionId])
+    },
+  })
+
   const handleReply = (data, type) => {
     !authenticated && toast.custom(<ToastComment />)
     if (authenticated) {
@@ -70,9 +76,17 @@ const Comments = ({ comments }: Props) => {
   const handleDelete = (reply) => {
     if (authenticated) {
       toast.error('deleting reply')
-      console.log('delete: ', reply)
       return deleteMutation.mutate({
         replyId: reply.id,
+      })
+    }
+  }
+
+  const handleDeleteComment = (comment) => {
+    if (authenticated) {
+      toast.error('deleting reply')
+      return deleteCommentMutation.mutate({
+        commentId: comment.id,
       })
     }
   }
@@ -82,6 +96,14 @@ const Comments = ({ comments }: Props) => {
       setIsEditing(true)
       setData(reply)
       setOpenReply(true)
+    }
+  }
+
+  const handleUpdateComment = (comment) => {
+    if (authenticated) {
+      setIsEditing(true)
+      setData(comment)
+      setOpenComment(true)
     }
   }
 
@@ -144,20 +166,62 @@ const Comments = ({ comments }: Props) => {
                         comment.user.email.toLocaleLowerCase()}
                     </p>
                   </div>
-                  <button
-                    onClick={() => handleReply(comment, 'comment')}
-                    className="hidden font-bold text-blue sm:flex"
-                  >
-                    Reply
-                  </button>
+
+                  <div className="hidden items-center gap-2 sm:flex">
+                    {session && session.user.email === comment.user.email && (
+                      <button
+                        onClick={() => handleDeleteComment(comment)}
+                        className="font-bold text-red"
+                      >
+                        Delete
+                      </button>
+                    )}
+                    {session && session.user.email === comment.user.email && (
+                      <button
+                        onClick={() => handleUpdateComment(comment)}
+                        className="font-bold text-fuschia"
+                      >
+                        Edit
+                      </button>
+                    )}
+                    {session && session.user.email !== comment.user.email && (
+                      <button
+                        onClick={() => handleReply(comment, 'comment')}
+                        className="font-bold text-blue"
+                      >
+                        Reply
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <p className="body-2">{comment.body}</p>
-                <button
-                  onClick={() => handleReply(comment, 'comment')}
-                  className="flex font-bold text-blue sm:hidden"
-                >
-                  Reply
-                </button>
+
+                <div className="flex items-center gap-2 font-bold text-blue sm:hidden">
+                  {session && session.user.email === comment.user.email && (
+                    <button
+                      onClick={() => handleDeleteComment(comment)}
+                      className="font-bold text-red"
+                    >
+                      Delete
+                    </button>
+                  )}
+                  {session && session.user.email === comment.user.email && (
+                    <button
+                      onClick={() => handleUpdateComment(comment)}
+                      className="font-bold text-fuschia"
+                    >
+                      Edit
+                    </button>
+                  )}
+                  {session && session.user.email !== comment.user.email && (
+                    <button
+                      onClick={() => handleReply(comment, 'comment')}
+                      className="font-bold text-blue"
+                    >
+                      Reply
+                    </button>
+                  )}
+                </div>
               </div>
 
               {comment.replies &&

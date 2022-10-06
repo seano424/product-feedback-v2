@@ -1,16 +1,16 @@
-import { useState, useRef, Dispatch, SetStateAction } from 'react'
-import { useSetRecoilState } from 'recoil'
+import Link from 'next/link'
+import { useRecoilState } from 'recoil'
 import { useClickAway } from 'react-use'
 import { AnimatePresence } from 'framer-motion'
 import { useSession, signOut } from 'next-auth/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
-import Link from 'next/link'
+import { useState, useRef, Dispatch, SetStateAction } from 'react'
 
 import { Plus, Bulb } from '@/icons'
 import { useGetSuggestions } from '@/lib/hooks/useGetSuggestions'
 import { sortByState } from '@/lib/atoms/sortByState'
 
-const sortBy = [
+const options = [
   {
     text: 'Most Upvotes',
     type: 'most-upvotes',
@@ -29,6 +29,13 @@ const sortBy = [
   },
 ]
 
+const sortObj = {
+  'least-upvotes': 'Least Upvotes',
+  'least-comments': 'Least Comments',
+  'most-comments': 'Most Comments',
+  'most-upvotes': 'Most Upvotes',
+}
+
 interface Props {
   setShowModal: Dispatch<SetStateAction<boolean>>
 }
@@ -36,15 +43,11 @@ interface Props {
 const ToolBar = (props: Props) => {
   const { setShowModal } = props
   const ref = useRef()
-
   const { data: session } = useSession()
   const { data: suggestions } = useGetSuggestions()
-  const setSortByState = useSetRecoilState(sortByState)
-
-  const [filter, setFilter] = useState(sortBy[0])
+  const [sortState, setSortState] = useRecoilState(sortByState)
   const [isOpen, setFilterOpen] = useState(false)
   const [clickedAway, setClickedAway] = useState(false)
-
   const user = session?.user
 
   useClickAway(ref, () => {
@@ -56,9 +59,8 @@ const ToolBar = (props: Props) => {
     }, 200)
   })
 
-  const handleSetSortBy = async (choice, type) => {
-    await setSortByState(type)
-    await setFilter(choice)
+  const handleSetSortBy = async (type) => {
+    await setSortState(type)
     setFilterOpen((state) => !state)
   }
 
@@ -83,7 +85,9 @@ const ToolBar = (props: Props) => {
             <div className="h3 relative">
               <button onClick={handleOpen} className="flex items-center gap-2">
                 <span className="hidden sm:flex">Sort by:</span>
-                {filter.text}
+
+                {sortObj[sortState]}
+
                 <ChevronDownIcon
                   className={`${
                     isOpen ? 'rotate-180' : 'rotate-0'
@@ -96,13 +100,13 @@ const ToolBar = (props: Props) => {
                     ref={ref}
                     className="absolute top-20 flex w-80 flex-col gap-4 rounded-lg bg-white text-black shadow-lg"
                   >
-                    {sortBy.map((choice) => (
+                    {options.map((choice) => (
                       <button
                         key={choice.type}
                         className={`h3 flex w-full justify-start border-b border-gray-light px-5 py-3 transition-all duration-300 hover:text-fuschia ${
-                          filter.type === choice.type && 'text-fuschia'
+                          sortState === choice.type && 'text-fuschia'
                         }`}
-                        onClick={() => handleSetSortBy(choice, choice.type)}
+                        onClick={() => handleSetSortBy(choice.type)}
                       >
                         {choice.text}
                       </button>

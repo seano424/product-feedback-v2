@@ -29,8 +29,18 @@ export const deleteReply = async (body) => {
   return await fetcher(`replies/${body.replyId}`, body, 'DELETE')
 }
 
+export const deleteComment = async (body) => {
+  console.log(body)
+
+  // return await fetcher(`comments/${body.commentId}`, body, 'DELETE')
+}
+
 export const updateReply = async (body) => {
   return await fetcher(`replies/${body.replyId}`, body, 'PATCH')
+}
+
+export const updateComment = async (body) => {
+  return await fetcher(`comments/${body.commentId}`, body, 'PATCH')
 }
 
 export const createSuggestion = async (body) => {
@@ -42,7 +52,7 @@ export const createVote = async (body) => {
 }
 
 export const createComment = async (body) => {
-  return await fetcher('comment', body, 'POST')
+  return await fetcher('comments', body, 'POST')
 }
 
 export const createReply = async (body) => {

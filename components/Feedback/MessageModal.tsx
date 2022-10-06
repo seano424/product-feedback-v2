@@ -3,7 +3,7 @@ import { useClickAway } from 'react-use'
 import { useSession } from 'next-auth/react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useMutation, useQueryClient } from 'react-query'
-import { createComment, createReply, updateReply } from '@/lib/api'
+import { updateComment, createReply, updateReply } from '@/lib/api'
 import { CommentProps } from '@/lib/interfaces'
 
 interface ModalCommentProps extends CommentProps {
@@ -19,14 +19,14 @@ interface MessageProps {
 
 const MessageModal = (props: MessageProps) => {
   const { type = 'comment', setOpen, data, isEditing } = props
-  const ref = useRef()
-  const queryClient = useQueryClient()
   const { data: session, status } = useSession()
   const [value, setValue] = useState('')
   const [charsLeft, setCharsLeft] = useState(value.length)
+
+  const queryClient = useQueryClient()
+  const ref = useRef()
   const authenticated = status === 'authenticated'
   const reply = type === 'reply'
-  console.log(data)
 
   useClickAway(ref, () => {
     setOpen(false)
@@ -46,6 +46,13 @@ const MessageModal = (props: MessageProps) => {
       setOpen(false)
       queryClient.invalidateQueries('suggestion')
       queryClient.invalidateQueries('suggestions')
+    },
+  })
+
+  const createCommentMutation = useMutation(updateComment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['suggestion', data.suggestionId])
+      setOpen(false)
     },
   })
 
@@ -73,14 +80,21 @@ const MessageModal = (props: MessageProps) => {
           return createReplyMutation.mutate(body)
         }
         if (reply && isEditing) {
-          console.log(data)
-
           return updateReplyMutation.mutate({
             commentId: data.commentId,
             body: value,
             suggestionId: data.suggestionId,
             replyId: +data.id,
           })
+        }
+        if (!reply) {
+          console.log('okay from modal: ', data)
+          const body = {
+            body: value,
+            suggestionId: data.suggestionId,
+            commentId: data.id,
+          }
+          createCommentMutation.mutate(body)
         }
       }
       toast('Please enter some feedback 😅')
