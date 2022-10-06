@@ -7,8 +7,9 @@ import { deleteSuggestion } from '@/lib/api'
 import toast, { Toaster } from 'react-hot-toast'
 import BackButton from '../Utilities/BackButton'
 
-interface Props extends SuggestionProps {
+interface Props {
   toggle?: Dispatch<SetStateAction<boolean>>
+  suggestion: SuggestionProps
 }
 
 interface ToastProps {
