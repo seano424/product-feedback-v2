@@ -8,6 +8,7 @@ import { SuggestionProps } from '@/lib/interfaces'
 
 interface Props extends SuggestionProps {
   toggle?: Dispatch<SetStateAction<boolean>>
+  suggestion: SuggestionProps
 }
 
 const FeedbackForm = ({ toggle, suggestion }: Props) => {
