@@ -1,11 +1,11 @@
+import clsx from 'clsx'
 import { useState, useEffect } from 'react'
-import { useMutation, useQueryClient } from 'react-query'
 import { useSession } from 'next-auth/react'
+import toast, { Toaster } from 'react-hot-toast'
+import { useMutation, useQueryClient } from 'react-query'
 import { createVote, deleteVote } from '@/lib/api'
 import { SuggestionProps } from '@/lib/interfaces'
 import { ArrowUp, ArrowDown } from '@/icons'
-
-import toast, { Toaster } from 'react-hot-toast'
 
 interface Props {
   viewport: 'large' | 'small'
@@ -33,6 +33,7 @@ const VoteButton = (props: Props) => {
     onSuccess: () => {
       setHasVoted(true)
       queryClient.invalidateQueries(['suggestion', suggestion.id])
+      queryClient.invalidateQueries(['suggestions'])
     },
   })
 
@@ -40,6 +41,7 @@ const VoteButton = (props: Props) => {
     onSuccess: () => {
       setHasVoted(false)
       queryClient.invalidateQueries(['suggestion', suggestion.id])
+      queryClient.invalidateQueries(['suggestions'])
     },
   })
 
@@ -61,11 +63,11 @@ const VoteButton = (props: Props) => {
       <Toaster />
       <button
         onClick={handleVoteClick}
-        className={`button-small items-center gap-2 hover:bg-opacity-80 ${
+        className={clsx(
+          'button-small items-center gap-2 hover:bg-opacity-80',
+          hasVoted ? 'bg-fuschia text-white' : 'text-blue-navy',
           small ? 'flex lg:hidden' : 'hidden lg:flex'
-        }
-        ${hasVoted ? 'bg-fuschia text-white' : 'text-blue-navy'}
-        `}
+        )}
       >
         {hasVoted ? <ArrowDown /> : <ArrowUp />}
         {suggestion.votes.length}
