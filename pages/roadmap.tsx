@@ -1,6 +1,6 @@
+import { getStatuses } from '@/lib/api'
 import { QueryClient, dehydrate } from 'react-query'
 import RoadmapNavbar from '@/components/Roadmap/RoadmapNavbar'
-import { getStatuses } from '@/lib/api'
 import RoadmapGrid from '@/components/Roadmap/RoadmapGrid'
 
 const Roadmap = () => {

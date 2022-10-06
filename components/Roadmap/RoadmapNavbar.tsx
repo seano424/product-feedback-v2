@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { PlusIcon } from '@heroicons/react/solid'
 import BackButton from '../Utilities/BackButton'
 
@@ -9,10 +10,12 @@ const RoadmapNavbar = () => {
           <BackButton variant="light" />
           <h2 className="h2">Roadmap</h2>
         </div>
-        <button className="button">
-          <PlusIcon className="h-5 w-5" />
-          Add Feedback
-        </button>
+        <Link href="/feedback/create">
+          <a className="button">
+            <PlusIcon className="h-5 w-5" />
+            Add Feedback
+          </a>
+        </Link>
       </div>
     </section>
   )

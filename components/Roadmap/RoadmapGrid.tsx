@@ -1,7 +1,7 @@
-import { useGetStatuses } from '@/lib/hooks/useGetStatuses'
 import clsx from 'clsx'
-import VoteButton from '@/components/Feedback/VoteButton'
 import { Comments } from '@/icons'
+import { useGetStatuses } from '@/lib/hooks/useGetStatuses'
+import VoteButton from '@/components/Feedback/VoteButton'
 
 const descriptions = {
   'In-Progress': 'Currently being developed',
