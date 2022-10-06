@@ -1,10 +1,18 @@
 @layer components {
   .button {
-    @apply flex w-max items-center justify-center gap-2 rounded-[10px] bg-fuschia p-3 text-[14px] font-bold leading-[20px] text-gray-light transition-all duration-150 ease-linear hover:bg-opacity-90 lg:py-4 lg:px-8;
+    @apply flex w-max items-center justify-center gap-2 rounded-lg bg-fuschia p-3 text-[14px] font-bold leading-[20px] text-gray-light transition-all duration-150 ease-linear hover:bg-opacity-90 lg:py-4 lg:px-8;
   }
 
   .button-small {
-    @apply w-max rounded-[10px] bg-gray-light py-2 px-5 text-[13px] font-semibold leading-[19px] text-blue transition-all duration-100 ease-in-out hover:bg-opacity-90;
+    @apply w-max rounded-lg bg-gray-light py-2 px-5 text-[13px] font-semibold leading-[19px] text-blue transition-all duration-100 ease-in-out hover:bg-opacity-90;
+  }
+
+  .button-sort {
+    @apply h3 flex w-full justify-start border-b border-gray-light px-5 py-3 transition-all duration-300 hover:text-fuschia;
+  }
+
+  .button-session {
+    @apply flex w-max items-center justify-center gap-2 rounded-lg bg-white py-3 px-6 text-[14px] font-bold uppercase leading-[20px] text-black  transition-all duration-150 ease-linear hover:bg-opacity-90 lg:py-4 lg:px-8;
   }
 
   .input {

@@ -1,12 +1,12 @@
+import clsx from 'clsx'
 import Link from 'next/link'
+import { Plus, Bulb } from '@/icons'
 import { useRecoilState } from 'recoil'
 import { useClickAway } from 'react-use'
 import { AnimatePresence } from 'framer-motion'
 import { useSession, signOut } from 'next-auth/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { useState, useRef, Dispatch, SetStateAction } from 'react'
-
-import { Plus, Bulb } from '@/icons'
 import { useGetSuggestions } from '@/lib/hooks/useGetSuggestions'
 import { sortByState } from '@/lib/atoms/sortByState'
 
@@ -103,9 +103,10 @@ const ToolBar = (props: Props) => {
                     {options.map((choice) => (
                       <button
                         key={choice.type}
-                        className={`h3 flex w-full justify-start border-b border-gray-light px-5 py-3 transition-all duration-300 hover:text-fuschia ${
+                        className={clsx(
+                          'button-sort',
                           sortState === choice.type && 'text-fuschia'
-                        }`}
+                        )}
                         onClick={() => handleSetSortBy(choice.type)}
                       >
                         {choice.text}
@@ -119,31 +120,22 @@ const ToolBar = (props: Props) => {
           <div className="flex gap-10">
             <div className="hidden sm:flex">
               {user && (
-                <button
-                  onClick={() => signOut()}
-                  className="button flex bg-white py-2 text-lg text-black"
-                >
+                <button onClick={() => signOut()} className="button-session">
                   Signout
                 </button>
               )}
               {!user && (
                 <button
                   onClick={() => setShowModal(true)}
-                  className="button flex bg-white py-2 text-lg text-black"
+                  className="button-session"
                 >
                   Signin
                 </button>
               )}
             </div>
-            <Link href="/feedback/create">
-              <a className="button hidden sm:flex">
-                <Plus className="text-white" />
-                Add Feedback
-              </a>
-            </Link>
             {user ? (
               <Link href="/feedback/create">
-                <a className="button flex sm:hidden">
+                <a className="button flex">
                   <Plus className="text-white" />
                   Add Feedback
                 </a>
@@ -151,7 +143,7 @@ const ToolBar = (props: Props) => {
             ) : (
               <button
                 onClick={() => setShowModal(true)}
-                className="button flex bg-white py-2 text-lg text-black sm:hidden"
+                className="button-session sm:hidden"
               >
                 Signin
               </button>

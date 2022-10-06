@@ -42,10 +42,7 @@ export default function Menu() {
           <RoadMapCard />
           {session.user && (
             <div>
-              <button
-                onClick={() => signOut()}
-                className="button flex bg-white py-2 text-lg text-black"
-              >
+              <button onClick={() => signOut()} className="button-session">
                 Signout
               </button>
             </div>
