@@ -2,24 +2,27 @@ import clsx from 'clsx'
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import toast, { Toaster } from 'react-hot-toast'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { createVote, deleteVote } from '@/lib/api'
-import { SuggestionProps } from '@/lib/interfaces'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { createVote, deleteVote, getSuggestion } from '@/lib/api'
 import { ArrowUp, ArrowDown } from '@/icons'
 
 interface Props {
   viewport: 'large' | 'small'
-  suggestion: SuggestionProps
+  id: number
 }
 
 const VoteButton = (props: Props) => {
-  const { viewport = 'small', suggestion } = props
+  const { viewport = 'small', id } = props
   const queryClient = useQueryClient()
   const { data: session, status } = useSession()
   const [hasVoted, setHasVoted] = useState(null)
+  const { data: suggestion, isLoading } = useQuery(
+    ['suggestion', id],
+    getSuggestion
+  )
 
   useEffect(() => {
-    if (session) {
+    if (session && !isLoading) {
       setHasVoted(
         suggestion.votes.find((v) => v.user.email === session.user.email)
       )
@@ -33,7 +36,6 @@ const VoteButton = (props: Props) => {
     onSuccess: () => {
       setHasVoted(true)
       queryClient.invalidateQueries(['suggestion', suggestion.id])
-      queryClient.invalidateQueries(['suggestions'])
     },
   })
 
@@ -41,7 +43,6 @@ const VoteButton = (props: Props) => {
     onSuccess: () => {
       setHasVoted(false)
       queryClient.invalidateQueries(['suggestion', suggestion.id])
-      queryClient.invalidateQueries(['suggestions'])
     },
   })
 
@@ -70,7 +71,7 @@ const VoteButton = (props: Props) => {
         )}
       >
         {hasVoted ? <ArrowDown /> : <ArrowUp />}
-        {suggestion.votes.length}
+        {isLoading ? 0 : suggestion.votes.length}
       </button>
     </>
   )

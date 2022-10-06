@@ -1,9 +1,12 @@
-import { dehydrate, QueryClient } from '@tanstack/react-query'
+import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
 import Suggestions from '@/components/Feedback/Suggestions'
 import Layout from '@/components/Layout'
-import { getCategories, getStatuses, getSuggestions } from 'lib/api'
+import { getSuggestions } from 'lib/api'
 
 const Home = () => {
+  const { data } = useQuery(['suggestions'], getSuggestions)
+  console.log('Data: ', data)
+
   return (
     <Layout>
       <Suggestions />
@@ -15,8 +18,6 @@ export default Home
 
 export async function getStaticProps() {
   const queryClient = new QueryClient()
-  await queryClient.prefetchQuery(['categories'], getCategories)
-  await queryClient.prefetchQuery(['statuses'], getStatuses)
   await queryClient.prefetchQuery(['suggestions'], getSuggestions)
 
   return {

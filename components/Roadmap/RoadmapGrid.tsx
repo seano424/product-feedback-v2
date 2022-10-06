@@ -52,7 +52,7 @@ const RoadmapGrid = () => {
                   {suggestion.category.name}
                 </button>
                 <div className="flex items-center justify-between">
-                  <VoteButton viewport="small" suggestion={suggestion} />
+                  <VoteButton id={suggestion.id} viewport="small" />
                   <div className="flex items-center gap-2">
                     <Comments />
                     {suggestion.comments.length}

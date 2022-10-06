@@ -33,7 +33,7 @@ const Suggestion = (props: Props) => {
         className="flex w-full cursor-pointer items-center justify-between rounded-xl bg-white/80 p-5 shadow-xl"
       >
         <div className="flex w-full items-center gap-10">
-          <VoteButton viewport="large" suggestion={suggestion} />
+          <VoteButton viewport="large" id={suggestion.id} />
           <div className="flex w-full flex-col items-start gap-3">
             <h3 className="h3">{suggestion.title}</h3>
             <p className="body-1 text-gray">{suggestion.description}</p>
@@ -41,7 +41,7 @@ const Suggestion = (props: Props) => {
               {suggestion.category?.name ?? 'UI'}
             </button>
             <div className="flex w-full items-center justify-between lg:hidden">
-              <VoteButton viewport="small" suggestion={suggestion} />
+              <VoteButton id={suggestion.id} viewport="small" />
               <div className="flex items-center gap-3 text-lg">
                 <Comments />
                 {suggestion.comments?.length ?? '100'}
