@@ -5,7 +5,23 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const statuses = await prisma.status.findMany({
       include: {
-        suggestions: true,
+        suggestions: {
+          include: {
+            comments: {
+              include: {
+                user: true,
+              },
+            },
+            category: true,
+            status: true,
+            votes: {
+              include: {
+                user: true,
+              },
+            },
+            user: true,
+          },
+        },
       },
     })
 

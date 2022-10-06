@@ -1,7 +1,7 @@
 import { AnimatePresence, m } from 'framer-motion'
 import useShowMobileNav from 'lib/hooks/useShowMobileNav'
 import Categories from '../Categories'
-import RoadMapCard from '../RoadMapCard'
+import RoadMapCard from '../Roadmap/RoadMapCard'
 import { useRef } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 

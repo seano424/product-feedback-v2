@@ -6,7 +6,11 @@ import { Comments } from '@/icons'
 import { SuggestionProps } from '@/lib/interfaces'
 import { useRouter } from 'next/router'
 
-const Suggestion = (props: SuggestionProps) => {
+interface Props {
+  suggestion: SuggestionProps
+}
+
+const Suggestion = (props: Props) => {
   const { suggestion } = props
   const setCategory = useSetRecoilState(categoriesState)
   const router = useRouter()

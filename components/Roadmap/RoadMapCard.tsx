@@ -16,7 +16,7 @@ const fakeStats = [
   },
 ]
 
-const RoadMap = () => {
+const RoadmapCard = () => {
   const { data: stats, isLoading } = useGetStatuses()
 
   return (
@@ -71,4 +71,4 @@ const RoadMap = () => {
   )
 }
 
-export default RoadMap
+export default RoadmapCard
