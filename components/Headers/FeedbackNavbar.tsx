@@ -1,12 +1,11 @@
-import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { signIn, useSession } from 'next-auth/react'
 import { SuggestionProps } from '@/lib/interfaces'
 import { deleteSuggestion } from '@/lib/api'
-import { ArrowLeft } from '@/icons'
 import toast, { Toaster } from 'react-hot-toast'
+import BackButton from '../Utilities/BackButton'
 
 interface Props extends SuggestionProps {
   toggle?: Dispatch<SetStateAction<boolean>>
@@ -59,12 +58,7 @@ const FeedbackNavbar = ({ suggestion, toggle }: Props) => {
   return (
     <nav className="flex flex-col justify-between gap-5 sm:flex-row">
       <Toaster />
-      <Link href="/">
-        <a className="flex items-center gap-3 text-[14px] font-bold leading-[20px] text-blue-navy">
-          <ArrowLeft />
-          Go Back
-        </a>
-      </Link>
+      <BackButton variant="dark" />
       {authenticated &&
         suggestion &&
         suggestion.user.email === session.user.email && (
