@@ -30,9 +30,7 @@ export const deleteReply = async (body) => {
 }
 
 export const deleteComment = async (body) => {
-  console.log(body)
-
-  // return await fetcher(`comments/${body.commentId}`, body, 'DELETE')
+  return await fetcher(`comments/${body.commentId}`, body, 'DELETE')
 }
 
 export const updateReply = async (body) => {

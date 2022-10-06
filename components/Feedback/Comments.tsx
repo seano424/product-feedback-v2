@@ -84,7 +84,7 @@ const Comments = ({ comments }: Props) => {
 
   const handleDeleteComment = (comment) => {
     if (authenticated) {
-      toast.error('deleting reply')
+      toast.error('deleting comment')
       return deleteCommentMutation.mutate({
         commentId: comment.id,
       })
