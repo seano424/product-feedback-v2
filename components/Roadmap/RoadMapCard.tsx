@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import Link from 'next/link'
 import { useGetStatuses } from '@/lib/hooks/useGetStatuses'
 
@@ -40,12 +41,12 @@ const RoadmapCard = () => {
               >
                 <div className="flex items-center gap-4">
                   <div
-                    className={`h-2 w-2 animate-pulse rounded-full ${
-                      i === 0 && 'bg-orange'
-                    }
-                      ${i === 1 && 'bg-purple-500'} ${
+                    className={clsx(
+                      'h-2 w-2 animate-pulse rounded-full',
+                      i === 0 && 'bg-orange',
+                      i === 1 && 'bg-purple-500',
                       i === 2 && 'bg-teal-400'
-                    }`}
+                    )}
                   ></div>
                   <p>{status.name}</p>
                 </div>
@@ -56,11 +57,14 @@ const RoadmapCard = () => {
               <div key={status.type} className="flex justify-between">
                 <div className="flex items-center gap-4">
                   <div
-                    className={`h-2 w-2 rounded-full ${i === 0 && 'bg-orange'}
-                      ${i === 1 && 'bg-purple-500'} ${
+                    className={clsx(
+                      'h-2 w-2 rounded-full',
+                      i === 0 && 'bg-orange',
+                      i === 1 && 'bg-purple-500',
                       i === 2 && 'bg-teal-400'
-                    }`}
+                    )}
                   ></div>
+
                   <p>{status.name}</p>
                 </div>
                 <p className="body-1">{status.suggestions.length}</p>
