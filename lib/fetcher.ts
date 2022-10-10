@@ -1,7 +1,7 @@
 const dev = process.env.NODE_ENV !== 'production'
 export const server = dev
   ? 'http://localhost:3000'
-  : 'https://your_deployment.server.com'
+  : 'https://product-feedback-v2-ten.vercel.app'
 
 export default function fetcher(url: string, data = undefined, method = 'GET') {
   return fetch(`${server}/api/${url}`, {
