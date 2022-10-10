@@ -1,15 +1,16 @@
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
-import Suggestions from '@/components/Feedback/Suggestions'
 import Layout from '@/components/Layout'
+import Suggestions from '@/components/Feedback/Suggestions'
+import { useSort } from '@/lib/hooks/useSort'
 import { getSuggestions } from 'lib/api'
 
 const Home = () => {
-  const { data } = useQuery(['suggestions'], getSuggestions)
-  console.log('Data: ', data)
+  const { data, isLoading } = useQuery(['suggestions'], getSuggestions)
+  const suggestions = useSort(data)
 
   return (
     <Layout>
-      <Suggestions />
+      <Suggestions data={suggestions} isLoading={isLoading} />
     </Layout>
   )
 }

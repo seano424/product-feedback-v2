@@ -1,12 +1,15 @@
-import { useQuery } from '@tanstack/react-query'
 import { fakeSuggestions } from '@/lib/data'
-import { useSort } from '@/lib/hooks/useSort'
 import GhostSuggestion from './GhostSuggestion'
 import Suggestion from './Suggestion'
+import { SuggestionProps } from '@/lib/interfaces'
 
-const Suggestions = () => {
-  const { data: suggestions, isLoading } = useQuery(['suggestions'])
-  const sortedData = useSort(suggestions)
+interface Props {
+  data: SuggestionProps[]
+  isLoading: boolean
+}
+
+const Suggestions = (props: Props) => {
+  const { isLoading, data } = props
 
   if (isLoading)
     return (
@@ -19,8 +22,8 @@ const Suggestions = () => {
 
   return (
     <div className="py-base container flex flex-col gap-5 xl:px-0">
-      {sortedData &&
-        sortedData.map((suggestion) => (
+      {data &&
+        data.map((suggestion) => (
           <Suggestion key={suggestion.id} suggestion={suggestion} />
         ))}
     </div>

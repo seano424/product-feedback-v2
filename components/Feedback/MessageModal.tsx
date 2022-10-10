@@ -44,8 +44,8 @@ const MessageModal = (props: MessageProps) => {
   const createReplyMutation = useMutation(createReply, {
     onSuccess: () => {
       setOpen(false)
-      queryClient.invalidateQueries('suggestion')
-      queryClient.invalidateQueries('suggestions')
+      queryClient.invalidateQueries(['suggestion'])
+      queryClient.invalidateQueries(['suggestions'])
     },
   })
 
@@ -59,8 +59,8 @@ const MessageModal = (props: MessageProps) => {
   const updateReplyMutation = useMutation(updateReply, {
     onSuccess: () => {
       setOpen(false)
-      queryClient.invalidateQueries('suggestion')
-      queryClient.invalidateQueries('suggestions')
+      queryClient.invalidateQueries(['suggestion'])
+      queryClient.invalidateQueries(['suggestions'])
       toast.success('updated reply')
     },
   })
