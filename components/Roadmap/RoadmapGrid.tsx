@@ -12,7 +12,7 @@ const descriptions = {
 const RoadmapGrid = () => {
   const { data: statuses } = useGetStatuses()
   return (
-    <section className="container mx-auto mt-8 grid max-w-4xl grid-cols-2 gap-5 lg:grid-cols-3">
+    <section className="container mx-auto mt-8 grid grid-cols-2 gap-5 lg:grid-cols-3">
       {statuses &&
         statuses.map((status, i) => (
           <div key={status.name} className="flex flex-col gap-4">

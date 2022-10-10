@@ -36,6 +36,7 @@ const VoteButton = (props: Props) => {
     onSuccess: () => {
       setHasVoted(true)
       queryClient.invalidateQueries(['suggestion', suggestion.id])
+      queryClient.invalidateQueries(['suggestions'])
     },
   })
 
@@ -43,6 +44,7 @@ const VoteButton = (props: Props) => {
     onSuccess: () => {
       setHasVoted(false)
       queryClient.invalidateQueries(['suggestion', suggestion.id])
+      queryClient.invalidateQueries(['suggestions'])
     },
   })
 
