@@ -34,7 +34,7 @@ const MessageModal = (props: MessageProps) => {
 
   useEffect(() => {
     isEditing && setValue(data.body)
-  }, [])
+  }, [data.body, isEditing])
 
   useEffect(() => {
     let limit = 250

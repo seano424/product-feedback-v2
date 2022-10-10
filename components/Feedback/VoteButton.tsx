@@ -27,7 +27,7 @@ const VoteButton = (props: Props) => {
         suggestion.votes.find((v) => v.user.email === session.user.email)
       )
     }
-  }, [session, suggestion])
+  }, [session, suggestion, isLoading])
 
   const authenticated = status === 'authenticated'
   const small = viewport === 'small'
