@@ -9,7 +9,7 @@ import BackButton from '../Utilities/BackButton'
 
 interface Props {
   toggle?: Dispatch<SetStateAction<boolean>>
-  suggestion: SuggestionProps
+  suggestion?: SuggestionProps
 }
 
 interface ToastProps {
