@@ -1,7 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'lib/prisma'
 import { resolve } from 'path'
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
     const categories = await prisma.category.findMany({})
     if (categories.length) {

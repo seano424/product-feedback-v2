@@ -3,7 +3,10 @@ import prisma from 'lib/prisma'
 import { resolve } from 'path'
 import { getSession } from 'next-auth/react'
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const session = await getSession({ req })
   if (req.method === 'GET') {
     try {
