@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { sortByState } from 'lib/atoms/sortByState'
 import { categoriesState } from 'lib/atoms/categoriesState'
+import { sort } from 'radash'
 
 export const useSort = (data) => {
   const sortType = useRecoilValue(sortByState)
@@ -20,25 +21,13 @@ export const useSort = (data) => {
           : data.filter((d) => d.category.type === filterType)
 
       mostUpvotes &&
-        setSortedData(
-          [...filteredData].sort((a, b) => b.votes.length - a.votes.length)
-        )
+        setSortedData(sort([...filteredData], (f) => f.votes.length, true))
       leastUpvotes &&
-        setSortedData(
-          [...filteredData].sort((a, b) => a.votes.length - b.votes.length)
-        )
+        setSortedData(sort([...filteredData], (f) => f.votes.length))
       mostComments &&
-        setSortedData(
-          [...filteredData].sort(
-            (a, b) => b.comments.length - a.comments.length
-          )
-        )
+        setSortedData(sort([...filteredData], (f) => f.comments.length, true))
       leastComments &&
-        setSortedData(
-          [...filteredData].sort(
-            (a, b) => a.comments.length - b.comments.length
-          )
-        )
+        setSortedData(sort([...filteredData], (f) => f.comments.length))
     }
 
     if (data) {
